@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SimpleNaturePackScene.unity
+    path: Assets/Niveles/Scenes/SimpleNaturePackScene.unity
     guid: c9098e5c124ff5b4fa3673312836be0e
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: bfa1182bd221b4ca89619141f66f1260, type: 2}
