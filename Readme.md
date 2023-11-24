@@ -1,0 +1,1 @@
+Los videos se encuentran subido a una [carpeta en drive](https://drive.google.com/drive/folders/15eV8e_d9GiqZK-1TQkJpykFT8Hkizrxa?usp=sharing). Los archivos de video  se deben ubicar (al menos por el momento) en "Assets\360\Videos"
