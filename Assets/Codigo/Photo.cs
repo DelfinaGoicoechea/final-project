@@ -5,7 +5,8 @@ using UnityEngine.UI;
 
 public class Photo : Content
 {
-    public Image photo; //Probablemente deba ser una textura, en vez de una Image
+    //public Image photo; //Probablemente deba ser una textura, en vez de una Image
+    public Material material;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,10 @@ public class Photo : Content
     }
     public override void play()
     {
-        //yet to be implemented
+        GameObject sphere = ContentManager.Instance.getSphere();
+        MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
+        Material[] meshmaterials = meshR.materials;
+        meshmaterials[0] = material;
+        meshR.materials = meshmaterials;
     }
 }

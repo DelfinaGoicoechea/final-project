@@ -7,6 +7,7 @@ public abstract class Content : MonoBehaviour
 {
     public Image thumbnail;
     public AudioClip sound;
+    public string nombre; //Puede ser util usar el atributo name que se hereda de más arriba
 
     // public AudioClip Audio { get => audio; set => audio = value; } //probablemente al setear tenga que hacer algun otro cambio
     // public Image Thumbnail { get => thumbnail; set => thumbnail = value; }
