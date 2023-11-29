@@ -6,16 +6,13 @@ using UnityEngine.UI;
 public abstract class Content : MonoBehaviour
 {
     public Image thumbnail;
-    public AudioClip sound;
+    public AudioClip sound; //probablemente al setearlo tenga que hacer algun otro cambio si ya está en reproduccion
     public string nombre; //Puede ser util usar el atributo name que se hereda de más arriba
-
-    // public AudioClip Audio { get => audio; set => audio = value; } //probablemente al setear tenga que hacer algun otro cambio
-    // public Image Thumbnail { get => thumbnail; set => thumbnail = value; }
 
     // Start is called before the first frame update
     void Start()
     {
-        //or else
+
     }
 
     // Update is called once per frame
@@ -25,4 +22,8 @@ public abstract class Content : MonoBehaviour
     }
 
     public abstract void play();
+    public virtual void pause()
+    {
+        // Does nothing, except in videos
+    }
 }

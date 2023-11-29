@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Photo : Content
 {
-    //public Image photo; //Probablemente deba ser una textura, en vez de una Image
     public Material material;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -20,10 +21,36 @@ public class Photo : Content
     }
     public override void play()
     {
-        GameObject sphere = ContentManager.Instance.getSphere();
-        MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
-        Material[] meshmaterials = meshR.materials;
-        meshmaterials[0] = material;
-        meshR.materials = meshmaterials;
+        if (SceneManager.GetActiveScene().name == "SphereScene")
+        {
+            GameObject sphere = ContentManager.Instance.getSphere();
+            StartCoroutine(checkRotation(sphere));
+            MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
+            Material[] meshmaterials = meshR.materials;
+            meshmaterials[0] = material;
+            meshR.materials = meshmaterials;
+        }
+        else
+        {
+            //TODO: Implementar despues de programar el cambio de escena
+            //Espero a cambiar de Escena, probablemente antes pongo la de carga
+            //Asigno la textura
+        }
+    }
+
+    private IEnumerator checkRotation(GameObject sphere)
+    {
+        // obtengo la posicion y rotacion local de la esfera
+        Vector3 position = new Vector3(0.0f, 1.0f, 0.0f);
+        Quaternion rotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
+        sphere.transform.GetLocalPositionAndRotation(out position, out rotation);
+
+        //Acomodo la esfera si estaba rotada
+        Quaternion rotated = new Quaternion(0.00000f, 0.00000f, 0.70711f, 0.70711f);
+        if (rotation == rotated)
+        {
+            sphere.transform.Rotate(0.0f, 0.0f, -90.0f);
+        }
+        yield return null;
     }
 }
