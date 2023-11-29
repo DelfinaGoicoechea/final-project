@@ -28,12 +28,11 @@ public class ContentManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		this.playContent("mar");
-		StartCoroutine(WaitAndVideo(10.0f, "playa1"));
-        StartCoroutine(WaitAndVideo(20.0f, "mar2"));
-        StartCoroutine(WaitAndVideo(30.0f, "venecia"));
-
-
+		//this.playContent("bosque");
+		StartCoroutine(WaitAndVideo(5.0f, "bosqueNevado"));
+        StartCoroutine(WaitAndVideo(10.0f, "city"));
+        StartCoroutine(WaitAndVideo(15.0f, "milkyWay"));
+        StartCoroutine(WaitAndVideo(20.0f, "navideno"));
     }
 
     private IEnumerator WaitAndVideo(float waitTime, string content)

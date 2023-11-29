@@ -26,19 +26,24 @@ public class Video : Content
 
     public override void play()
     {
-        // TODO: Asignar sonido al videoPlayer, o a un AudioSource
-        VideoPlayer videoPlayer = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
-        if (isPaused)
-        {
-            videoPlayer.Play();
-            isPaused = false;
-            return;
-        }
 
         isPaused = false;
         GameObject sphere = ContentManager.Instance.getSphere();
         if (SceneManager.GetActiveScene().name == "SphereScene")
         {
+            // TODO: Asignar sonido al videoPlayer, o a un AudioSource
+            VideoPlayer videoPlayer = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
+            if (isPaused)
+            {
+                videoPlayer.Play();
+                isPaused = false;
+                return;
+            }
+            
+            // Pauso audio que se haya configurado al ver una imagen
+            AudioSource audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
+            audioSource.Pause();
+
             // Roto la esfera dependiendo de si es o no un Equi-Angular Cubemap
             StartCoroutine(checkRotation(sphere));
 

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
 public class Photo : Content
@@ -23,12 +24,22 @@ public class Photo : Content
     {
         if (SceneManager.GetActiveScene().name == "SphereScene")
         {
+            VideoPlayer videoPlayer = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
+            videoPlayer.Pause();
+            AudioSource audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
+            audioSource.Pause();
             GameObject sphere = ContentManager.Instance.getSphere();
             StartCoroutine(checkRotation(sphere));
             MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
             Material[] meshmaterials = meshR.materials;
             meshmaterials[0] = material;
             meshR.materials = meshmaterials;
+            if(this.sound != null)
+            {
+                audioSource.clip = this.sound;
+                audioSource.Play();
+            }
+
         }
         else
         {
