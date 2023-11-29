@@ -28,17 +28,18 @@ public class ContentManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		//or else
 		this.playContent("mar");
-		IEnumerator coroutine = WaitAndVideo(10.0f);
-		StartCoroutine(coroutine);
+		StartCoroutine(WaitAndVideo(10.0f, "playa1"));
+        StartCoroutine(WaitAndVideo(20.0f, "mar2"));
+        StartCoroutine(WaitAndVideo(30.0f, "venecia"));
 
-	}
 
-	private IEnumerator WaitAndVideo(float waitTime)
+    }
+
+    private IEnumerator WaitAndVideo(float waitTime, string content)
 	{
 		yield return new WaitForSeconds(waitTime);
-		this.playContent("playa1");
+		this.playContent(content);
 	}
 
 	// Update is called once per frame
@@ -49,20 +50,16 @@ public class ContentManager : MonoBehaviour
 
 	void OnEnable()
 	{
-		Debug.Log("OnEnable called");
 		SceneManager.sceneLoaded += OnSceneLoaded;
 	}
 
 	// called second
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 	{
-		Debug.Log("OnSceneLoaded: " + scene.name);
-		Debug.Log(mode);
 		if (SceneManager.GetActiveScene().name == "SphereScene")
 		{
-			sphere = GameObject.Find("ProjectionSphere");
-			Debug.Log("Entre a encontrar la esfera");
-			//Acá tengo que chequear, si estoy en SphereScene, busco la esfera
+            // Busco ProjectionSphere
+            sphere = GameObject.Find("ProjectionSphere");
 		}
 	}
 
@@ -91,5 +88,10 @@ public class ContentManager : MonoBehaviour
 	public GameObject getSphere()
 	{
 		return sphere;
+	}
+
+	public void stop()
+	{
+		//TODO: terminar reproduccion y llevar a la escena main
 	}
 }
