@@ -28,22 +28,27 @@ public class Video : Content
     {
 
         isPaused = false;
-        GameObject sphere = ContentManager.Instance.getSphere();
+
+        // Pauso audio que se haya configurado al ver una imagen
+        AudioSource audioSource = ContentManager.Instance.audioSource;
+        audioSource.Pause();
+
         if (SceneManager.GetActiveScene().name == "SphereScene")
         {
-            // TODO: Asignar sonido al videoPlayer, o a un AudioSource
-            VideoPlayer videoPlayer = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
+            GameObject sphere = GameObject.FindWithTag("ProjectionSphere");
+            
+            VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+           
             if (isPaused)
             {
                 videoPlayer.Play();
                 isPaused = false;
+                if (this.sound != null){
+                    audioSource.Play();
+                }
                 return;
             }
             
-            // Pauso audio que se haya configurado al ver una imagen
-            AudioSource audioSource = GameObject.Find("AudioSource").GetComponent<AudioSource>();
-            audioSource.Pause();
-
             // Roto la esfera dependiendo de si es o no un Equi-Angular Cubemap
             StartCoroutine(checkRotation(sphere));
 
@@ -54,22 +59,90 @@ public class Video : Content
             meshR.materials = meshmaterials;
 
             // Asigno RenderTexture y video al VideoPlayer
+            videoPlayer.Stop();
             videoPlayer.clip = video;
             videoPlayer.targetTexture = renderTexture;
+            if (this.sound != null)
+            {
+                if (video.audioTrackCount > 0)
+                {
+                    videoPlayer.SetDirectAudioVolume(0, 0);
+                }
+                audioSource.clip = this.sound;
+                audioSource.Play();
+            }
+            else
+            {
+                videoPlayer.SetDirectAudioVolume(0, 1);
+            }
+            videoPlayer.Play();
         }
         else
         {
-            //TODO: Implementar despues de programar el cambio de escena
-            //Espero a cambiar de Escena, probablemente antes pongo la de carga
-            //Asigno la textura
+            SceneManager.LoadScene("SphereScene");
+
+            // Espero a que carge la escena, para no tener problemas al buscar la esfera
+            if (SceneManager.GetActiveScene().name != "SphereScene")
+            {
+                StartCoroutine(waitForSceneLoad("SphereScene", audioSource));
+            }
         }
     }
 
     public override void pause()
     {
-        VideoPlayer videoPlayer = GameObject.Find("VideoPlayer").GetComponent<VideoPlayer>();
+        VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+        AudioSource audioSource = ContentManager.Instance.audioSource;
         videoPlayer.Pause();
+        if (this.sound != null){
+            audioSource.Pause();
+        }
         isPaused = true;
+    }
+
+    private IEnumerator waitForSceneLoad(string sceneName, AudioSource audioSource)
+    {
+        // Busy wait, pero el delay es que debo esperar realmente es mï¿½nimo
+        while (SceneManager.GetActiveScene().name != sceneName)
+        {
+            yield return null;
+        }
+
+        if (SceneManager.GetActiveScene().name == sceneName)
+        {
+            GameObject sphere = ContentManager.Instance.getSphere();
+
+            // Roto la esfera dependiendo de si es o no un Equi-Angular Cubemap
+            StartCoroutine(checkRotation(sphere));
+
+            // Asigno el material a la esfera
+            MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
+            Material[] meshmaterials = meshR.materials;
+            meshmaterials[0] = material;
+            meshR.materials = meshmaterials;
+
+            VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+            
+            // Asigno RenderTexture y video al VideoPlayer
+            videoPlayer.Stop();
+            videoPlayer.clip = video;
+            videoPlayer.targetTexture = renderTexture;
+
+            if (this.sound != null)
+            {
+                if (video.audioTrackCount > 0)
+                {
+                    videoPlayer.SetDirectAudioVolume(0, 0);
+                }
+                audioSource.clip = this.sound;
+                audioSource.Play();
+            }
+            else
+            {
+                videoPlayer.SetDirectAudioVolume(0, 1);;
+            }
+            videoPlayer.Play();
+        }
     }
 
     private IEnumerator checkRotation(GameObject sphere)
@@ -79,7 +152,7 @@ public class Video : Content
         Quaternion rotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
         sphere.transform.GetLocalPositionAndRotation(out position, out rotation);
 
-        // Roto la esfera si es un Equi-Angular Cubemap (Porque no se cómo rotarlo desde el shader)
+        // Roto la esfera si es un Equi-Angular Cubemap (Porque no se cï¿½mo rotarlo desde el shader)
         Quaternion rotated = new Quaternion(0.00000f, 0.00000f, 0.70711f, 0.70711f);
         if (equiangularCubemap && rotation != rotated)
         {

@@ -8,31 +8,36 @@ using UnityEngine.SceneManagement;
 public class ContentManager : MonoBehaviour
 {
 	public List<Content> contents;
-	private GameObject sphere;
+	public GameObject sphere;
+	//private Content currentlyPlaying;
+	public AudioSource audioSource;
 
 	public static ContentManager Instance { get; private set; }
 	private void Awake()
 	{
 		// If there is an instance, and it's not me, delete myself.
-		DontDestroyOnLoad(this.gameObject);
 		if (Instance != null && Instance != this)
 		{
-			Destroy(this);
-		}
+            Destroy(this.gameObject);
+        }
 		else
 		{
 			Instance = this;
 		}
-	}
+        DontDestroyOnLoad(this.gameObject);
+    }
 
 	// Start is called before the first frame update
 	void Start()
 	{
-		//this.playContent("bosque");
-		StartCoroutine(WaitAndVideo(5.0f, "bosqueNevado"));
-        StartCoroutine(WaitAndVideo(10.0f, "city"));
-        StartCoroutine(WaitAndVideo(15.0f, "milkyWay"));
-        StartCoroutine(WaitAndVideo(20.0f, "navideno"));
+		GameObject aSource = GameObject.Find("AudioSource");
+		DontDestroyOnLoad(aSource);
+        this.playContent("playa1");
+        StartCoroutine(WaitAndVideo(5.0f, "SimpleNaturePackScene"));
+		StartCoroutine(WaitAndVideo(10.0f, "bosque"));
+        StartCoroutine(WaitAndVideo(15.0f, "venecia"));
+        StartCoroutine(WaitAndVideo(20.0f, "playa1"));
+        StartCoroutine(WaitAndVideo(30.0f, "venecia"));
     }
 
     private IEnumerator WaitAndVideo(float waitTime, string content)
@@ -58,7 +63,7 @@ public class ContentManager : MonoBehaviour
 		if (SceneManager.GetActiveScene().name == "SphereScene")
 		{
             // Busco ProjectionSphere
-            sphere = GameObject.Find("ProjectionSphere");
+            sphere = GameObject.FindWithTag("ProjectionSphere");
 		}
 	}
 
@@ -77,10 +82,11 @@ public class ContentManager : MonoBehaviour
 		Content content = contents.Find(x => x.nombre.Equals(scene));
 		if (content != null)
 		{
-			content.play();
+			//currentlyPlaying = content;
+            content.play();
 			return true;
 		}
-		Debug.LogWarning("No se encontró el Contenido: " + scene);
+		Debug.LogWarning("No se encontrï¿½ el Contenido: " + scene);
 		return false;
 	}
 
