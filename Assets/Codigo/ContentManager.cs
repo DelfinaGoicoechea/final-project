@@ -7,10 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class ContentManager : MonoBehaviour
 {
-	public List<Content> contents;
-	public GameObject sphere;
-	//private Content currentlyPlaying;
 	public AudioSource audioSource;
+	public List<Content> contents;
+	private GameObject sphere;
+	private GameObject sphereEAC;
+	//private Content currentlyPlaying;
+	
 
 	public static ContentManager Instance { get; private set; }
 	private void Awake()
@@ -30,14 +32,13 @@ public class ContentManager : MonoBehaviour
 	// Start is called before the first frame update
 	void Start()
 	{
-		GameObject aSource = GameObject.Find("AudioSource");
-		DontDestroyOnLoad(aSource);
         this.playContent("playa1");
         StartCoroutine(WaitAndVideo(5.0f, "SimpleNaturePackScene"));
 		StartCoroutine(WaitAndVideo(10.0f, "bosque"));
         StartCoroutine(WaitAndVideo(15.0f, "venecia"));
         StartCoroutine(WaitAndVideo(20.0f, "playa1"));
         StartCoroutine(WaitAndVideo(30.0f, "venecia"));
+		StartCoroutine(WaitAndVideo(40.0f, "bosque"));
     }
 
     private IEnumerator WaitAndVideo(float waitTime, string content)
@@ -64,6 +65,7 @@ public class ContentManager : MonoBehaviour
 		{
             // Busco ProjectionSphere
             sphere = GameObject.FindWithTag("ProjectionSphere");
+			sphereEAC = GameObject.FindWithTag("ProjectionSphereEAC");
 		}
 	}
 
@@ -86,13 +88,18 @@ public class ContentManager : MonoBehaviour
             content.play();
 			return true;
 		}
-		Debug.LogWarning("No se encontr� el Contenido: " + scene);
+		Debug.LogWarning("No se encontro el Contenido: " + scene);
 		return false;
 	}
 
 	public GameObject getSphere()
 	{
 		return sphere;
+	}
+
+		public GameObject getSphereEAC()
+	{
+		return sphereEAC;
 	}
 
 	public void stop()

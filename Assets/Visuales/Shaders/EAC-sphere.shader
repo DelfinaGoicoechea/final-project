@@ -7,7 +7,7 @@ Shader "Custom/EAC-sphere"
 	SubShader
 	{
 		// No culling or depth
-		Cull Front ZWrite Off ZTest Always // Cull front will flip normals
+		Cull Front //ZWrite Off ZTest Always // Cull front will flip normals
 
 		Pass
 		{

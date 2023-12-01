@@ -31,11 +31,14 @@ public class Photo : Content
             videoPlayer.Pause();
 
             GameObject sphere = ContentManager.Instance.getSphere();
-            StartCoroutine(checkRotation(sphere));
+            
             MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
             Material[] meshmaterials = meshR.materials;
             meshmaterials[0] = material;
             meshR.materials = meshmaterials;
+
+            GameObject player = GameObject.FindWithTag("Player");
+            player.transform.position = sphere.transform.position;
 
             if (this.sound != null)
             {
@@ -62,7 +65,7 @@ public class Photo : Content
 
     private IEnumerator waitForSceneLoad(string sceneName)
     {
-        // Busy wait, pero el delay es que debo esperar realmente es mínimo
+        // Busy wait, pero el delay que debo esperar realmente es mï¿½nimo
         while (SceneManager.GetActiveScene().name != sceneName)
         {
             yield return null;
@@ -75,22 +78,8 @@ public class Photo : Content
             Material[] meshmaterials = meshR.materials;
             meshmaterials[0] = material;
             meshR.materials = meshmaterials;
+            GameObject player = GameObject.FindWithTag("Player");
+            player.transform.position = sphere.transform.position;
         }
-    }
-
-    private IEnumerator checkRotation(GameObject sphere)
-    {
-        // obtengo la posicion y rotacion local de la esfera
-        Vector3 position = new Vector3(0.0f, 1.0f, 0.0f);
-        Quaternion rotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
-        sphere.transform.GetLocalPositionAndRotation(out position, out rotation);
-
-        //Acomodo la esfera si estaba rotada
-        Quaternion rotated = new Quaternion(0.00000f, 0.00000f, 0.70711f, 0.70711f);
-        if (rotation == rotated)
-        {
-            sphere.transform.Rotate(0.0f, 0.0f, -90.0f);
-        }
-        yield return null;
     }
 }

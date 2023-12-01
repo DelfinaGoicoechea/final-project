@@ -35,9 +35,11 @@ public class Video : Content
 
         if (SceneManager.GetActiveScene().name == "SphereScene")
         {
-            GameObject sphere = GameObject.FindWithTag("ProjectionSphere");
+            ContentManager cm = ContentManager.Instance;
+            GameObject sphere = (equiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
             
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+            GameObject player = GameObject.FindWithTag("Player");
            
             if (isPaused)
             {
@@ -48,15 +50,11 @@ public class Video : Content
                 }
                 return;
             }
-            
-            // Roto la esfera dependiendo de si es o no un Equi-Angular Cubemap
-            StartCoroutine(checkRotation(sphere));
 
-            // Asigno el material a la esfera
+            // Asigno el material para la esfera
             MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
             Material[] meshmaterials = meshR.materials;
             meshmaterials[0] = material;
-            meshR.materials = meshmaterials;
 
             // Asigno RenderTexture y video al VideoPlayer
             videoPlayer.Stop();
@@ -75,7 +73,10 @@ public class Video : Content
             {
                 videoPlayer.SetDirectAudioVolume(0, 1);
             }
+            videoPlayer.Prepare();
             videoPlayer.Play();
+            meshR.materials = meshmaterials;
+            player.transform.position = sphere.transform.position;
         }
         else
         {
@@ -110,18 +111,17 @@ public class Video : Content
 
         if (SceneManager.GetActiveScene().name == sceneName)
         {
-            GameObject sphere = ContentManager.Instance.getSphere();
-
-            // Roto la esfera dependiendo de si es o no un Equi-Angular Cubemap
-            StartCoroutine(checkRotation(sphere));
+            GameObject sphere;
+            ContentManager cm = ContentManager.Instance;
+            sphere = (equiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
 
             // Asigno el material a la esfera
             MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
             Material[] meshmaterials = meshR.materials;
             meshmaterials[0] = material;
-            meshR.materials = meshmaterials;
 
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+            GameObject player = GameObject.FindWithTag("Player");
             
             // Asigno RenderTexture y video al VideoPlayer
             videoPlayer.Stop();
@@ -142,30 +142,8 @@ public class Video : Content
                 videoPlayer.SetDirectAudioVolume(0, 1);;
             }
             videoPlayer.Play();
+            meshR.materials = meshmaterials;
+            player.transform.position = sphere.transform.position;
         }
-    }
-
-    private IEnumerator checkRotation(GameObject sphere)
-    {
-        // obtengo la posicion y rotacion local de la esfera
-        Vector3 position = new Vector3(0.0f, 1.0f, 0.0f);
-        Quaternion rotation = new Quaternion(0.0f, 1.0f, 0.0f, 0.0f);
-        sphere.transform.GetLocalPositionAndRotation(out position, out rotation);
-
-        // Roto la esfera si es un Equi-Angular Cubemap (Porque no se c�mo rotarlo desde el shader)
-        Quaternion rotated = new Quaternion(0.00000f, 0.00000f, 0.70711f, 0.70711f);
-        if (equiangularCubemap && rotation != rotated)
-        {
-            sphere.transform.Rotate(0.0f, 0.0f, 90.0f);
-        }
-        else
-        {
-            //Acomodo la esfera si ya estaba rotada y este video NO es un Equi-Angular Cubemap
-            if (!equiangularCubemap && rotation == rotated)
-            {
-                sphere.transform.Rotate(0.0f, 0.0f, -90.0f);
-            }
-        }
-        yield return null;
     }
 }
