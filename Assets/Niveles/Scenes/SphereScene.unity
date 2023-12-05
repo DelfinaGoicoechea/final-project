@@ -346,7 +346,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
+  - {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -784,26 +784,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8216540715976620675, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: dc6b5d6b10bb8c0489cd2e018afab84d, type: 3}
-    - target: {fileID: 8216540716129985541, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: e903d7a3505b17445a17ab3e3dd95991, type: 3}
-    - target: {fileID: 8216540716262589914, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: 9fa9b560382c82d45b775675607311f4, type: 3}
-    - target: {fileID: 8216540716366605911, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: 7c2d9a4a7931dab47a85824cbb763244, type: 3}
-    - target: {fileID: 8216540716520445050, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: 588facc2190d2d944aaeff8754be12e4, type: 3}
     - target: {fileID: 8216540716786038009, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -896,33 +876,5 @@ PrefabInstance:
       propertyPath: sphere
       value: 
       objectReference: {fileID: 1222125823}
-    - target: {fileID: 8216540717175707342, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: sound
-      value: 
-      objectReference: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
-    - target: {fileID: 8216540717175707342, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: a2856ae240f4db04a9c637ca48056d1f, type: 3}
-    - target: {fileID: 8216540717177267769, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: 4709c224b103f634799a8d23086082b0, type: 3}
-    - target: {fileID: 8216540717901532558, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: sound
-      value: 
-      objectReference: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
-    - target: {fileID: 8216540717901532558, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: 9bb0d665dc6f2b342950c38fc0629bc1, type: 3}
-    - target: {fileID: 8216540717980148932, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
-    - target: {fileID: 8216540718048004338, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
-      propertyPath: thumbnail
-      value: 
-      objectReference: {fileID: 2800000, guid: f226cfe95412a51439f6c21c4a13134e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}

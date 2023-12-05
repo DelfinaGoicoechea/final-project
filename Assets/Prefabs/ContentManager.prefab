@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: dc6b5d6b10bb8c0489cd2e018afab84d, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: mar
   material: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: e903d7a3505b17445a17ab3e3dd95991, type: 3}
   sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
   nombre: navideno
   material: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: 9fa9b560382c82d45b775675607311f4, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: bosque
   material: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
@@ -493,7 +493,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: 7c2d9a4a7931dab47a85824cbb763244, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: mar2
   material: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
@@ -541,7 +541,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: 588facc2190d2d944aaeff8754be12e4, type: 3}
   sound: {fileID: 8300000, guid: cb0383393c0f3244b9d8533b9cc451e0, type: 3}
   nombre: milkyWay
   material: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
@@ -600,7 +600,6 @@ MonoBehaviour:
   contents:
   - {fileID: 8216540716262589914}
   - {fileID: 8216540717175707342}
-  - {fileID: 0}
   - {fileID: 8216540717901532558}
   - {fileID: 8216540715976620675}
   - {fileID: 8216540716366605911}
@@ -737,8 +736,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
-  sound: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: a2856ae240f4db04a9c637ca48056d1f, type: 3}
+  sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: bosqueNevado
   material: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
 --- !u!1 &8216540717177267771
@@ -785,7 +784,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: 4709c224b103f634799a8d23086082b0, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: muelle
   material: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
@@ -923,8 +922,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
-  sound: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: 9bb0d665dc6f2b342950c38fc0629bc1, type: 3}
+  sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
   nombre: iglesiaPh
   material: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
 --- !u!1 &8216540717909920681
@@ -971,7 +970,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77a9aa4bfc8f244db01796a66174e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: ff6c315bc1d9b0141a5e50e90c8d1804, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: SimpleNaturePackScene
 --- !u!1 &8216540717919886705
@@ -1069,7 +1068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
   sound: {fileID: 8300000, guid: cb0383393c0f3244b9d8533b9cc451e0, type: 3}
   nombre: valle
   material: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
@@ -1117,7 +1116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0e1f953cffa7a114b8e81de292c8f44c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
+  thumbnail: {fileID: 2800000, guid: f226cfe95412a51439f6c21c4a13134e, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: playa1
   video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
