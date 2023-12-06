@@ -89,7 +89,7 @@ namespace SunTemple
 
 
 
-		void TryToOpen(){
+		public void TryToOpen(){
 			if (Mathf.Abs(Vector3.Distance(transform.position, Player.transform.position)) <= MaxDistance){	
 
 				Ray ray = Cam.ScreenPointToRay (new Vector3 (Screen.width / 2, Screen.height / 2, 0));
