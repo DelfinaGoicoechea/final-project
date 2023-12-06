@@ -29,4 +29,7 @@ public class Escena: Content
             audioSource.Play();
         }
     }
+
+    // Si aca ponemos un pause() que bloquee el movimiento del jugador,
+    // tenemos que asegurarnos de rehabilitarlo al poner play en otra escena
 }

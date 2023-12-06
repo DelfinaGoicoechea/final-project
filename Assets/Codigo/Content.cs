@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public abstract class Content : MonoBehaviour
 {
     public Texture thumbnail;
-    public AudioClip sound; //probablemente al setearlo tenga que hacer algun otro cambio si ya está en reproduccion
-    public string nombre; //Puede ser util usar el atributo name que se hereda de más arriba
+    public AudioClip sound; //probablemente al setearlo tenga que hacer algun otro cambio si ya estï¿½ en reproduccion
+    public string nombre; //Puede ser util usar el atributo name que se hereda de mï¿½s arriba
 
     // Start is called before the first frame update
     void Start()
@@ -24,6 +24,9 @@ public abstract class Content : MonoBehaviour
     public abstract void play();
     public virtual void pause()
     {
-        // Does nothing, except in videos
+        AudioSource audioSource = ContentManager.Instance.audioSource;
+        if (this.sound != null){
+            audioSource.Pause();
+        }
     }
 }

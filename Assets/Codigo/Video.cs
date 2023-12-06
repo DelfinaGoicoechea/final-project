@@ -92,12 +92,9 @@ public class Video : Content
 
     public override void pause()
     {
+        base.pause();
         VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-        AudioSource audioSource = ContentManager.Instance.audioSource;
         videoPlayer.Pause();
-        if (this.sound != null){
-            audioSource.Pause();
-        }
         isPaused = true;
     }
 
