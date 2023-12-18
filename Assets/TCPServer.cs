@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using UnityEngine;
+using TMPro;
 
 public class TCPServer : MonoBehaviour
 {
@@ -17,12 +18,16 @@ public class TCPServer : MonoBehaviour
     private Thread tcpListenerThread;
     private TcpClient connectedTcpClient;
     public static TCPServer Instance { get; private set; }
+	public TMP_Text toPrint;
+	//private bool ipUpdated = false;
+	private string errorHere = null;
 
     // Start is called before the first frame update
     void Start()
     {
+		Debug.Log("Esto se imprime");
         tcpListenerThread = new Thread (new ThreadStart(ListenForIncommingRequests)); 		
-		tcpListenerThread.IsBackground = true; 		
+		tcpListenerThread.IsBackground = false; 		
 		tcpListenerThread.Start();
     }
 
@@ -30,16 +35,24 @@ public class TCPServer : MonoBehaviour
 		//if (eventoMetrica?) {             
 			//SendMessage(Metrica);         
 		//} 	
+		if (errorHere == null)
+		{
+			toPrint.text = "ip:" + ip + " port:" + port;
+		}
+		else
+		{
+			toPrint.text = errorHere;
+		}
 	}
 
 	private void ListenForIncommingRequests () { 		
         try {
-
             ip = getIP();
 			tcpListener = new TcpListener(ip, 0); //TCP port 0 gives first disponible
             tcpListener.Start(); 
             port = ((IPEndPoint)tcpListener.LocalEndpoint).Port; //Busco saber cual es 			             
-			Debug.Log("Server is listening on ip: " + ip + " port: " + port);              
+			Debug.Log("Server is listening on ip: " + ip + " port: " + port);
+			// Busco imprimir en el oculus
 			Byte[] bytes = new Byte[1024];
 
 			while (true) { 				
@@ -65,7 +78,11 @@ public class TCPServer : MonoBehaviour
 
 		} 		
 		catch (SocketException socketException) { 			
-			Debug.LogWarning("SocketException " + socketException.ToString()); 		
+			Debug.LogWarning("SocketException " + socketException.ToString());
+			errorHere =	"SocketException " + socketException.ToString();
+
+			// LO SIGUIENTE VA A CREAR UN ERROR EN TIEMPO DE EJECUCION
+			toPrint.text = "SocketException " + socketException.ToString();
 		}
         /*finally {
             tcpListener.Stop(); //O close? En versiones viejas no mata el stream, verificar
