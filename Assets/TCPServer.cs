@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading;
 using UnityEngine;
 using TMPro;
+using System.Runtime.InteropServices;
 
 public class TCPServer : MonoBehaviour
 {
@@ -25,9 +26,8 @@ public class TCPServer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-		Debug.Log("Esto se imprime");
         tcpListenerThread = new Thread (new ThreadStart(ListenForIncommingRequests)); 		
-		tcpListenerThread.IsBackground = false; 		
+		tcpListenerThread.IsBackground = true; 		
 		tcpListenerThread.Start();
     }
 
@@ -119,7 +119,10 @@ public class TCPServer : MonoBehaviour
 
     private IPAddress getIP() {
         string hostName = Dns.GetHostName();
-        return IPAddress.Parse(Dns.GetHostEntry(hostName).AddressList[1].ToString());
+		int index = 0;
+		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
+			index = 1;
+		return IPAddress.Parse(Dns.GetHostEntry(hostName).AddressList[index].ToString());
     }
 
 }
