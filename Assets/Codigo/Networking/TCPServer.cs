@@ -13,7 +13,7 @@ using System.Runtime.InteropServices;
 public class TCPServer : MonoBehaviour
 {
 
-    private Int32 port;
+    private Int32 port = 0;
     private IPAddress ip = IPAddress.Parse("127.0.0.1");
     private TcpListener tcpListener;
     private Thread tcpListenerThread;
@@ -37,11 +37,11 @@ public class TCPServer : MonoBehaviour
 		//} 	
 		if (errorHere == null)
 		{
-			toPrint.text = "ip:" + ip + " port:" + port;
+			//toPrint.text = "ip:" + ip + " port:" + port;
 		}
 		else
 		{
-			toPrint.text = errorHere;
+			//toPrint.text = errorHere;
 		}
 	}
 
@@ -118,11 +118,16 @@ public class TCPServer : MonoBehaviour
 	}*/
 
     private IPAddress getIP() {
-        string hostName = Dns.GetHostName();
-		int index = 0;
-		if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-			index = 1;
-		return IPAddress.Parse(Dns.GetHostEntry(hostName).AddressList[index].ToString());
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                return IPAddress.Parse(ip.ToString());
+            }
+        }
+		Debug.LogError("No se encontro la direccion IP");
+		return null;
     }
 
 }
