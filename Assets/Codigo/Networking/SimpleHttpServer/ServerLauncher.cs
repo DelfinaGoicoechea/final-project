@@ -33,12 +33,22 @@ namespace SimpleHttpServer
                         };
                     }
                 }, 
-                //new Route {   
-                //    Name = "FileSystem Static Handler",
-                //    UrlRegex = @"^/Static/(.*)$",
-                //    Method = "GET",
-                //    Callable = new FileSystemRouteHandler() { BasePath = @"C:\Tmp", ShowDirectories=true }.Handle,
-                //},
+                new Route {   
+                    Name = "Play Handler",
+                    UrlRegex = @"^/Play$",
+                    Method = "PUT",
+                    Callable = (HttpRequest request) => {
+                        // Aca debería tener un llamado ¿al dispatcher? dando play, y usando la
+                        // escena indicada en request.Content
+                        Debug.Log(request.Content); 
+                        return new HttpResponse()
+                        {
+                            ContentAsUTF8 = "the content is playing succensfully",
+                            ReasonPhrase = "OK",
+                            StatusCode = "200"
+                        };
+                    }
+                },
             };
 
             httpServer = new HttpServer(route_config);  

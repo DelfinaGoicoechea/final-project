@@ -29,15 +29,6 @@ namespace SimpleHttpServer
 
         #region Public Methods
 
-        public void Start()
-        {
-            string hostName = Dns.GetHostName();
-            // tcpListenerThread = new Thread (new ThreadStart(ListenForIncommingRequests)); 		
-            // tcpListenerThread.IsBackground = true; 		
-            // tcpListenerThread.Start();
-        }
-
-
         public HttpServer(List<Route> routes)
         {
             this.Processor = new HttpProcessor();
