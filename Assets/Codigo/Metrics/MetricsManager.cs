@@ -6,8 +6,8 @@ using UnityEngine.SceneManagement;
 public class MetricsManager : MonoBehaviour
 {
     public static MetricsManager Instance { get; private set; }
-    private GameObject sceneMetrics;
-    private string nombreEscenaActual;
+    private SceneMetrics sceneMetrics;
+    private List<string> listaMetricasRegistradas = new List<string>();
 
 
     private void Awake()
@@ -24,34 +24,42 @@ public class MetricsManager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void BuildAndSendMetric()//args propios de la metrica
+    // Devuelve al Dispatcher una lista de las metricas en formato string(JSON)
+    public List<string> ReportarMetricas()
     {
-        //Buildear Metrica en formato listo para ser enviado
-        //Mandarselo al dispatcher
+        List<string> listaRetorno = listaMetricasRegistradas;
+        listaMetricasRegistradas = new List<string>();
+        return listaRetorno;
     }
 
-    public void LevantarMetricas()//tipo de retorno del que requiera el dispatcher
-    {
-        //Por cada metric ademas que envie el nombre de la escena
-    }
-
-    // Start is called before the first frame update
+    // Al iniciarse se subscribe al evento de cambio de escena
     void Start()
     {
-        sceneMetrics = GameObject.Find("SceneMetrics");
         SceneManager.activeSceneChanged += CambioEscena;
     }
 
-    //Funcion que se activa cuando cambia la escena para poder tomar las metricas correctas
+    // Funcion que se activa cuando cambia la escena para poder tomar las metricas de la escena saliente
     void CambioEscena(Scene current, Scene next)
     {
-        sceneMetrics = GameObject.Find("SceneMetrics");
-        nombreEscenaActual = current.name;
+        LevantarMetricasEscena();
+    }
+    
+    //Agrega las metricas registradas por la escena a su lista de jsons
+    void LevantarMetricasEscena()
+    {
+        sceneMetrics = GameObject.Find("SceneMetrics").GetComponent<SceneMetrics>();
+        List<Metric> metricasEscena = sceneMetrics.getMetricasRegistradas();
+        foreach (Metric metrica in metricasEscena)
+        {
+            string metricaBuildeada = metrica.toString();
+            listaMetricasRegistradas.Add(metricaBuildeada);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    // Levanta las metricas de la ultima escena
+    void OnApplicationQuit()
     {
-        
+        LevantarMetricasEscena();
     }
+
 }

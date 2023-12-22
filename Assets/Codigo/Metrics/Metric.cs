@@ -1,18 +1,27 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class Metric : MonoBehaviour
+public abstract class Metric : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public abstract string Nombre { get; }
+    public string NombreEscena;
+    public delegate void MetricEventHandler(Metric metrica);
+    public event MetricEventHandler CondicionMetricaCumplida;
+
+    protected abstract void PublicarMetrica();
+
+    public abstract string toString();
+
+    //Asi cada instancia puede invocar el evento para registrarse
+    protected void InvokeCondicionMetricaCumplida()
     {
-        
+        CondicionMetricaCumplida?.Invoke(this);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Awake()
     {
-        
+        NombreEscena = SceneManager.GetActiveScene().name;
     }
 }
