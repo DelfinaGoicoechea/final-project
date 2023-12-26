@@ -43,19 +43,21 @@ namespace SimpleHttpServer
                                 };
                             }
                         };
-                        // return tempTestResponse();
+                        // TODO: obtener la escena desde el request
                         string scene = "mar2";
-                        // TODO: Ver como llamar a hacer que dispatcher llame a play con (scene,callback),
-                        // esperar y obtener lo que retorna.
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             scene, 
                             (string scene) =>
                             {
-                                Debug.Log("This is a debug log called on the main thread!");
                                 return dispatcher.play(scene, callback);
-                            });
+                            }
+                        );
+                        // No estoy seguro de si el siguiente return espera
+                        // a que se termine de ejecutar el task 
+                        // TODO: confirmar eso.
                         return task.Result;
-                        //return dispatcher.play(scene, callback);
                     }
                 },
             };
