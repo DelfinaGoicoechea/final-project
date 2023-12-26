@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using SimpleHttpServer.Models;
 using UnityEngine;
 using DispatcherSpace;
+using System.Threading.Tasks;
 
 namespace SimpleHttpServer
 {
@@ -46,13 +47,15 @@ namespace SimpleHttpServer
                         string scene = "mar2";
                         // TODO: Ver como llamar a hacer que dispatcher llame a play con (scene,callback),
                         // esperar y obtener lo que retorna.
-                        dispatcher.EnqueueAsync(() =>
-                        {
-                            HttpResponse response = dispatcher.play(scene, callback);
-                            Debug.Log("This is a debug log called on the main thread!");
-                        });
-
-                        return dispatcher.play(scene, callback);
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            scene, 
+                            (string scene) =>
+                            {
+                                Debug.Log("This is a debug log called on the main thread!");
+                                return dispatcher.play(scene, callback);
+                            });
+                        return task.Result;
+                        //return dispatcher.play(scene, callback);
                     }
                 },
             };

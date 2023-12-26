@@ -62,14 +62,16 @@ namespace DispatcherSpace
 			}
 		}
 
-        public Task EnqueueAsync(Action action)
+        // action de alguna manera debe ser this.play(scene, HttpResponse), y llamarse con los
+        // argumentos que ya se pasaron (y no se como pasarlos).
+        public Task<HttpResponse> EnqueueAsync(string argument, Func<string, HttpResponse> action)
 		{
 			var tcs = new TaskCompletionSource<HttpResponse>();
 
 			void WrappedAction() {
 				try 
 				{
-					HttpResponse response = action();
+					HttpResponse response = action(argument);
 					tcs.TrySetResult(response);
 				} catch (Exception ex) 
 				{
