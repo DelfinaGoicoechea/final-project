@@ -34,7 +34,7 @@ namespace Contents{
 		// Start is called before the first frame update
 		void Start()
 		{
-			//this.playContent("bosque");
+			StartCoroutine(WaitAndVideo(6.0f, "iglesiaPh"));
 		}
 
 		private IEnumerator WaitAndVideo(float waitTime, string content)
@@ -92,10 +92,39 @@ namespace Contents{
 			{
 				this.currentlyPlaying = content;
 				content.play();
+				StartCoroutine(FadeIn(5f));
 				return true;
 			}
 			Debug.LogWarning("No se encontro el Contenido: " + scene);
 			return false;
+		}
+
+		public IEnumerator FadeIn(float duration)
+		{
+			float currentTime = 0;
+			float start = 0;
+			float end = audioSource.volume;
+			while (currentTime < duration)
+			{
+				currentTime += Time.fixedDeltaTime;
+				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
+				yield return new WaitForFixedUpdate();
+			}
+			yield break;
+		}
+
+		public IEnumerator FadeOut(float duration)
+		{
+			float currentTime = 0;
+			float start = audioSource.volume;
+			float end = 0;
+			while (currentTime < duration)
+			{
+				currentTime += Time.fixedDeltaTime;
+				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
+				yield return new WaitForFixedUpdate();
+			}
+			yield break;
 		}
 
 		public GameObject getSphere()
@@ -110,12 +139,14 @@ namespace Contents{
 
 		public void stop()
 		{
+			//TODO: terminar reproduccion y llevar a la escena main
 			this.pause();
 			SceneManager.LoadScene("Main");
 		}
 
 		public void pause(){
-			if(currentlyPlaying != null){
+			StartCoroutine(FadeOut(5f));
+			if (currentlyPlaying != null){
 				currentlyPlaying.pause();
 			}
 		}

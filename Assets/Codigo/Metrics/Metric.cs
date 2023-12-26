@@ -9,6 +9,7 @@ public abstract class Metric : MonoBehaviour
     public string NombreEscena;
     public delegate void MetricEventHandler(Metric metrica);
     public event MetricEventHandler CondicionMetricaCumplida;
+    public bool metricaPublicada = false;
 
     protected abstract void PublicarMetrica();
 
@@ -18,10 +19,12 @@ public abstract class Metric : MonoBehaviour
     protected void InvokeCondicionMetricaCumplida()
     {
         CondicionMetricaCumplida?.Invoke(this);
+        metricaPublicada = true;
     }
 
     void Awake()
     {
         NombreEscena = SceneManager.GetActiveScene().name;
+        metricaPublicada = false;
     }
 }

@@ -5,9 +5,9 @@ using UnityEngine;
 public class MetricaTiempoEscenaActiva : Metric
 {
 
-    private int t;
-    private int max;
-    private const int threshold = 50;
+    public float tiempoLimite = 5f;
+    private float tiempoTranscurrido = 0f;
+    private float tiempoMaxTranscurrido = 0f;
 
     public override string Nombre
     {
@@ -18,7 +18,7 @@ public class MetricaTiempoEscenaActiva : Metric
     {
         public string Nombre { get; set; }
         public string NombreEscena { get; set; }
-        public int CantidadFramesEscena { get; set; }
+        public float TiempoMaxTranscurrido { get; set; }
         public string Mensaje { get; set; }
     }
 
@@ -28,16 +28,16 @@ public class MetricaTiempoEscenaActiva : Metric
         {
             Nombre = Nombre,
             NombreEscena = NombreEscena,
-            CantidadFramesEscena = max,
+            TiempoMaxTranscurrido = tiempoMaxTranscurrido,
             Mensaje = "La escena estuvo demasiado tiempo activa."
         };
 
         return JsonUtility.ToJson(modeloMetrica);
     }
 
-    protected bool CumpleConThreshold(int m)
+    protected bool CumpleConThreshold(float m)
     {
-        if (m >= threshold)
+        if (m >= tiempoLimite)
         {
             return true;
         }
@@ -46,7 +46,7 @@ public class MetricaTiempoEscenaActiva : Metric
 
     protected override void PublicarMetrica()
     {
-        if (CumpleConThreshold(max))
+        if (CumpleConThreshold(tiempoMaxTranscurrido))
         {
             InvokeCondicionMetricaCumplida();
         }
@@ -55,19 +55,19 @@ public class MetricaTiempoEscenaActiva : Metric
     // Start is called before the first frame update
     void Start()
     {
-        t = 0;
-        max = 0;
+        tiempoTranscurrido = 0;
+        tiempoMaxTranscurrido = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
-        t++;
-        if (t > max)
+        tiempoTranscurrido += Time.deltaTime;
+        if (tiempoTranscurrido > tiempoMaxTranscurrido)
         {
-            max = t;
+            tiempoMaxTranscurrido = tiempoTranscurrido;
         }
-        if (max == threshold)
+        if ((!metricaPublicada)&&(tiempoMaxTranscurrido >= tiempoLimite))
         {
             PublicarMetrica();
         }
