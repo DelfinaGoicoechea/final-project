@@ -4,32 +4,34 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class Escena: Content
-{
-    // Start is called before the first frame update
-    void Start()
+namespace Contents{
+    public class Escena: Content
     {
-        //or else
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-    public override void play()
-    {
-        //yet to be implemented}
-        SceneManager.LoadScene(nombre);
-        AudioSource audioSource = ContentManager.Instance.audioSource;
-        audioSource.Pause();
-        if (this.sound != null)
+        // Start is called before the first frame update
+        void Start()
         {
-            audioSource.clip = this.sound;
-            audioSource.Play();
+            //or else
         }
-    }
 
-    // Si aca ponemos un pause() que bloquee el movimiento del jugador,
-    // tenemos que asegurarnos de rehabilitarlo al poner play en otra escena
+        // Update is called once per frame
+        void Update()
+        {
+
+        }
+        public override void play()
+        {
+            //yet to be implemented}
+            SceneManager.LoadScene(nombre);
+            AudioSource audioSource = ContentManager.Instance.audioSource;
+            audioSource.Pause();
+            if (this.sound != null)
+            {
+                audioSource.clip = this.sound;
+                audioSource.Play();
+            }
+        }
+
+        // Si aca ponemos un pause() que bloquee el movimiento del jugador,
+        // tenemos que asegurarnos de rehabilitarlo al poner play en otra escena
+    }
 }

@@ -10,6 +10,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using UnityEngine;
 
 namespace SimpleHttpServer
 {
@@ -154,7 +155,7 @@ namespace SimpleHttpServer
             try {
                 return route.Callable(request);
             } catch(Exception ex) {
-                //log.Error(ex);
+                Debug.LogError(ex);
                 return HttpBuilder.InternalServerError();
             }
 

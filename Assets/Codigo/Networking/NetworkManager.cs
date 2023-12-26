@@ -8,7 +8,7 @@ using UnityEngine;
 using TMPro;
 using SimpleHttpServer;
 using SimpleHttpServer.Models;
-
+using DispatcherSpace;
 
 namespace SimpleHttpServer
 {
@@ -18,6 +18,8 @@ namespace SimpleHttpServer
         public static NetworkManager Instance { get; private set; }
         public TMP_Text toPrint;
         private HttpServer httpServer;
+
+        public Dispatcher dispatcher;
 
         private void Awake()
         {
@@ -36,7 +38,10 @@ namespace SimpleHttpServer
         // Start is called before the first frame update
         void Start()
         {
-            var route_config = new List<Models.Route>() {
+            Routes routes = new Routes();
+            routes.setDispatcher(this.dispatcher); // dudoso. ¿Esto funciona?
+            List<Models.Route> route_config  = routes.getRoutes();
+            var route_config2 = new List<Models.Route>() {
                 new Route {
                     Name = "Hello Handler",
                     UrlRegex = @"^/$",

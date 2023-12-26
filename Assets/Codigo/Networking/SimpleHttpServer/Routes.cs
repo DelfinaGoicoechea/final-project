@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using SimpleHttpServer.Models;
 using UnityEngine;
-//using Dispatcher, 
+using DispatcherSpace;
 
 namespace SimpleHttpServer
 {
     public class Routes
     {
         private List<Models.Route> routes;
+        private Dispatcher dispatcher;
 
         public Routes()
         {
-            var routes = new List<Models.Route>() {
+            routes = new List<Models.Route>() {
                 new Route {
                     Name = "Play Handler",
                     UrlRegex = @"^/Play$",
@@ -41,12 +42,25 @@ namespace SimpleHttpServer
                                 };
                             }
                         };
-                        return tempTestResponse();
-                        //return Dispatcher.play(scene, callback);
-                        //Debug.Log(request.Content);
+                        // return tempTestResponse();
+                        string scene = "mar2";
+                        // TODO: Ver como llamar a hacer que dispatcher llame a play con (scene,callback),
+                        // esperar y obtener lo que retorna.
+                        dispatcher.EnqueueAsync(() =>
+                        {
+                            HttpResponse response = dispatcher.play(scene, callback);
+                            Debug.Log("This is a debug log called on the main thread!");
+                        });
+
+                        return dispatcher.play(scene, callback);
                     }
                 },
             };
+        }
+
+        public List<Models.Route> getRoutes(){
+            // TODO: retornar una copia profunda, no la lista directa (ni copia superficial).
+            return routes;
         }
 
         private HttpResponse tempTestResponse()
@@ -57,6 +71,10 @@ namespace SimpleHttpServer
                 ReasonPhrase = "OK",
                 StatusCode = "200"
             };
+        }
+
+        public void setDispatcher(Dispatcher disp){
+            this.dispatcher = disp;
         }
     }
 }
