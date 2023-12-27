@@ -16,10 +16,10 @@ public class MetricaTiempoEscenaActiva : Metric
 
     private class Modelo
     {
-        public string Nombre { get; set; }
-        public string NombreEscena { get; set; }
-        public float TiempoMaxTranscurrido { get; set; }
-        public string Mensaje { get; set; }
+        public string Nombre;
+        public string NombreEscena;
+        public float TiempoMaxTranscurrido;
+        public string Mensaje;
     }
 
     public override string toString()
