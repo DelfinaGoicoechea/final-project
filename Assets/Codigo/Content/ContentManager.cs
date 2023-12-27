@@ -14,6 +14,7 @@ namespace Contents{
 		private GameObject sphere;
 		private GameObject sphereEAC;
 		private Content currentlyPlaying;
+		private float configuredVolume = 1.0f;
 		
 
 		public static ContentManager Instance { get; private set; }
@@ -34,7 +35,7 @@ namespace Contents{
 		// Start is called before the first frame update
 		void Start()
 		{
-			StartCoroutine(WaitAndVideo(6.0f, "iglesiaPh"));
+			//StartCoroutine(WaitAndVideo(6.0f, "iglesiaPh"));
 		}
 
 		private IEnumerator WaitAndVideo(float waitTime, string content)
@@ -102,8 +103,8 @@ namespace Contents{
 		public IEnumerator FadeIn(float duration)
 		{
 			float currentTime = 0;
-			float start = 0;
-			float end = audioSource.volume;
+			float start = 0.0f;
+			float end = configuredVolume;
 			while (currentTime < duration)
 			{
 				currentTime += Time.fixedDeltaTime;
@@ -113,11 +114,12 @@ namespace Contents{
 			yield break;
 		}
 
+
 		public IEnumerator FadeOut(float duration)
 		{
 			float currentTime = 0;
-			float start = audioSource.volume;
-			float end = 0;
+			float start = configuredVolume;
+			float end = 0.0f;
 			while (currentTime < duration)
 			{
 				currentTime += Time.fixedDeltaTime;
@@ -139,11 +141,12 @@ namespace Contents{
 
 		public void stop()
 		{
-			//TODO: terminar reproduccion y llevar a la escena main
 			this.pause();
-			SceneManager.LoadScene("Main");
+			this.playContent("Main");
 		}
 
+		// TODO: fix FadeOut. 
+		// hint: creo que Content.cs pone pausa antes de que se complete el FadeOut
 		public void pause(){
 			StartCoroutine(FadeOut(5f));
 			if (currentlyPlaying != null){
@@ -163,7 +166,9 @@ namespace Contents{
 				audioSource.volume = vol;
 			}
 
-			// El video solo esta presenta en la escena de la esfera
+			configuredVolume = vol;
+
+			// El video solo esta presente en la escena de la esfera
 			if(SceneManager.GetActiveScene().name == "SphereScene"){
 				VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
 				if(videoPlayer.clip.audioTrackCount > 0){
