@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 
 namespace SimpleHttpServer.Models
 {
@@ -33,7 +34,14 @@ namespace SimpleHttpServer.Models
         }
         public string getAsJSON()
         {
-            return JsonUtility.ToJson(this); 
+            StringBuilder json = new StringBuilder("{\"metrics\": [");
+            foreach (var metric in metrics)
+            {
+                json.Append(metric +",");
+            }
+            json = json.Remove(json.Length-1, 1);
+            json.Append("]}");
+            return json.ToString();
         }
     }
 }
