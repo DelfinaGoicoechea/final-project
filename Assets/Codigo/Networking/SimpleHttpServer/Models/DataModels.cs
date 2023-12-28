@@ -1,9 +1,17 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+
 namespace SimpleHttpServer.Models
 {
-
+    [System.Serializable]
+    public class DataPlay{
+        public string scene;
+        public static DataPlay CreateFromJSON(string jsonString)
+        {
+            return JsonUtility.FromJson<DataPlay>(jsonString);
+        }
+    }
 
     [System.Serializable]
     public class DataVolumen
@@ -25,7 +33,7 @@ namespace SimpleHttpServer.Models
         }
         public string getAsJSON()
         {
-            return JsonUtility.ToJson(this);
+            return JsonUtility.ToJson(this); 
         }
     }
 }

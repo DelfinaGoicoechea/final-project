@@ -43,8 +43,10 @@ namespace SimpleHttpServer
                                 };
                             }
                         };
-                        // TODO: obtener la escena desde el request
-                        string scene = "mar2";
+                        
+                        DataPlay jsonObject = DataPlay.CreateFromJSON(request.Content);
+                        string scene = jsonObject.scene;
+
                         // Necesito usar un  task, porque play() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
