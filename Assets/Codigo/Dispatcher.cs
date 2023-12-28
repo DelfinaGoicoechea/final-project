@@ -35,11 +35,13 @@ namespace DispatcherSpace
         void Start()
         {
             cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
-            //mManager = GameObject.FindWithTag("MetricsManager");
+            mManager = GameObject.FindWithTag("MetricsManager").GetComponent<MetricsManager>();
         }
 
         public HttpResponse play(string scene, Func<bool, HttpResponse> callback)
         {
+			// Levanta las metricas de la escena saliente (antes del cambio).
+			mManager.LevantarMetricasEscena();
             bool sceneFound = cManager.playContent(scene);
             return callback(sceneFound);
         }
@@ -56,13 +58,18 @@ namespace DispatcherSpace
             return callback();
         }
 
-        public HttpResponse stop(Func<HttpResponse> callback)
+        public HttpResponse stop(Func<string, HttpResponse> callback)
         {
-            cManager.stop();
+			mManager.LevantarMetricasEscena();
             List<string> metricas = mManager.ReportarMetricas();
-            // TODO: Formatear lista de metricas en el callback. 
-            // (lo que obtengo de ReportarMetricas() es una lista de jsons)
-            return callback();
+			foreach (var metrica in metricas)
+			{
+				Debug.Log("Metrica: " + metrica);
+			}
+			DataMetricsList serializer = new DataMetricsList(metricas);
+			string metricasJson = serializer.getAsJSON();
+			cManager.stop();
+            return callback(metricasJson);
         }
         
 

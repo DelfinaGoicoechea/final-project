@@ -92,13 +92,13 @@ namespace SimpleHttpServer
                     UrlRegex = @"^/Stop$",
                     Method = "PUT",
                     Callable = (HttpRequest request) => {
-                        Func<HttpResponse> callback = () =>
+                        Func<string, HttpResponse> callback = (string metricas) =>
                         {
                             return new HttpResponse()
                             {
-                                ContentAsUTF8 = "La reproducion fue detenida",
+                                ContentAsUTF8 = metricas,
                                 ReasonPhrase = "OK",
-                                StatusCode = "200"
+                                StatusCode = "200",
                             };
                         };
                         // Necesito usar un  task, porque stop() se debe 

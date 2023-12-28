@@ -41,11 +41,11 @@ public class MetricsManager : MonoBehaviour
     // Funcion que se activa cuando cambia la escena para poder tomar las metricas de la escena saliente
     void CambioEscena(Scene current, Scene next)
     {
-        LevantarMetricasEscena();
+        //LevantarMetricasEscena();
     }
     
     //Agrega las metricas registradas por la escena a su lista de jsons
-    void LevantarMetricasEscena()
+    public void LevantarMetricasEscena()
     {
         GameObject metricsGameObject = GameObject.Find("SceneMetrics");
         if (metricsGameObject != null)
@@ -54,6 +54,7 @@ public class MetricsManager : MonoBehaviour
             List<Metric> metricasEscena = sceneMetrics.getMetricasRegistradas();
             foreach (Metric metrica in metricasEscena)
             {
+                Debug.Log("MM 54: Metrica toString");
                 string metricaBuildeada = metrica.toString();
                 listaMetricasRegistradas.Add(metricaBuildeada);
             }
@@ -64,7 +65,7 @@ public class MetricsManager : MonoBehaviour
     // Levanta las metricas de la ultima escena
     void OnApplicationQuit()
     {
-        LevantarMetricasEscena();
+        //LevantarMetricasEscena();
     }
 
 }

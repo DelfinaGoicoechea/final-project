@@ -8,10 +8,10 @@ public class SceneMetrics : MonoBehaviour
 
     private void Start()
     {
-        // Obtén todas las instancias de Metric en la escena
+        // Obtï¿½n todas las instancias de Metric en la escena
         Metric[] metricas = GetComponentsInChildren<Metric>();
 
-        // Suscribe el método ManejarMetricaAlcanzada al evento de cada métrica
+        // Suscribe el mï¿½todo ManejarMetricaAlcanzada al evento de cada mï¿½trica
         foreach (Metric metrica in metricas)
         {
             metrica.CondicionMetricaCumplida += RegistrarMetricaEscena;
@@ -27,7 +27,7 @@ public class SceneMetrics : MonoBehaviour
 
     public List<Metric> getMetricasRegistradas()
     {
-        return listaMetricasRegistradas;
+        return new List<Metric>(listaMetricasRegistradas);
     }
 
 }

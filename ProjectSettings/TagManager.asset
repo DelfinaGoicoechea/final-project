@@ -9,6 +9,7 @@ TagManager:
   - VideoPlayer
   - ProjectionSphereEAC
   - ContentManager
+  - MetricsManager
   layers:
   - Default
   - TransparentFX

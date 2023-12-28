@@ -39,39 +39,8 @@ namespace SimpleHttpServer
         void Start()
         {
             Routes routes = new Routes();
-            routes.setDispatcher(this.dispatcher); // dudoso. ¿Esto funciona?
+            routes.setDispatcher(this.dispatcher);
             List<Models.Route> route_config  = routes.getRoutes();
-            var route_config2 = new List<Models.Route>() {
-                new Route {
-                    Name = "Hello Handler",
-                    UrlRegex = @"^/$",
-                    Method = "GET",
-                    Callable = (HttpRequest request) => {
-                        return new HttpResponse()
-                        {
-                            ContentAsUTF8 = "Hello from SimpleHttpServer",
-                            ReasonPhrase = "OK",
-                            StatusCode = "200"
-                        };
-                    }
-                },
-                new Route {
-                    Name = "Play Handler",
-                    UrlRegex = @"^/Play$",
-                    Method = "PUT",
-                    Callable = (HttpRequest request) => {
-                        // Aca debería tener un llamado ¿al dispatcher? dando play, y usando la
-                        // escena indicada en request.Content
-                        Debug.Log(request.Content);
-                        return new HttpResponse()
-                        {
-                            ContentAsUTF8 = "the content is playing succensfully",
-                            ReasonPhrase = "OK",
-                            StatusCode = "200"
-                        };
-                    }
-                },
-            };
             httpServer = new HttpServer(route_config);
             Thread thread = new Thread(new ThreadStart(httpServer.Listen));
             thread.Start();
