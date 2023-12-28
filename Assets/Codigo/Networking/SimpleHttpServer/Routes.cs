@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text.Json;
 using SimpleHttpServer.Models;
 using UnityEngine;
 using DispatcherSpace;
@@ -43,7 +42,7 @@ namespace SimpleHttpServer
                                 };
                             }
                         };
-                        
+
                         DataPlay jsonObject = DataPlay.CreateFromJSON(request.Content);
                         string scene = jsonObject.scene;
 
