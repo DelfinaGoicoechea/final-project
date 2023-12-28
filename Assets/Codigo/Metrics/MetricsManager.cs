@@ -47,13 +47,18 @@ public class MetricsManager : MonoBehaviour
     //Agrega las metricas registradas por la escena a su lista de jsons
     void LevantarMetricasEscena()
     {
-        sceneMetrics = GameObject.Find("SceneMetrics").GetComponent<SceneMetrics>();
-        List<Metric> metricasEscena = sceneMetrics.getMetricasRegistradas();
-        foreach (Metric metrica in metricasEscena)
+        GameObject metricsGameObject = GameObject.Find("SceneMetrics");
+        if (metricsGameObject != null)
         {
-            string metricaBuildeada = metrica.toString();
-            listaMetricasRegistradas.Add(metricaBuildeada);
+            sceneMetrics = metricsGameObject.GetComponent<SceneMetrics>();
+            List<Metric> metricasEscena = sceneMetrics.getMetricasRegistradas();
+            foreach (Metric metrica in metricasEscena)
+            {
+                string metricaBuildeada = metrica.toString();
+                listaMetricasRegistradas.Add(metricaBuildeada);
+            }
         }
+
     }
 
     // Levanta las metricas de la ultima escena
