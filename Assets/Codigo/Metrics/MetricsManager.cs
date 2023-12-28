@@ -54,7 +54,6 @@ public class MetricsManager : MonoBehaviour
             List<Metric> metricasEscena = sceneMetrics.getMetricasRegistradas();
             foreach (Metric metrica in metricasEscena)
             {
-                Debug.Log("MM 54: Metrica toString");
                 string metricaBuildeada = metrica.toString();
                 listaMetricasRegistradas.Add(metricaBuildeada);
             }

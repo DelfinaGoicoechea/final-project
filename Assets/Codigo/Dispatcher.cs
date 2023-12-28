@@ -62,10 +62,6 @@ namespace DispatcherSpace
         {
 			mManager.LevantarMetricasEscena();
             List<string> metricas = mManager.ReportarMetricas();
-			foreach (var metrica in metricas)
-			{
-				Debug.Log("Metrica: " + metrica);
-			}
 			DataMetricsList serializer = new DataMetricsList(metricas);
 			string metricasJson = serializer.getAsJSON();
 			cManager.stop();
