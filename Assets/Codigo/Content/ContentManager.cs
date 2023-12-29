@@ -176,5 +176,9 @@ namespace Contents{
 				}
 			}
 		}
+
+		public string getPlayingName(){
+			return currentlyPlaying.nombre;
+		}
 	}
 }

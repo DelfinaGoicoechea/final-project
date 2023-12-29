@@ -17,7 +17,7 @@ public class MetricaTiempoEscenaActiva : Metric
     private class Modelo
     {
         public string Nombre;
-        public string NombreEscena;
+        public string NombreContenido;
         public float TiempoMaxTranscurrido;
         public string Mensaje;
     }
@@ -27,7 +27,7 @@ public class MetricaTiempoEscenaActiva : Metric
         var modeloMetrica = new Modelo
         {
             Nombre = Nombre,
-            NombreEscena = NombreEscena,
+            NombreContenido = NombreContenido,
             TiempoMaxTranscurrido = tiempoMaxTranscurrido,
             Mensaje = "La escena estuvo demasiado tiempo activa."
         };

@@ -20,7 +20,7 @@ public class MetricaHeadsetInactivo : Metric
     private class Modelo
     {
         public string Nombre;
-        public string NombreEscena;
+        public string NombreContenido;
         public float CantidadSegundosInactivo;
         public string Mensaje;
     }
@@ -30,7 +30,7 @@ public class MetricaHeadsetInactivo : Metric
         var modeloMetrica = new Modelo
         {
             Nombre = Nombre,
-            NombreEscena = NombreEscena,
+            NombreContenido = NombreContenido,
             CantidadSegundosInactivo = segundosMaxInactivo,
             Mensaje = "Headset inactivo por mucho tiempo."
         };

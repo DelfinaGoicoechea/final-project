@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Contents;
 
 public abstract class Metric : MonoBehaviour
 {
     public abstract string Nombre { get; }
-    public string NombreEscena;
+    public string NombreContenido;
     public delegate void MetricEventHandler(Metric metrica);
     public event MetricEventHandler CondicionMetricaCumplida;
     public bool metricaPublicada = false;
@@ -24,7 +25,8 @@ public abstract class Metric : MonoBehaviour
 
     void Awake()
     {
-        NombreEscena = SceneManager.GetActiveScene().name;
+        ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
+        NombreContenido = cManager.getPlayingName();
         metricaPublicada = false;
     }
 }
