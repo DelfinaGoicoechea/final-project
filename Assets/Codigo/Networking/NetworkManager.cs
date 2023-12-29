@@ -49,11 +49,7 @@ namespace SimpleHttpServer
             httpServer = new HttpServer(route_config);
             Thread thread = new Thread(new ThreadStart(httpServer.Listen));
             thread.Start();
-            StartCoroutine(showIpPort());
-
-            //Publico el dns_sd
-            DNS_SD dns_sd = new DNS_SD("Tranquilidad", port);
-            dns_sd.StartAdvertising();
+            StartCoroutine(publishService());
         }
 
         // Update is called once per frame
@@ -76,14 +72,22 @@ namespace SimpleHttpServer
             return null;
         }
 
-        private IEnumerator showIpPort()
+        private IEnumerator publishService()
         {
-            yield return new WaitForSeconds(5);
+            yield return new WaitForSeconds(2);
             IPAddress ip = getIP();
             port = httpServer.getPort();
             Debug.Log("Listening in ip: " + ip + "  port: " + port);
             if (toPrint != null)
                 toPrint.text = "ip:" + ip + " port:" + port; // TODO: Eventually delete "toPrint", and this line too
+            
+            //Publico el dns_sd
+            DNS_SD dns_sd = new DNS_SD("Tranquilidad", port);
+            dns_sd.StartAdvertising();
+        }
+
+        void OnDestroy(){
+            //httpServer.Close();
         }
     }
 }

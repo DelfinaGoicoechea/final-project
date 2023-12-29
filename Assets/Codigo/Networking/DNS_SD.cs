@@ -16,15 +16,15 @@ namespace DNSSpace
             try
             {
                 var properties = new TxtRecord{// Add properties if necessary
-                 };
-
+                };
+                properties.Add ("Port", $"{port}");
                 var service = new RegisterService
                 {
                     Name = serviceName,
                     RegType = "_http._tcp",
                     ReplyDomain = "local.",
-                    Port = Convert.ToInt16(port),
-                    //TxtRecord = properties
+                    Port = Convert.ToInt16(5353),
+                    TxtRecord = properties
                 };
 
                 Console.WriteLine("*** Registering name = '{0}', type = '{1}', domain = '{2}'",
