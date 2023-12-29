@@ -66,19 +66,27 @@ namespace Contents{
 			}
 		}
 
-		public List<Tuple<string, Texture>> getContent()
+		public List<string> getContents()
 		{
-			List<Tuple<string, Texture>> toReturn = new List<Tuple<string, Texture>>();
+			List<string> toReturn = new List<string>();
 			foreach(Content content in contents){
 				if(content.nombre != "Main" && content.nombre != "SphereScene"){
-					Tuple<string, Texture> toAdd = new Tuple<string, Texture>(content.nombre, content.thumbnail);
-					toReturn.Add(toAdd);
+					toReturn.Add(content.nombre);
 				}
 			}
 			if(toReturn.Count > 0){
 				return toReturn;
 			}
 			return null;
+		}
+
+		public Texture2D getThumbnail(string scene){
+			Content content = contents.Find(x => x.nombre.Equals(scene));
+			if (content == null){
+				Debug.LogWarning("No se encontro el Contenido: " + scene);
+				return null;
+			}
+			return content.thumbnail;
 		}
 
 		public void addContent(Content content)

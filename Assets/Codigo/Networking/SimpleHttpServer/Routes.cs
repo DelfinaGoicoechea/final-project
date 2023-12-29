@@ -43,7 +43,7 @@ namespace SimpleHttpServer
                             }
                         };
 
-                        DataPlay jsonObject = DataPlay.CreateFromJSON(request.Content);
+                        DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
                         string scene = jsonObject.scene;
 
                         // Necesito usar un  task, porque play() se debe 
@@ -137,6 +137,86 @@ namespace SimpleHttpServer
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () => { return dispatcher.setVolume(volume,callback); }
+                        );
+                        // No estoy seguro de si el siguiente Wait() espera
+                        // a que se termine de ejecutar el task 
+                        // TODO: confirmar eso.
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "get Contents Handler",
+                    UrlRegex = @"^/GetContents$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string content) =>
+                        {
+                            if(content != null){
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = content,
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "No se encontro contenido",
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "404"
+                                };
+                            }
+                        };
+
+                        // Necesito usar un  task, porque setVolumen() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () => { return dispatcher.getContents(callback); }
+                        );
+                        // No estoy seguro de si el siguiente Wait() espera
+                        // a que se termine de ejecutar el task 
+                        // TODO: confirmar eso.
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "get Thumbnail Handler",
+                    UrlRegex = @"^/GetThumbnail$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string thumbnail) =>
+                        {
+                            if(thumbnail != null){
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = thumbnail,
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "El contenido solicitado no fue encontrado",
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "404"
+                                };
+                            }
+                        };
+
+                        // TODO: Horrible que sea un DataPlay, pero usa el mismo patron de datos.
+                        DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
+                        string scene = jsonObject.scene;
+
+                        // Necesito usar un  task, porque setVolumen() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () => { return dispatcher.getThumbnail(scene, callback); }
                         );
                         // No estoy seguro de si el siguiente Wait() espera
                         // a que se termine de ejecutar el task 

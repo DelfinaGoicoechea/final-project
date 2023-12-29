@@ -6,7 +6,7 @@ using UnityEngine.UI;
 namespace Contents{
     public abstract class Content : MonoBehaviour
     {
-        public Texture thumbnail;
+        public Texture2D thumbnail;
         public AudioClip sound; //probablemente al setearlo tenga que hacer algun otro cambio si ya est� en reproduccion
         public string nombre; //Puede ser util usar el atributo name que se hereda de m�s arriba
 

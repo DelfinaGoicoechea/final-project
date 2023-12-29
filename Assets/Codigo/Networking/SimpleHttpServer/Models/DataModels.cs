@@ -6,11 +6,11 @@ using System.Text;
 namespace SimpleHttpServer.Models
 {
     [System.Serializable]
-    public class DataPlay{
+    public class DataScene{
         public string scene;
-        public static DataPlay CreateFromJSON(string jsonString)
+        public static DataScene CreateFromJSON(string jsonString)
         {
-            return JsonUtility.FromJson<DataPlay>(jsonString);
+            return JsonUtility.FromJson<DataScene>(jsonString);
         }
     }
 

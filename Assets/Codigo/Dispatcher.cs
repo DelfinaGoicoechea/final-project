@@ -5,6 +5,8 @@ using UnityEngine;
 using SimpleHttpServer.Models;
 using Contents;
 using System.Threading.Tasks;
+using TeamUtilityEditor;
+using System.Text;
 
 namespace DispatcherSpace
 {
@@ -68,6 +70,35 @@ namespace DispatcherSpace
             return callback(metricasJson);
         }
         
+		
+		public HttpResponse getContents(Func<string, HttpResponse> callback)
+		{
+			List<string> contenido = cManager.getContents();
+			if(contenido.Count == 0)
+				return null;
+			StringBuilder json = new StringBuilder("{\"scenes\": [");
+            foreach (string name in contenido)
+            {
+				json.Append($"\"{name}\",");
+            }
+            json = json.Remove(json.Length-1, 1);
+            json.Append("]}");
+			return callback(json.ToString());
+		}
+
+		// TODO: usar BASE64 y mandarlo en un json parece bastante horroroso, especialmente xq
+		//       la biblioteca requiere que las imagenes no esten comprimidas.
+		//       Una vez que se tenga la app Mobile, ver de pasar las imagenes en binario,
+		//       o por el estilo.
+		public HttpResponse getThumbnail(string scene, Func<string, HttpResponse> callback)
+		{
+			Texture2D thumbnail = cManager.getThumbnail(scene);
+			string encodedThumbnail = null;
+			if(thumbnail != null){
+				encodedThumbnail = TextureToBase64Tool.Texture2DToBase64(thumbnail);
+			}
+			return callback(encodedThumbnail);
+		}
 
         // Update is called once per frame
 		public void Update() {
