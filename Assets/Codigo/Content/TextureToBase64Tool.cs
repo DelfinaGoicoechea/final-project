@@ -27,27 +27,10 @@ using System;
 
 namespace TeamUtilityEditor
 {
-	public class TextureToBase64Tool : UnityEditor.EditorWindow
+	public class TextureToBase64Tool
 	{
 		[SerializeField] private Texture2D m_texture;
 		[SerializeField] private string m_encodedData = "";
-		
-		private void OnGUI()
-		{
-			var oldTexture = m_texture;
-			
-			m_texture = EditorGUILayout.ObjectField("Texture", m_texture, typeof(Texture2D), false) as Texture2D;
-			if(m_texture != oldTexture)
-			{
-				if(m_texture != null)
-					m_encodedData = Texture2DToBase64(m_texture);
-				else
-					m_encodedData = string.Empty;
-			}
-			
-			EditorGUILayout.LabelField("Encoded Data");
-			EditorGUILayout.TextArea(m_encodedData);
-		}
 		
 		public static string Texture2DToBase64(Texture2D texture)
 		{
@@ -79,12 +62,6 @@ namespace TeamUtilityEditor
 		private static int ReadInt(byte[] imageData, int offset)
 		{
 			return (imageData[offset] << 8) | imageData[offset + 1];
-		}
-		
-		[MenuItem("Window/Tools/Texture2D To Base64")]
-		private static void Open()
-		{
-			EditorWindow.GetWindow<TextureToBase64Tool>("Texture2D To Base64");
 		}
 	}
 }
