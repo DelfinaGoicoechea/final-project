@@ -1,35 +1,73 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using System.Threading.Tasks;
+using Mono.Zeroconf.Providers.Bonjour;
 using UnityEngine;
-using Zeroconf;
 
-public class DNS_SD : MonoBehaviour
+namespace DNSSpace
 {
-    private IServicePublisher publisher;
-
-    public async void StartAdvertising(string serviceName, int port)
+    public class DNS_SD
     {
-        try
-        {
-            publisher = new ServicePublisher();
+        //private IServicePublisher publisher;
+        private string serviceName;
+        private Int32 port;
 
-            var properties = new[]
+        public async void StartAdvertising()
+        {
+            try
             {
-                //Se puden crear tuplas de propiedades de la siguiente forma
-                //Tuple.Create("key1", "value1"),
-                //Tuple.Create("key2", "value2")
-            };
+                var properties = new TxtRecord{// Add properties if necessary
+                 };
 
-            await publisher.PublishAsync(serviceName, "_http._tcp", port, properties);
+                var service = new RegisterService
+                {
+                    Name = serviceName,
+                    RegType = "_http._tcp",
+                    ReplyDomain = "local.",
+                    Port = Convert.ToInt16(port),
+                    //TxtRecord = properties
+                };
+
+                Console.WriteLine("*** Registering name = '{0}', type = '{1}', domain = '{2}'",
+                service.Name,
+                service.RegType,
+                service.ReplyDomain);
+
+                service.Register();
+                Debug.Log("Se registro el servicio en dns-sd");
+                //publisher = new ServicePublisher();
+                //await publisher.PublishAsync(service);
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error al iniciar el anuncio del servicio: " + ex.Message);
+            }
         }
-        catch (Exception ex)
+
+        private static void OnServiceAdded(object o, ServiceBrowseEventArgs args)
         {
-            Console.WriteLine("Error al iniciar el anuncio del servicio: " + ex.Message);
+            Console.WriteLine("*** Found name = '{0}', type = '{1}', domain = '{2}'",
+                args.Service.Name,
+                args.Service.RegType,
+                args.Service.ReplyDomain);
         }
-    }
 
-    public void StopAdvertising()
-    {
-        publisher?.Unpublish();
+        private static void OnServiceRemoved(object o, ServiceBrowseEventArgs args)
+        {
+            Console.WriteLine("*** Lost  name = '{0}', type = '{1}', domain = '{2}'",
+                args.Service.Name,
+                args.Service.RegType,
+                args.Service.ReplyDomain);
+        }
+
+        public DNS_SD(string serviceName, Int32 port)
+        {
+            this.serviceName = serviceName;
+            this.port = port;
+        }
+
+        /*public void StopAdvertising()
+        {
+            publisher?.Unpublish();
+        }*/
     }
 }

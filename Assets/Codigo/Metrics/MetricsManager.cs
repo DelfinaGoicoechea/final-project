@@ -57,8 +57,8 @@ public class MetricsManager : MonoBehaviour
                 string metricaBuildeada = metrica.toString();
                 listaMetricasRegistradas.Add(metricaBuildeada);
             }
+            sceneMetrics.ReiniciarMetricasRegistradas();
         }
-
     }
 
     // Levanta las metricas de la ultima escena

@@ -50,6 +50,14 @@ public class MetricaHeadsetInactivo : Metric
         segundosMaxInactivo = 0f;
     }
 
+    public override void ReiniciarMetrica()
+    {
+        lastCameraTransform = Camera.main.transform;
+        segundosInactivo = 0f;
+        segundosMaxInactivo = 0f;
+        metricaPublicada = false;
+    }
+
     void Update()
     {
         var camera = Camera.main.transform;
@@ -70,6 +78,7 @@ public class MetricaHeadsetInactivo : Metric
             }
             if ((!metricaPublicada)&&(segundosMaxInactivo >= tiempoLimite))
             {
+                metricaPublicada = true;
                 PublicarMetrica();
             }
         }

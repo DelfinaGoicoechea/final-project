@@ -25,6 +25,21 @@ public class SceneMetrics : MonoBehaviour
         Debug.Log($"La metrica {metrica.Nombre} fue registrada en su escena.");
     }
 
+    public void ReiniciarMetricasRegistradas()
+    {
+        Debug.Log("Se reinician las metricas de la escena");
+        Metric[] metricas = GetComponentsInChildren<Metric>();
+
+        // Reinicia cada metrica
+        foreach (Metric metrica in metricas)
+        {
+            metrica.ReiniciarMetrica();
+        }
+
+        //Vacio la lista de registradas
+        listaMetricasRegistradas.Clear();
+    }
+
     public List<Metric> getMetricasRegistradas()
     {
         return new List<Metric>(listaMetricasRegistradas);

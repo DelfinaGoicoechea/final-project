@@ -9,6 +9,7 @@ using TMPro;
 using SimpleHttpServer;
 using SimpleHttpServer.Models;
 using DispatcherSpace;
+using DNSSpace;
 
 namespace SimpleHttpServer
 {
@@ -18,6 +19,7 @@ namespace SimpleHttpServer
         public static NetworkManager Instance { get; private set; }
         public TMP_Text toPrint;
         private HttpServer httpServer;
+        private Int32 port;
 
         public Dispatcher dispatcher;
 
@@ -38,13 +40,20 @@ namespace SimpleHttpServer
         // Start is called before the first frame update
         void Start()
         {
+            //Inicializo rutas
             Routes routes = new Routes();
             routes.setDispatcher(this.dispatcher);
             List<Models.Route> route_config  = routes.getRoutes();
+
+            //Levanto servidor http
             httpServer = new HttpServer(route_config);
             Thread thread = new Thread(new ThreadStart(httpServer.Listen));
             thread.Start();
             StartCoroutine(showIpPort());
+
+            //Publico el dns_sd
+            DNS_SD dns_sd = new DNS_SD("Tranquilidad", port);
+            dns_sd.StartAdvertising();
         }
 
         // Update is called once per frame
@@ -71,7 +80,7 @@ namespace SimpleHttpServer
         {
             yield return new WaitForSeconds(5);
             IPAddress ip = getIP();
-            Int32 port = httpServer.getPort();
+            port = httpServer.getPort();
             Debug.Log("Listening in ip: " + ip + "  port: " + port);
             if (toPrint != null)
                 toPrint.text = "ip:" + ip + " port:" + port; // TODO: Eventually delete "toPrint", and this line too

@@ -13,14 +13,13 @@ public abstract class Metric : MonoBehaviour
     public bool metricaPublicada = false;
 
     protected abstract void PublicarMetrica();
-
+    public abstract void ReiniciarMetrica();
     public abstract string toString();
 
     //Asi cada instancia puede invocar el evento para registrarse
     protected void InvokeCondicionMetricaCumplida()
     {
         CondicionMetricaCumplida?.Invoke(this);
-        metricaPublicada = true;
     }
 
     void Awake()

@@ -35,6 +35,14 @@ public class MetricaTiempoEscenaActiva : Metric
         return JsonUtility.ToJson(modeloMetrica);
     }
 
+    public override void ReiniciarMetrica()
+    {
+        Debug.Log("Se reinicia el tiempo escena activa");
+        tiempoTranscurrido = 0f;
+        tiempoMaxTranscurrido = 0f;
+        metricaPublicada = false;
+    }
+
     protected bool CumpleConThreshold(float m)
     {
         if (m >= tiempoLimite)
@@ -55,8 +63,8 @@ public class MetricaTiempoEscenaActiva : Metric
     // Start is called before the first frame update
     void Start()
     {
-        tiempoTranscurrido = 0;
-        tiempoMaxTranscurrido = 0;
+        tiempoTranscurrido = 0f;
+        tiempoMaxTranscurrido = 0f;
     }
 
     // Update is called once per frame
@@ -69,6 +77,7 @@ public class MetricaTiempoEscenaActiva : Metric
         }
         if ((!metricaPublicada)&&(tiempoMaxTranscurrido >= tiempoLimite))
         {
+            metricaPublicada = true;
             PublicarMetrica();
         }
     }
