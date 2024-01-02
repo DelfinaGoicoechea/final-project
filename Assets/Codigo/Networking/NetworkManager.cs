@@ -82,7 +82,9 @@ namespace SimpleHttpServer
                 toPrint.text = "ip:" + ip + " port:" + port; // TODO: Eventually delete "toPrint", and this line too
             
             //Publico el dns_sd
-            DNS_SD dns_sd = new DNS_SD("Tranquilidad", port);
+            string ip_str =  "" + ip;
+            string port_str = "" + port;
+            DNS_SD dns_sd = new DNS_SD(ip_str, port_str);
             dns_sd.StartAdvertising();
         }
 

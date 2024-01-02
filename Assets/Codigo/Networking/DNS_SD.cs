@@ -7,35 +7,23 @@ namespace DNSSpace
 {
     public class DNS_SD
     {
-        //private IServicePublisher publisher;
-        private string serviceName;
-        private Int32 port;
+
+        string IP;
+        private string port;
 
         public async void StartAdvertising()
         {
             try
             {
-                var properties = new TxtRecord{// Add properties if necessary
-                };
-                properties.Add ("Port", $"{port}");
-                var service = new RegisterService
-                {
-                    Name = serviceName,
-                    RegType = "_http._tcp",
-                    ReplyDomain = "local.",
-                    Port = Convert.ToInt16(5353),
-                    TxtRecord = properties
-                };
-
-                Console.WriteLine("*** Registering name = '{0}', type = '{1}', domain = '{2}'",
-                service.Name,
-                service.RegType,
-                service.ReplyDomain);
-
-                service.Register();
-                Debug.Log("Se registro el servicio en dns-sd");
-                //publisher = new ServicePublisher();
-                //await publisher.PublishAsync(service);
+                //src.DnsSdJava.ServiceRegistration
+                Debug.Log("Todavia no crasheo 0");
+                string[] args2 = new string[]{};
+                AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
+                Debug.Log("Todavia no crasheo 1");
+                string[] args = new string[]{ IP, port};
+                Debug.Log("Todavia no crasheo 2");
+                jc.CallStatic("main", args);
+                Debug.Log("Todavia no crasheo 3");
             }
             catch (Exception ex)
             {
@@ -43,31 +31,11 @@ namespace DNSSpace
             }
         }
 
-        private static void OnServiceAdded(object o, ServiceBrowseEventArgs args)
+        public DNS_SD(String IP, String port)
         {
-            Console.WriteLine("*** Found name = '{0}', type = '{1}', domain = '{2}'",
-                args.Service.Name,
-                args.Service.RegType,
-                args.Service.ReplyDomain);
-        }
-
-        private static void OnServiceRemoved(object o, ServiceBrowseEventArgs args)
-        {
-            Console.WriteLine("*** Lost  name = '{0}', type = '{1}', domain = '{2}'",
-                args.Service.Name,
-                args.Service.RegType,
-                args.Service.ReplyDomain);
-        }
-
-        public DNS_SD(string serviceName, Int32 port)
-        {
-            this.serviceName = serviceName;
+            this.IP = IP;
             this.port = port;
         }
 
-        /*public void StopAdvertising()
-        {
-            publisher?.Unpublish();
-        }*/
     }
 }
