@@ -50,7 +50,7 @@ namespace DispatcherSpace
 
         public HttpResponse pause(Func<HttpResponse> callback)
         {
-            cManager.pause();
+            StartCoroutine(cManager.pause());
             return callback();
         }
 
@@ -66,7 +66,7 @@ namespace DispatcherSpace
             List<string> metricas = mManager.ReportarMetricas();
 			DataMetricsList serializer = new DataMetricsList(metricas);
 			string metricasJson = serializer.getAsJSON();
-			cManager.stop();
+			StartCoroutine(cManager.stop());
             return callback(metricasJson);
         }
         

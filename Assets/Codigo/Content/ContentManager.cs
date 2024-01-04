@@ -122,21 +122,6 @@ namespace Contents{
 			yield break;
 		}
 
-
-		public IEnumerator FadeOut(float duration)
-		{
-			float currentTime = 0;
-			float start = configuredVolume;
-			float end = 0.0f;
-			while (currentTime < duration)
-			{
-				currentTime += Time.fixedDeltaTime;
-				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
-				yield return new WaitForFixedUpdate();
-			}
-			yield break;
-		}
-
 		public GameObject getSphere()
 		{
 			return sphere;
@@ -147,19 +132,37 @@ namespace Contents{
 			return sphereEAC;
 		}
 
-		public void stop()
+		public IEnumerator stop()
 		{
-			this.pause();
+			float currentTime = 0.0f;
+			float start = configuredVolume;
+			float end = 0.0f;
+			float duration = 5f;
+			while (currentTime < duration)
+			{
+				currentTime += Time.fixedDeltaTime;
+				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
+				yield return new WaitForFixedUpdate();
+			}
 			this.playContent("Main");
+			yield return null;
 		}
 
-		// TODO: fix FadeOut. 
-		// hint: creo que Content.cs pone pausa antes de que se complete el FadeOut
-		public void pause(){
-			StartCoroutine(FadeOut(5f));
+		public IEnumerator pause(){
+			float currentTime = 0.0f;
+			float start = configuredVolume;
+			float end = 0.0f;
+			float duration = 5f;
+			while (currentTime < duration)
+			{
+				currentTime += Time.fixedDeltaTime;
+				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
+				yield return new WaitForFixedUpdate();
+			}
 			if (currentlyPlaying != null){
 				currentlyPlaying.pause();
 			}
+			yield return null;
 		}
 
 		public void setVolume(float vol){
