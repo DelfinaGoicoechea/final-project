@@ -12,7 +12,7 @@ namespace SimpleHttpServer
     {
         public static HttpResponse InternalServerError()
         {
-            string content = File.ReadAllText("Resources/Pages/500.html"); 
+            string content = File.ReadAllText("Assets/Codigo/Networking/SimpleHttpServer/Resources/Pages/500.html"); 
 
             return new HttpResponse()
             {
@@ -24,7 +24,7 @@ namespace SimpleHttpServer
 
         public static HttpResponse NotFound()
         {
-            string content = File.ReadAllText("Resources/Pages/404.html");
+            string content = File.ReadAllText("Assets/Codigo/Networking/SimpleHttpServer/Resources/Pages/404.html");
 
             return new HttpResponse()
             {
