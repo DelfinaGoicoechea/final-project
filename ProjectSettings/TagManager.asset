@@ -10,6 +10,7 @@ TagManager:
   - ProjectionSphereEAC
   - ContentManager
   - MetricsManager
+  - NetworkManager
   layers:
   - Default
   - TransparentFX

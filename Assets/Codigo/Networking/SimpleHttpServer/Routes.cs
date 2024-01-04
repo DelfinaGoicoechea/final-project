@@ -206,6 +206,23 @@ namespace SimpleHttpServer
                         return task.Result;
                     }
                 },
+                new Route {
+                    Name = "Stop Advertisment Handler",
+                    UrlRegex = @"^/RegisterClient$",
+                    Method = "PUT",
+                    Callable = (HttpRequest request) => {
+                        Func<HttpResponse> callback = () =>
+                        {
+                            return new HttpResponse()
+                            {
+                                ContentAsUTF8 = "El dispositivo fue registrado",
+                                ReasonPhrase = "OK",
+                                StatusCode = "200"
+                            };
+                        };
+                        return dispatcher.stopAdvertising(callback);
+                    }
+                },
             };
         }
 

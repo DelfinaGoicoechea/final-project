@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using SimpleHttpServer;
 using SimpleHttpServer.Models;
 using Contents;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ namespace DispatcherSpace
         public static Dispatcher Instance { get; private set; }
         private ContentManager cManager;
         private MetricsManager mManager;
+		private NetworkManager nManager;
 
         private void Awake()
         {
@@ -38,6 +40,7 @@ namespace DispatcherSpace
         {
             cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
             mManager = GameObject.FindWithTag("MetricsManager").GetComponent<MetricsManager>();
+			nManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
         }
 
         public HttpResponse play(string scene, Func<bool, HttpResponse> callback)
@@ -98,6 +101,11 @@ namespace DispatcherSpace
 				encodedThumbnail = TextureToBase64Tool.Texture2DToBase64(thumbnail);
 			}
 			return callback(encodedThumbnail);
+		}
+
+		public HttpResponse stopAdvertising(Func<HttpResponse> callback){
+			nManager.stopAdvertisingService();
+			return callback();
 		}
 
         // Update is called once per frame

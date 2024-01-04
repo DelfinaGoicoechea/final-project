@@ -1372,6 +1372,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2177932500417523858, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
+      propertyPath: bup
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177932500417523858, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
       propertyPath: toPrint
       value: 
       objectReference: {fileID: 961728571}
@@ -1381,6 +1385,10 @@ PrefabInstance:
       objectReference: {fileID: 1333345022}
     - target: {fileID: 2177932500417523860, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
       propertyPath: m_Name
+      value: NetworkManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2177932500417523860, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
+      propertyPath: m_TagString
       value: NetworkManager
       objectReference: {fileID: 0}
     - target: {fileID: 2177932500417523861, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}

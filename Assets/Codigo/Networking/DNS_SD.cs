@@ -18,11 +18,26 @@ namespace DNSSpace
                 string[] args2 = new string[]{};
                 AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
                 string[] args = new string[]{ IP, port};
-                jc.CallStatic("main", args);
+                jc.CallStatic("registerService", args);
             }
             catch (Exception ex)
             {
                 Debug.LogError("Error al iniciar el anuncio del servicio: " + ex.Message);
+            }
+        }
+
+        //TODO: Testear StopAdvertising en el propio Quest
+        public void StopAdvertising()
+        {
+            try
+            {
+                string[] args2 = new string[]{};
+                AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
+                jc.CallStatic("unregisterAllServices");
+            }
+            catch (Exception ex)
+            {
+                Debug.LogError("Error al finalizar el anuncio del servicio: " + ex.Message);
             }
         }
 
