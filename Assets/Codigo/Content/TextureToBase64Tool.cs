@@ -30,7 +30,7 @@ namespace TeamUtilityEditor
 	public class TextureToBase64Tool
 	{
 		[SerializeField] private Texture2D m_texture;
-		[SerializeField] private string m_encodedData = "";
+		//[SerializeField] private string m_encodedData = "";
 		
 		public static string Texture2DToBase64(Texture2D texture)
 		{

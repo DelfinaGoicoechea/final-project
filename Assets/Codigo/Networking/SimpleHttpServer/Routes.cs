@@ -55,9 +55,6 @@ namespace SimpleHttpServer
                                 return dispatcher.play(scene, callback);
                             }
                         );
-                        // No estoy seguro de si el siguiente Wait() espera
-                        // a que se termine de ejecutar el task 
-                        // TODO: confirmar eso.
                         task.Wait();
                         return task.Result;
                     }
@@ -81,9 +78,6 @@ namespace SimpleHttpServer
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () => { return dispatcher.pause(callback); }
                         );
-                        // No estoy seguro de si el siguiente Wait() espera
-                        // a que se termine de ejecutar el task 
-                        // TODO: confirmar eso.
                         task.Wait();
                         return task.Result;
                     }
@@ -107,9 +101,6 @@ namespace SimpleHttpServer
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () => { return dispatcher.stop(callback); }
                         );
-                        // No estoy seguro de si el siguiente Wait() espera
-                        // a que se termine de ejecutar el task 
-                        // TODO: confirmar eso.
                         task.Wait();
                         return task.Result;
                     }
@@ -138,9 +129,6 @@ namespace SimpleHttpServer
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () => { return dispatcher.setVolume(volume,callback); }
                         );
-                        // No estoy seguro de si el siguiente Wait() espera
-                        // a que se termine de ejecutar el task 
-                        // TODO: confirmar eso.
                         task.Wait();
                         return task.Result;
                     }
@@ -176,9 +164,6 @@ namespace SimpleHttpServer
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () => { return dispatcher.getContents(callback); }
                         );
-                        // No estoy seguro de si el siguiente Wait() espera
-                        // a que se termine de ejecutar el task 
-                        // TODO: confirmar eso.
                         task.Wait();
                         return task.Result;
                     }
@@ -209,7 +194,6 @@ namespace SimpleHttpServer
                             }
                         };
 
-                        // TODO: Horrible que sea un DataPlay, pero usa el mismo patron de datos.
                         DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
                         string scene = jsonObject.scene;
 
@@ -218,9 +202,6 @@ namespace SimpleHttpServer
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () => { return dispatcher.getThumbnail(scene, callback); }
                         );
-                        // No estoy seguro de si el siguiente Wait() espera
-                        // a que se termine de ejecutar el task 
-                        // TODO: confirmar eso.
                         task.Wait();
                         return task.Result;
                     }
