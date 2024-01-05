@@ -1057,17 +1057,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!114 &1333345022 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 311450029196680404, guid: f82eeb5ae4cecd84aa9204059aa7037a, type: 3}
-  m_PrefabInstance: {fileID: 311450028280686122}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dae0044829365604ab21df3b5d51e3df, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1390362884
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1497,14 +1486,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2177932500417523858, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
-      propertyPath: toPrint
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2177932500417523858, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
-      propertyPath: dispatcher
-      value: 
-      objectReference: {fileID: 1333345022}
     - target: {fileID: 2177932500417523860, guid: 4ed7265cf21d26d4697385a672fae265, type: 3}
       propertyPath: m_Name
       value: NetworkManager
