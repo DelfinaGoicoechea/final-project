@@ -20,7 +20,6 @@ namespace Contents{
         }
         public override void play()
         {
-            //yet to be implemented}
             SceneManager.LoadScene(nombre);
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();

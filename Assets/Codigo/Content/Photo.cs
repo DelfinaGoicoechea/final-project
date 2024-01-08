@@ -26,6 +26,7 @@ namespace Contents{
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
 
+            // Si no estoy en la escena adecuada, me voy a ella
             if (SceneManager.GetActiveScene().name == "SphereScene")
             {
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();

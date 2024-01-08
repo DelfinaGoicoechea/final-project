@@ -38,6 +38,7 @@ namespace Contents{
 			//StartCoroutine(WaitAndVideo(6.0f, "iglesiaPh"));
 		}
 
+		// Solo usado para testing
 		private IEnumerator WaitAndVideo(float waitTime, string content)
 		{
 			yield return new WaitForSeconds(waitTime);
@@ -55,7 +56,7 @@ namespace Contents{
 			SceneManager.sceneLoaded += OnSceneLoaded;
 		}
 
-		// called second
+		// Asignar esferas de proyeccion al estar en la escena adecuada 
 		void OnSceneLoaded(Scene scene, LoadSceneMode mode)
 		{
 			if (SceneManager.GetActiveScene().name == "SphereScene")
@@ -66,6 +67,12 @@ namespace Contents{
 			}
 		}
 
+		/// <summary>
+		/// Returns a list containing the name of the available contents.
+		/// It doesn't include the scenes "main" or "SphereScene", as those
+		/// aren't supposed to be directly accesed by the client.
+		/// </summary>
+		/// <returns></returns>
 		public List<string> getContents()
 		{
 			List<string> toReturn = new List<string>();
@@ -79,7 +86,12 @@ namespace Contents{
 			}
 			return null;
 		}
-
+		
+		/// <summary>
+		/// Takes the name of a Content as an input, and returns its thumbnail as a Texture2D.
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns></returns>
 		public Texture2D getThumbnail(string scene){
 			Content content = contents.Find(x => x.nombre.Equals(scene));
 			if (content == null){
@@ -94,6 +106,11 @@ namespace Contents{
 
 		}
 
+		/// <summary>
+		/// Takes the name of a Content as an input, and starts playing it.
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns></returns>
 		public bool playContent(string scene)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(scene));
@@ -122,11 +139,21 @@ namespace Contents{
 			yield break;
 		}
 
+		/// <summary>
+		/// returns the sphere used to project a 360 image/video.
+		/// Check getSphereEAC for a special case.
+		/// </summary>
+		/// <returns></returns>
 		public GameObject getSphere()
 		{
 			return sphere;
 		}
 
+		/// <summary>
+		/// returns the sphere used to project an "EquiAngularCubemap" image/video.
+		/// Usually found in 4K videos from Youtube.
+		/// </summary>
+		/// <returns></returns>
 			public GameObject getSphereEAC()
 		{
 			return sphereEAC;
