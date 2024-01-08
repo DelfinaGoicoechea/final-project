@@ -13,7 +13,7 @@ public class HandAnimatorController : MonoBehaviour
     {
         anim = GetComponent<Animator>();
     }
-    private void update()
+    private void Update()
     {
         float triggerValue = triggerAction.action.ReadValue<float>();
         float gripValue = gripAction.action.ReadValue<float>();
