@@ -220,7 +220,15 @@ namespace SimpleHttpServer
                                 StatusCode = "200"
                             };
                         };
-                        return dispatcher.stopAdvertising(callback);
+
+                        // Necesito usar un  task, porque setVolumen() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () => { return dispatcher.stopAdvertising(callback); }
+                        );
+                        task.Wait();
+                        return task.Result;
+                        //return dispatcher.stopAdvertising(callback);
                     }
                 },
             };

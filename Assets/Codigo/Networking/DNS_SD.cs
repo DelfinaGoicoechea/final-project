@@ -10,13 +10,12 @@ namespace DNSSpace
 
         string IP;
         private string port;
+        AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
 
         public async void StartAdvertising()
         {
             try
             {
-                string[] args2 = new string[]{};
-                AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
                 string[] args = new string[]{ IP, port};
                 jc.CallStatic("registerService", args);
             }
@@ -31,8 +30,6 @@ namespace DNSSpace
         {
             try
             {
-                string[] args2 = new string[]{};
-                AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
                 jc.CallStatic("unregisterAllServices");
             }
             catch (Exception ex)
