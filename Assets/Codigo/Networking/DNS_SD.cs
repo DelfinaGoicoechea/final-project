@@ -12,7 +12,7 @@ namespace DNSSpace
         private string port;
         AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
 
-        public async void StartAdvertising()
+        public void StartAdvertising()
         {
             try
             {
@@ -25,7 +25,6 @@ namespace DNSSpace
             }
         }
 
-        //TODO: Testear StopAdvertising en el propio Quest
         public void StopAdvertising()
         {
             try
