@@ -19,7 +19,7 @@ namespace SimpleHttpServer
                 new Route {
                     Name = "Play Handler",
                     UrlRegex = @"^/Play$",
-                    Method = "PUT",
+                    Method = "POST",
                     Callable = (HttpRequest request) => {
                         Func<bool, HttpResponse> callback = (bool isOk) =>
                         {
@@ -62,7 +62,7 @@ namespace SimpleHttpServer
                 new Route {
                     Name = "Pause Handler",
                     UrlRegex = @"^/Pause$",
-                    Method = "PUT",
+                    Method = "POST",
                     Callable = (HttpRequest request) => {
                         Func<HttpResponse> callback = () =>
                         {
@@ -85,7 +85,7 @@ namespace SimpleHttpServer
                 new Route {
                     Name = "Stop Handler",
                     UrlRegex = @"^/Stop$",
-                    Method = "PUT",
+                    Method = "POST",
                     Callable = (HttpRequest request) => {
                         Func<string, HttpResponse> callback = (string metricas) =>
                         {
@@ -108,7 +108,7 @@ namespace SimpleHttpServer
                 new Route {
                     Name = "Volume Handler",
                     UrlRegex = @"^/Volume$",
-                    Method = "PUT",
+                    Method = "POST",
                     Callable = (HttpRequest request) => {
                         Func<HttpResponse> callback = () =>
                         {
@@ -209,7 +209,7 @@ namespace SimpleHttpServer
                 new Route {
                     Name = "Stop Advertisment Handler",
                     UrlRegex = @"^/RegisterClient$",
-                    Method = "PUT",
+                    Method = "POST",
                     Callable = (HttpRequest request) => {
                         Func<HttpResponse> callback = () =>
                         {
