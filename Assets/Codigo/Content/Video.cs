@@ -91,6 +91,9 @@ namespace Contents{
             }
         }
 
+        /// <summary>
+        /// Pauses the video, and any music associated with it the scene.
+        /// </summary>
         public override void pause()
         {
             base.pause();

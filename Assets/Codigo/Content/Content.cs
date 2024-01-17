@@ -23,6 +23,10 @@ namespace Contents{
         }
 
         public abstract void play();
+
+        /// <summary>
+        /// Pauses any music plying in the scene
+        /// </summary>
         public virtual void pause()
         {
             AudioSource audioSource = ContentManager.Instance.audioSource;

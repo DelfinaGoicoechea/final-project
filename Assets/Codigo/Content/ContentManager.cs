@@ -159,6 +159,10 @@ namespace Contents{
 			return sphereEAC;
 		}
 
+		/// <summary>
+		/// Stops content reproduction and returns to the "Main" scene.
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerator stop()
 		{
 			float currentTime = 0.0f;
@@ -175,6 +179,12 @@ namespace Contents{
 			yield return null;
 		}
 
+		/// <summary>
+		/// pauses any currently playing content.
+		/// Exactly what that means depends on the kind of
+		/// content currently playing (image/video/scene).
+		/// </summary>
+		/// <returns></returns>
 		public IEnumerator pause(){
 			float currentTime = 0.0f;
 			float start = configuredVolume;

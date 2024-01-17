@@ -18,6 +18,7 @@ namespace Contents{
         {
 
         }
+        
         public override void play()
         {
             SceneManager.LoadScene(nombre);
