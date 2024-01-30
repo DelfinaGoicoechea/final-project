@@ -194,8 +194,17 @@ namespace SimpleHttpServer
                             }
                         };
 
-                        DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
-                        string scene = jsonObject.scene;
+                        if(!request.Headers.ContainsKey("scene")){
+                            return new HttpResponse()
+                            {
+                                ContentAsUTF8 = "No se indico la escena a obtener",
+                                ReasonPhrase = "Not Found",
+                                StatusCode = "404"
+                            };
+                            
+                        }
+
+                        string scene = request.Headers["scene"];
 
                         // Necesito usar un  task, porque setVolumen() se debe 
                         // ejecutar SI O SI desde el thread principal.
