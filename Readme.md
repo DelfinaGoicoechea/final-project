@@ -1,3 +1,5 @@
+## Tranquilidad 360
+
 - Unity Editor version: [2021.3.32f1](https://unity.com/releases/editor/archive#download-archive-2021)
 
 - La ubicacion de la escena inicial es: "\Assets\Niveles\Scenes\Main.unity"
@@ -7,3 +9,4 @@
 
 - **Network discovery solo funciona en Android.** Esto es porque se realiza mediante llamados a un archivo .jar, cosa que se realiza mediante la JNI (Java Native Interface) solo presente en Android.
 	- Se podría utilizar alguna biblioteca para que funcione en el editor, pero es trabajo extra que no consideramos que valga la pena.
+	- La ip y puerto se imprimen por consola para cuando se ejecuta desde el editor.
