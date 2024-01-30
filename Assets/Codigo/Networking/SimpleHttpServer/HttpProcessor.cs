@@ -218,6 +218,24 @@ namespace SimpleHttpServer
                 }
 
                 content = Encoding.ASCII.GetString(bytes);
+            }else{
+                if (headers.ContainsKey("content-length"))
+            {
+                int totalBytes = Convert.ToInt32(headers["content-length"]);
+                int bytesLeft = totalBytes;
+                byte[] bytes = new byte[totalBytes];
+               
+                while(bytesLeft > 0)
+                {
+                    byte[] buffer = new byte[bytesLeft > 1024? 1024 : bytesLeft];
+                    int n = inputStream.Read(buffer, 0, buffer.Length);
+                    buffer.CopyTo(bytes, totalBytes - bytesLeft);
+
+                    bytesLeft -= n;
+                }
+
+                content = Encoding.ASCII.GetString(bytes);
+            }
             }
 
 
