@@ -76,16 +76,52 @@ namespace DispatcherSpace
 		
 		public HttpResponse getContents(Func<string, HttpResponse> callback)
 		{
-			List<string> contenido = cManager.getContents();
-			if(contenido.Count == 0)
+			Dictionary<string, List<string>> contenidos = cManager.getContents();
+			if(contenidos.Count == 0)
 				return null;
-			StringBuilder json = new StringBuilder("{\"scenes\": [");
-            foreach (string name in contenido)
+			StringBuilder json = new StringBuilder("{");
+			bool had3d = false;
+			bool hadVideo = false;
+            foreach (string contentType in contenidos.Keys)
             {
-				json.Append($"\"{name}\",");
+				switch (contentType){
+					case "3D":
+						had3d = true;
+						json.Append("\"3D\": [");
+						foreach (string content in contenidos["3D"]){
+							json.Append($"\"{content}\",");
+						}
+						json = json.Remove(json.Length-1, 1);
+            			json.Append("]");
+						break;
+					
+					case "videos":
+						hadVideo = true;
+						if(had3d){
+							json.Append(",");
+						}
+						json.Append("\"videos\": [");
+						foreach (string content in contenidos["videos"]){
+							json.Append($"\"{content}\",");
+						}
+						json = json.Remove(json.Length-1, 1);
+            			json.Append("]");
+						break;
+
+					case "photos":
+						if(had3d || hadVideo){
+							json.Append(",");
+						}
+						json.Append("\"photos\": [");
+						foreach (string content in contenidos["photos"]){
+							json.Append($"\"{content}\",");
+						}
+						json = json.Remove(json.Length-1, 1);
+            			json.Append("]");
+						break;
+				}
             }
-            json = json.Remove(json.Length-1, 1);
-            json.Append("]}");
+            json.Append("}");
 			return callback(json.ToString());
 		}
 

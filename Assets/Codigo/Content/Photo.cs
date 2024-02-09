@@ -84,5 +84,9 @@ namespace Contents{
                 player.transform.position = sphere.transform.position;
             }
         }
+
+        public override string getContentType(){
+            return "photo";
+        }
     }
 }

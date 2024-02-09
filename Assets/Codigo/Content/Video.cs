@@ -91,6 +91,10 @@ namespace Contents{
             }
         }
 
+        public override string getContentType(){
+            return "video";
+        }
+
         /// <summary>
         /// Pauses the video, and any music associated with it the scene.
         /// </summary>

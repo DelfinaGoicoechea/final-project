@@ -68,23 +68,56 @@ namespace Contents{
 		}
 
 		/// <summary>
-		/// Returns a list containing the name of the available contents.
+		/// Returns a Map with the keys being the content types (3D, video, photo),
+		///  and the value being a list with the names of the available contents of
+		///  that type.<br/> <br/>
 		/// It doesn't include the scenes "main" or "SphereScene", as those
 		/// aren't supposed to be directly accesed by the client.
 		/// </summary>
 		/// <returns></returns>
-		public List<string> getContents()
+		public Dictionary<string, List<string>> getContents()
 		{
-			List<string> toReturn = new List<string>();
+			Dictionary<string, List<string>> toReturnDict = new Dictionary<string, List<string>>();
+			List<string> scenes = new List<string>();
+			List<string> videos = new List<string>();
+			List<string> photos = new List<string>();
 			foreach(Content content in contents){
 				if(content.nombre != "Main" && content.nombre != "SphereScene"){
-					toReturn.Add(content.nombre);
+					switch (content.getContentType()){
+						case "3D":
+							scenes.Add(content.nombre);
+							break;
+
+						case "video":
+							videos.Add(content.nombre);
+							break;
+
+						case "photo":
+							photos.Add(content.nombre);
+							break;
+					}
 				}
 			}
-			if(toReturn.Count > 0){
-				return toReturn;
+
+			bool hasSomething = false;
+			if(scenes.Count > 0){
+				toReturnDict.Add("3D",scenes);
+				hasSomething = true;
 			}
-			return null;
+			if(videos.Count > 0){
+				toReturnDict.Add("videos",videos);
+				hasSomething = true;
+			}
+			if(photos.Count > 0){
+				toReturnDict.Add("photos",photos);
+				hasSomething = true;
+			}
+
+			if(hasSomething){
+				return toReturnDict;
+			}else{
+				return null;
+			}
 		}
 		
 		/// <summary>

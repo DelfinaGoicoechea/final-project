@@ -23,6 +23,7 @@ namespace Contents{
         }
 
         public abstract void play();
+        public abstract string getContentType();
 
         /// <summary>
         /// Pauses any music plying in the scene
