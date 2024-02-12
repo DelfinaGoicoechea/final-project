@@ -29,6 +29,7 @@ public class MetricsManager : MonoBehaviour
     {
         List<string> listaRetorno = listaMetricasRegistradas;
         listaMetricasRegistradas = new List<string>();
+        Debug.Log(listaRetorno);
         return listaRetorno;
     }
 
@@ -41,7 +42,7 @@ public class MetricsManager : MonoBehaviour
     // Funcion que se activa cuando cambia la escena para poder tomar las metricas de la escena saliente
     void CambioEscena(Scene current, Scene next)
     {
-        //LevantarMetricasEscena();
+        LevantarMetricasEscena();
     }
     
     //Agrega las metricas registradas por la escena a su lista de jsons
@@ -64,7 +65,7 @@ public class MetricsManager : MonoBehaviour
     // Levanta las metricas de la ultima escena
     void OnApplicationQuit()
     {
-        //LevantarMetricasEscena();
+        LevantarMetricasEscena();
     }
 
 }

@@ -24,8 +24,18 @@ public abstract class Metric : MonoBehaviour
 
     void Awake()
     {
+        ReiniciarNombreContent();
+        ReiniciarPublicada();
+    }
+
+    protected void ReiniciarNombreContent()
+    {
         ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
         NombreContenido = cManager.getPlayingName();
+    }
+
+    protected void ReiniciarPublicada()
+    {
         metricaPublicada = false;
     }
 }

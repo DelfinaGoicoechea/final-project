@@ -37,10 +37,9 @@ public class MetricaTiempoEscenaActiva : Metric
 
     public override void ReiniciarMetrica()
     {
-        Debug.Log("Se reinicia el tiempo escena activa");
         tiempoTranscurrido = 0f;
         tiempoMaxTranscurrido = 0f;
-        metricaPublicada = false;
+        ReiniciarPublicada();
     }
 
     protected bool CumpleConThreshold(float m)
@@ -77,6 +76,7 @@ public class MetricaTiempoEscenaActiva : Metric
         }
         if ((!metricaPublicada)&&(tiempoMaxTranscurrido >= tiempoLimite))
         {
+            ReiniciarNombreContent();
             metricaPublicada = true;
             PublicarMetrica();
         }

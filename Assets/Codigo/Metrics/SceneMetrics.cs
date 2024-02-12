@@ -27,7 +27,6 @@ public class SceneMetrics : MonoBehaviour
 
     public void ReiniciarMetricasRegistradas()
     {
-        Debug.Log("Se reinician las metricas de la escena");
         Metric[] metricas = GetComponentsInChildren<Metric>();
 
         // Reinicia cada metrica
