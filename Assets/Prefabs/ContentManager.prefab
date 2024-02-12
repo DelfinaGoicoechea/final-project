@@ -46,54 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: 717550b2d81524540a715f23d769b06a, type: 3}
   sound: {fileID: 8300000, guid: 70d867c045fd90c47b6ed4ed96bf1dac, type: 3}
-  nombre: CityScene
---- !u!1 &1173754555880882875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5347797449175554275}
-  - component: {fileID: 4826196647887449482}
-  m_Layer: 0
-  m_Name: TempleScene
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5347797449175554275
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1173754555880882875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8216540715953134333}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4826196647887449482
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1173754555880882875}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c77a9aa4bfc8f244db01796a66174e89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thumbnail: {fileID: 2800000, guid: dbbe3237630540f4b88e9676db80563e, type: 3}
-  sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
-  nombre: TempleScene
+  nombre: Ciudad simple
 --- !u!1 &7644583462511288352
 GameObject:
   m_ObjectHideFlags: 0
@@ -173,7 +126,6 @@ Transform:
   - {fileID: 8216540716924300529}
   - {fileID: 8216540717909920686}
   - {fileID: 7718834895301982644}
-  - {fileID: 5347797449175554275}
   m_Father: {fileID: 8216540716978143274}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -223,7 +175,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: dc6b5d6b10bb8c0489cd2e018afab84d, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
-  nombre: mar
+  nombre: Mar azul
   material: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
 --- !u!1 &8216540716124840403
 GameObject:
@@ -399,7 +351,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: e903d7a3505b17445a17ab3e3dd95991, type: 3}
   sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
-  nombre: navideno
+  nombre: Calle festiva
   material: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
 --- !u!1 &8216540716262589908
 GameObject:
@@ -447,7 +399,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: 9fa9b560382c82d45b775675607311f4, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
-  nombre: bosque
+  nombre: Bosque de pinos
   material: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
 --- !u!1 &8216540716366605905
 GameObject:
@@ -495,7 +447,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: 7c2d9a4a7931dab47a85824cbb763244, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
-  nombre: mar2
+  nombre: Mar colorido
   material: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
 --- !u!1 &8216540716520445044
 GameObject:
@@ -543,7 +495,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: 588facc2190d2d944aaeff8754be12e4, type: 3}
   sound: {fileID: 8300000, guid: cb0383393c0f3244b9d8533b9cc451e0, type: 3}
-  nombre: milkyWay
+  nombre: Cielo nocturno
   material: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
 --- !u!1 &8216540716786038010
 GameObject:
@@ -597,23 +549,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioSource: {fileID: 8216540716124840400}
-  contents:
-  - {fileID: 8216540716262589914}
-  - {fileID: 8216540717175707342}
-  - {fileID: 8216540717901532558}
-  - {fileID: 8216540715976620675}
-  - {fileID: 8216540716366605911}
-  - {fileID: 8216540716520445050}
-  - {fileID: 8216540717177267769}
-  - {fileID: 8216540716129985541}
-  - {fileID: 8216540717980148932}
-  - {fileID: 8216540718048004338}
-  - {fileID: 8216540717919886711}
-  - {fileID: 1552341287464702225}
-  - {fileID: 8216540716924300534}
-  - {fileID: 8216540717909920687}
-  - {fileID: 7352002288794312773}
-  - {fileID: 4826196647887449482}
+  contents: []
 --- !u!1 &8216540716924300528
 GameObject:
   m_ObjectHideFlags: 0
@@ -741,7 +677,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: a2856ae240f4db04a9c637ca48056d1f, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
-  nombre: bosqueNevado
+  nombre: Bosque Nevado
   material: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
 --- !u!1 &8216540717177267771
 GameObject:
@@ -789,7 +725,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: 4709c224b103f634799a8d23086082b0, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
-  nombre: muelle
+  nombre: Muelle
   material: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
 --- !u!1 &8216540717577473001
 GameObject:
@@ -820,7 +756,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8216540718048004333}
-  - {fileID: 8216540717919886710}
   m_Father: {fileID: 8216540716978143274}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -833,7 +768,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8216540717771585012}
-  - component: {fileID: 8216540717771585013}
   m_Layer: 0
   m_Name: Photos
   m_TagString: Untagged
@@ -865,22 +799,6 @@ Transform:
   m_Father: {fileID: 8216540716978143274}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8216540717771585013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8216540717771585015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49bc26f5e8717464a82b9562f7da9062, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
-  sound: {fileID: 0}
-  nombre: desierto
-  material: {fileID: 0}
 --- !u!1 &8216540717901532552
 GameObject:
   m_ObjectHideFlags: 0
@@ -927,7 +845,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: 9bb0d665dc6f2b342950c38fc0629bc1, type: 3}
   sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
-  nombre: iglesiaPh
+  nombre: Iglesia
   material: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
 --- !u!1 &8216540717909920681
 GameObject:
@@ -975,58 +893,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: ff6c315bc1d9b0141a5e50e90c8d1804, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
-  nombre: SimpleNaturePackScene
---- !u!1 &8216540717919886705
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8216540717919886710}
-  - component: {fileID: 8216540717919886711}
-  m_Layer: 0
-  m_Name: venecia
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8216540717919886710
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8216540717919886705}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8216540717577473006}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8216540717919886711
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8216540717919886705}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1f953cffa7a114b8e81de292c8f44c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  thumbnail: {fileID: 0}
-  sound: {fileID: 0}
-  nombre: venecia
-  video: {fileID: 32900000, guid: f1b724545a81ffe4c901532bb700313f, type: 3}
-  material: {fileID: 2100000, guid: f5faec58b2fe1354aa0f72e31b5865f2, type: 2}
-  renderTexture: {fileID: 8400000, guid: 205c69285322fbf41b6ae0f5002c8d7c, type: 2}
-  equiangularCubemap: 0
+  nombre: Bosque lowpoly
 --- !u!1 &8216540717980148934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1073,7 +940,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
   sound: {fileID: 8300000, guid: cb0383393c0f3244b9d8533b9cc451e0, type: 3}
-  nombre: valle
+  nombre: Valle
   material: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
 --- !u!1 &8216540718048004332
 GameObject:
@@ -1121,7 +988,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: f226cfe95412a51439f6c21c4a13134e, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
-  nombre: playa1
+  nombre: Playa
   video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
   material: {fileID: 2100000, guid: b242c65006a121743b80e0f4050f7ebf, type: 2}
   renderTexture: {fileID: 8400000, guid: 1e08bcf0583d69c428f97b9c0333d037, type: 2}

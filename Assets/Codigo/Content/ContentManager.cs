@@ -35,14 +35,43 @@ namespace Contents{
 		// Start is called before the first frame update
 		void Start()
 		{
-			//StartCoroutine(WaitAndVideo(6.0f, "iglesiaPh"));
+			StartCoroutine(LoadContents());
 		}
 
-		// Solo usado para testing
-		private IEnumerator WaitAndVideo(float waitTime, string content)
+		private IEnumerator LoadContents()
 		{
-			yield return new WaitForSeconds(waitTime);
-			this.playContent(content);
+			Transform contentsTransform = transform.GetChild(1);
+			// Cargar Imagenes
+			Transform photosTransform = contentsTransform.GetChild(0);
+			foreach (Transform photoTransform in photosTransform){
+				Content photo = photoTransform.gameObject.GetComponent<Photo>();
+				if(photo != null){
+					contents.Add(photo);
+				}else{
+					Debug.LogWarning("El GameObject "+photoTransform.gameObject.name+" no tiene un script Photo");
+				}
+			}
+			// Cargar Videos
+			Transform videosTransform = contentsTransform.GetChild(1);
+			foreach (Transform videoTransform in videosTransform){
+				Content video = videoTransform.gameObject.GetComponent<Video>();
+				if(video != null){
+					contents.Add(video);
+				}else{
+					Debug.LogWarning("El GameObject "+videoTransform.gameObject.name+" no tiene un script Video");
+				}
+			}
+			// Cargar Escenas 3D
+			Transform scenesTransform = contentsTransform.GetChild(2);
+			foreach (Transform sceneTransform in scenesTransform){
+				Content scene = sceneTransform.gameObject.GetComponent<Escena>();
+				if(scene != null){
+					contents.Add(scene);
+				}else{
+					Debug.LogWarning("El GameObject "+sceneTransform.gameObject.name+" no tiene un script Escena");
+				}
+			}
+			yield return null;
 		}
 
 		// Update is called once per frame
