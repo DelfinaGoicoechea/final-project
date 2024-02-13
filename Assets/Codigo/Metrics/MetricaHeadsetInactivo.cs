@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,18 +22,28 @@ public class MetricaHeadsetInactivo : Metric
     {
         public string Nombre;
         public string NombreContenido;
-        public float CantidadSegundosInactivo;
         public string Mensaje;
     }
 
     public override string toString()
     {
+        string m = "";
+        if (segundosMaxInactivo >= 60)
+        {
+            int minutes = (int)Math.Round(segundosMaxInactivo / 60);
+            m = $"El headset paso mucho tiempo inactivo: {minutes} minutos";
+            }
+        else
+        {
+            int segundos = (int)Math.Round(segundosMaxInactivo);
+            m = $"El headset paso mucho tiempo inactivo: {segundos} segundos";
+        };
+
         var modeloMetrica = new Modelo
         {
             Nombre = Nombre,
             NombreContenido = NombreContenido,
-            CantidadSegundosInactivo = segundosMaxInactivo,
-            Mensaje = "Headset inactivo por mucho tiempo."
+            Mensaje = m
         };
 
         return JsonUtility.ToJson(modeloMetrica);

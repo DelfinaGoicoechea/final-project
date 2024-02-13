@@ -34,7 +34,7 @@ namespace SimpleHttpServer.Models
         }
         public string getAsJSON()
         {
-            StringBuilder json = new StringBuilder("{\"metrics\": [");
+            StringBuilder json = new StringBuilder("{\"metrics\": [ ");
             foreach (var metric in metrics)
             {
                 json.Append(metric +",");

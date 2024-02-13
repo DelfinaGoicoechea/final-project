@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,18 +19,28 @@ public class MetricaTiempoEscenaActiva : Metric
     {
         public string Nombre;
         public string NombreContenido;
-        public float TiempoMaxTranscurrido;
         public string Mensaje;
     }
 
     public override string toString()
     {
+        string m = "";
+        if (tiempoMaxTranscurrido >= 60)
+        {
+            int minutes = (int)Math.Round(tiempoMaxTranscurrido / 60);
+            m = $"La escena estuvo demasiado tiempo activa: {minutes} minutos";
+            }
+        else
+        {
+            int segundos = (int)Math.Round(tiempoMaxTranscurrido);
+            m = $"La escena estuvo demasiado tiempo activa: {segundos} segundos";
+        };
+
         var modeloMetrica = new Modelo
         {
             Nombre = Nombre,
             NombreContenido = NombreContenido,
-            TiempoMaxTranscurrido = tiempoMaxTranscurrido,
-            Mensaje = "La escena estuvo demasiado tiempo activa."
+            Mensaje = m
         };
 
         return JsonUtility.ToJson(modeloMetrica);
