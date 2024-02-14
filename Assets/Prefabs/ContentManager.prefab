@@ -47,6 +47,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 717550b2d81524540a715f23d769b06a, type: 3}
   sound: {fileID: 8300000, guid: 70d867c045fd90c47b6ed4ed96bf1dac, type: 3}
   nombre: Ciudad simple
+  sceneName: CityScene
 --- !u!1 &7644583462511288352
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
   thumbnail: {fileID: 0}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: Main
+  sceneName: 
 --- !u!1 &8216540715953134332
 GameObject:
   m_ObjectHideFlags: 0
@@ -597,6 +599,7 @@ MonoBehaviour:
   thumbnail: {fileID: 0}
   sound: {fileID: 0}
   nombre: SphereScene
+  sceneName: 
 --- !u!1 &8216540716978143269
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,6 +897,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: ff6c315bc1d9b0141a5e50e90c8d1804, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: Bosque lowpoly
+  sceneName: SimpleNaturePackScene
 --- !u!1 &8216540717980148934
 GameObject:
   m_ObjectHideFlags: 0
