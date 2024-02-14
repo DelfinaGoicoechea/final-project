@@ -2,7 +2,6 @@
 
 - Unity Editor:
   - Versión: [2021.3.32f1](https://unity.com/releases/editor/archive#download-archive-2021) con los módulos "OpenJDK" y "Android SDK & NDK Support"
-  - La ubicación de la escena inicial es: "\Assets\Niveles\Scenes\Main.unity"
 
 - La ubicacion de la escena inicial es: "\Assets\Niveles\Scenes\Main.unity"
 
