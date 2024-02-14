@@ -5,8 +5,12 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 namespace Contents{
+
+    
     public class Escena: Content
     {
+       [Tooltip("Nombre de la escena a cargar (solo util y visible para Unity)")]
+        public string sceneName;
         // Start is called before the first frame update
         void Start()
         {
@@ -21,7 +25,7 @@ namespace Contents{
         
         public override void play()
         {
-            SceneManager.LoadScene(nombre);
+            SceneManager.LoadScene(sceneName);
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
             if (this.sound != null)
