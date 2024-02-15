@@ -44,11 +44,17 @@ namespace DispatcherSpace
         }
 
         public HttpResponse play(string scene, Func<bool, HttpResponse> callback)
-        {
-			// Levanta las metricas de la escena saliente (antes del cambio).
-			mManager.LevantarMetricasEscena();
-            bool sceneFound = cManager.playContent(scene);
-            return callback(sceneFound);
+        {	
+			string currentlyPlaying = cManager.getPlayingName();
+			if(currentlyPlaying != null && !currentlyPlaying.Equals(scene)){
+				// Levanta las metricas de la escena saliente (antes del cambio).
+				mManager.LevantarMetricasEscena();
+            	bool sceneFound = cManager.playContent(scene);
+            	return callback(sceneFound);
+			}else{
+				// el contenido ya estaba en reproduccion
+				return callback(true);
+			}
         }
 
         public HttpResponse pause(Func<HttpResponse> callback)
