@@ -95,7 +95,7 @@ MonoBehaviour:
   thumbnail: {fileID: 0}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: Main
-  sceneName: 
+  sceneName: Main
 --- !u!1 &8216540715953134332
 GameObject:
   m_ObjectHideFlags: 0
@@ -599,7 +599,7 @@ MonoBehaviour:
   thumbnail: {fileID: 0}
   sound: {fileID: 0}
   nombre: SphereScene
-  sceneName: 
+  sceneName: SphereScene
 --- !u!1 &8216540716978143269
 GameObject:
   m_ObjectHideFlags: 0
