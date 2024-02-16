@@ -18,14 +18,7 @@ public class MetricaHeadsetInactivo : Metric
         get { return "MetricaHeadsetInactivo"; }
     }
 
-    private class Modelo
-    {
-        public string Nombre;
-        public string NombreContenido;
-        public string Mensaje;
-    }
-
-    public override string toString()
+    public override Modelo getModelo()
     {
         string m = "";
         if (segundosMaxInactivo >= 60)
@@ -46,7 +39,7 @@ public class MetricaHeadsetInactivo : Metric
             Mensaje = m
         };
 
-        return JsonUtility.ToJson(modeloMetrica);
+        return modeloMetrica;
     }
 
     protected override void PublicarMetrica()

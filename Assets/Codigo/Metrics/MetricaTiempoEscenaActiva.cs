@@ -15,14 +15,7 @@ public class MetricaTiempoEscenaActiva : Metric
         get { return "MetricaTiempoEscenaActiva"; }
     }
 
-    private class Modelo
-    {
-        public string Nombre;
-        public string NombreContenido;
-        public string Mensaje;
-    }
-
-    public override string toString()
+    public override Modelo getModelo()
     {
         string m = "";
         if (tiempoMaxTranscurrido >= 60)
@@ -43,7 +36,7 @@ public class MetricaTiempoEscenaActiva : Metric
             Mensaje = m
         };
 
-        return JsonUtility.ToJson(modeloMetrica);
+        return modeloMetrica;
     }
 
     public override void ReiniciarMetrica()

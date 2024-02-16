@@ -8,13 +8,21 @@ public abstract class Metric : MonoBehaviour
 {
     public abstract string Nombre { get; }
     public string NombreContenido;
+    public string Mensaje;
     public delegate void MetricEventHandler(Metric metrica);
     public event MetricEventHandler CondicionMetricaCumplida;
     public bool metricaPublicada = false;
 
     protected abstract void PublicarMetrica();
     public abstract void ReiniciarMetrica();
-    public abstract string toString();
+    public abstract Modelo getModelo();
+
+    public class Modelo
+    {
+        public string Nombre;
+        public string NombreContenido;
+        public string Mensaje;
+    }
 
     //Asi cada instancia puede invocar el evento para registrarse
     protected void InvokeCondicionMetricaCumplida()
@@ -37,5 +45,11 @@ public abstract class Metric : MonoBehaviour
     protected void ReiniciarPublicada()
     {
         metricaPublicada = false;
+    }
+
+    public string toString()
+    {
+        var modeloMetrica = getModelo();
+        return JsonUtility.ToJson(modeloMetrica);
     }
 }
