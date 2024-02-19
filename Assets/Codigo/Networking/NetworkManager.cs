@@ -13,6 +13,10 @@ using DNSSpace;
 
 namespace SimpleHttpServer
 {
+    /// <summary>
+    /// Clase de gestion de Networking. Tiene al servidor http y DNS-SD como subrutinas.
+    /// Es SINGLETON y no muere en toda la ejecucion.
+    /// </summary>
     public class NetworkManager : MonoBehaviour
     {
 

@@ -3,9 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// !! Metrica en desuso por desarrollo incompleto !!
+/// Esta metrica creada a modo de ejemplo, pretende avisar si el hedset ha pasado mucho tiempo sin modificaciones en posicion
+/// </summary>
 public class MetricaHeadsetInactivo : Metric
 {
 
+    //Se setean los thresholds de la condicion
     public float translationThreshold = 0.001f;
     public float rotationThreshold = 0.001f;
     public float tiempoLimite = 5f;

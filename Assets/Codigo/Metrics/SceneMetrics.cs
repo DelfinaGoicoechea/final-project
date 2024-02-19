@@ -2,16 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// Clase que maneja las metricas dentro de una escena particular.
+/// Toda escena que quiera medir sus metricas, debe contener Scene Metrics, porque se ella levanta las metricas el Metrics Manager.
 public class SceneMetrics : MonoBehaviour
 {
+    // Mientras registra metricas, las conserva en una lista
     private List<Metric> listaMetricasRegistradas = new List<Metric>();
 
     private void Start()
     {
-        // Obt�n todas las instancias de Metric en la escena
+        // Scene Metrics debe tener a todas las metricas que quiera utiliar en la escena, como hijos
+        // Entonces crea una lista de metricas a recolectar a partir de sus hijos
         Metric[] metricas = GetComponentsInChildren<Metric>();
 
-        // Suscribe el m�todo ManejarMetricaAlcanzada al evento de cada m�trica
+        // Se suscribe al evento CondicionMetricaCumplida de cada metrica, para que cuando una se cumpla, se la registre
         foreach (Metric metrica in metricas)
         {
             metrica.CondicionMetricaCumplida += RegistrarMetricaEscena;

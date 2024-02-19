@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 
 namespace Contents{
+    
+    /// <summary>
+    /// Tipo abstracto de contenido, luego extendido por Fotos, Videos y Escenas 3D.
+    /// </summary>
     public abstract class Content : MonoBehaviour
     {
         public Texture2D thumbnail;

@@ -6,6 +6,9 @@ using System.Text;
 namespace SimpleHttpServer.Models
 {
     [System.Serializable]
+    /// <summary>
+    /// Modelo de datos serializable para la escena a partir de json.
+    /// </summary>
     public class DataScene{
         public string scene;
         public static DataScene CreateFromJSON(string jsonString)
@@ -15,6 +18,9 @@ namespace SimpleHttpServer.Models
     }
 
     [System.Serializable]
+    /// <summary>
+    /// Modelo de datos serializable para el volumen a partir de json.
+    /// </summary>
     public class DataVolumen
     {
         public float volumen;
@@ -25,6 +31,9 @@ namespace SimpleHttpServer.Models
     }
 
     [System.Serializable]
+    /// <summary>
+    /// Modelo de datos serializable para la lista de metricas a partir de json.
+    /// </summary>
     public class DataMetricsList
     {
         public List<string> metrics;

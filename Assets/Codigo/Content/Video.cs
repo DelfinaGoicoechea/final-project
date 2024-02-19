@@ -5,6 +5,10 @@ using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
 namespace Contents{
+
+    /// <summary>
+    /// Definicion del tipo de contenido video
+    /// </summary>
     public class Video : Content
     {
         public VideoClip video;
@@ -34,6 +38,7 @@ namespace Contents{
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
 
+            // Siempre las imagenes y videos se reproducen en la escena de esferas
             if (SceneManager.GetActiveScene().name == "SphereScene")
             {
                 ContentManager cm = ContentManager.Instance;
@@ -108,7 +113,7 @@ namespace Contents{
 
         private IEnumerator waitForSceneLoad(string sceneName, AudioSource audioSource)
         {
-            // Busy wait, pero el delay es que debo esperar realmente es m�nimo
+            // Busy wait, pero el delay es que debo esperar realmente es minimo
             while (SceneManager.GetActiveScene().name != sceneName)
             {
                 yield return null;

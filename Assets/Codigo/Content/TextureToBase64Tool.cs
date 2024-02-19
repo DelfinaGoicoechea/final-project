@@ -27,6 +27,9 @@ using System;
 
 namespace TeamUtilityEditor
 {
+	/// <summary>
+	/// Clase que transforma de tipo Textura a tipo Base64, par pasar los de las escenas al cliente
+	/// </summary>
 	public class TextureToBase64Tool
 	{
 		[SerializeField] private Texture2D m_texture;

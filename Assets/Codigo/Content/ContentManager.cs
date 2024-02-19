@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
 namespace Contents{
+
+	/// <summary>
+	/// Clase encargada de gestionar la disponibilidad y reproduccion del contenido.
+	/// Es SINGLETON y no muere en toda la ejecucion.
+	/// </summary>
 	public class ContentManager : MonoBehaviour
 	{
 		public AudioSource audioSource;

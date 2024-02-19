@@ -43,6 +43,7 @@ namespace DispatcherSpace
 			nManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
         }
 
+		/// Funcion que realiza la accion de play y retorna la respuesta http acorde (codigo)
         public HttpResponse play(string scene, Func<bool, HttpResponse> callback)
         {	
 			string currentlyPlaying = cManager.getPlayingName();
@@ -52,23 +53,36 @@ namespace DispatcherSpace
             	bool sceneFound = cManager.playContent(scene);
             	return callback(sceneFound);
 			}else{
-				// el contenido ya estaba en reproduccion
+				// El contenido ya estaba en reproduccion
 				return callback(true);
 			}
         }
 
+		/// <summary>
+		/// Funcion que realiza la accion de pausa y retorna la respuesta http acorde (codigo)
+		/// <summary>
+		/// <returns></returns>
         public HttpResponse pause(Func<HttpResponse> callback)
         {
             StartCoroutine(cManager.pause());
             return callback();
         }
 
+		/// <summary>
+		/// Funcion que realiza la accion de cambio de volumen y retorna la respuesta http acorde (codigo)
+		/// </summary>
+		/// <returns></returns>
         public HttpResponse setVolume(float vol, Func<HttpResponse> callback)
         {
             cManager.setVolume(vol);
             return callback();
         }
 
+		/// <summary>
+		/// Funcion que realiza la accion de stop contenido y retorna la respuesta http acorde.
+		/// Como se finaliza la sesion, le pido las metricas recogidas al Metrics Manager, las serializo y las devuelvo.
+		/// </summary>
+		/// <returns></returns>
         public HttpResponse stop(Func<string, HttpResponse> callback)
         {
 			mManager.LevantarMetricasEscena();
@@ -79,7 +93,11 @@ namespace DispatcherSpace
             return callback(metricasJson);
         }
         
-		
+		///<summary>
+		/// Funcion que pide al Content Manager todos los contenidos disponibles para reproduccion
+		/// </summary>
+		/// <param name="callback"></param>
+		/// <returns></returns>		
 		public HttpResponse getContents(Func<string, HttpResponse> callback)
 		{
 			Dictionary<string, List<string>> contenidos = cManager.getContents();
@@ -131,10 +149,9 @@ namespace DispatcherSpace
 			return callback(json.ToString());
 		}
 
-		// TODO: usar BASE64 y mandarlo en un json parece bastante horroroso, especialmente xq
+		// TODO: usar BASE64 y mandarlo en un json parece ineficiente, especialmente porque
 		//       la biblioteca requiere que las imagenes no esten comprimidas.
-		//       Una vez que se tenga la app Mobile, ver de pasar las imagenes en binario,
-		//       o por el estilo.
+		//       Posible mejora: pasar imagenes en binario u otra mejor opcion
 		public HttpResponse getThumbnail(string scene, Func<string, HttpResponse> callback)
 		{
 			Texture2D thumbnail = cManager.getThumbnail(scene);
@@ -145,6 +162,11 @@ namespace DispatcherSpace
 			return callback(encodedThumbnail);
 		}
 
+		/// <summary>
+		/// Funcion para dejar de publicar servicio mDNS. No usada.
+		/// </summary>
+		/// <param name="callback"></param>
+		/// <returns></returns>		
 		public HttpResponse stopAdvertising(Func<HttpResponse> callback){
 			nManager.stopAdvertisingService();
 			return callback();
@@ -167,7 +189,12 @@ namespace DispatcherSpace
 			}
 		}
 
-        // Enqueue functions with a SINGLE argument
+        /// <summary>
+		/// Enqueue functions with a SINGLE argument
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>		
         public Task<HttpResponse> EnqueueAsync(string argument, Func<string, HttpResponse> action)
 		{
 			var tcs = new TaskCompletionSource<HttpResponse>();
@@ -187,8 +214,13 @@ namespace DispatcherSpace
 			return tcs.Task;
 		}
 
-        // Enqueue functions with a SINGLE argument
-        // This is stupid, but I couldn't make a generic delegate function work :( 
+        /// <summary>
+		/// Enqueue functions with a SINGLE argument
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>		
+        // This is ineficient, but I couldn't make a generic delegate function work :( 
         public Task<HttpResponse> EnqueueAsync(float argument, Func<float, HttpResponse> action)
 		{
 			var tcs = new TaskCompletionSource<HttpResponse>();

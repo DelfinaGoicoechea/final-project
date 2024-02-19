@@ -6,6 +6,10 @@ using UnityEngine.Video;
 using UnityEngine.SceneManagement;
 
 namespace Contents{
+
+    /// <summary>
+    /// Definicion del tipo de contenido video
+    /// </summary>
     public class Photo : Content
     {
         public Material material;
@@ -27,6 +31,7 @@ namespace Contents{
             audioSource.Pause();
 
             // Si no estoy en la escena adecuada, me voy a ella
+            // Siempre las imagenes y videos se reproducen en la escena de esferas
             if (SceneManager.GetActiveScene().name == "SphereScene")
             {
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
@@ -67,12 +72,13 @@ namespace Contents{
 
         private IEnumerator waitForSceneLoad(string sceneName)
         {
-            // Busy wait, pero el delay que debo esperar realmente es m�nimo
+            // Busy wait, pero el delay que debo esperar realmente es minimo
             while (SceneManager.GetActiveScene().name != sceneName)
             {
                 yield return null;
             }
 
+            // Inserto el render definido a la esfera y transporto al player dentro
             if(SceneManager.GetActiveScene().name == sceneName)
             {
                 GameObject sphere = ContentManager.Instance.getSphere();

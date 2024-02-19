@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace DNSSpace
 {
+    /// <summary>
+    /// Clase encargada del Service Discovery. Utiliza .jar ubicado en Plugins.
+    /// </summary>
     public class DNS_SD
     {
 

@@ -4,6 +4,10 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Contents;
 
+/// <summary>
+/// Clase abstracta de la que deben heredar todas las metricas. 
+/// Contiene los atributos y funciones indispensables para el funcionamiento del sistema de metricas.
+/// </summary>
 public abstract class Metric : MonoBehaviour
 {
     public abstract string Nombre { get; }
@@ -13,8 +17,22 @@ public abstract class Metric : MonoBehaviour
     public event MetricEventHandler CondicionMetricaCumplida;
     public bool metricaPublicada = false;
 
+    /// <summary>
+    /// Funcion a sobrescribir por cada metrica, donde se llame a InvokeCondicionMetricaCumplida().
+    /// </summary>
+    /// <returns></returns>
     protected abstract void PublicarMetrica();
+    
+    /// <summary>
+    /// Funcion a sobrescribir por cada metrica, donde se la reinicie.
+    /// </summary>
+    /// <returns></returns>
     public abstract void ReiniciarMetrica();
+    
+    /// <summary>
+    /// Funcion a sobrescribir por cada metrica, donde se devuelva el modelo establecido debajo para enviarlo al cliente.
+    /// </summary>
+    /// <returns></returns>
     public abstract Modelo getModelo();
 
     public class Modelo
@@ -24,7 +42,10 @@ public abstract class Metric : MonoBehaviour
         public string Mensaje;
     }
 
-    //Asi cada instancia puede invocar el evento para registrarse
+    /// <summary>
+    /// Funcion para que cada instancia invoque al evento de cumplimiento y se registre la metrica
+    /// </summary>
+    /// <returns></returns>
     protected void InvokeCondicionMetricaCumplida()
     {
         CondicionMetricaCumplida?.Invoke(this);
@@ -36,17 +57,30 @@ public abstract class Metric : MonoBehaviour
         ReiniciarPublicada();
     }
 
+    /// <summary>
+    /// Funcion que setea el nombre del contenido actual a partir del Content Manager
+    /// </summary>
+    /// <returns></returns>
     protected void ReiniciarNombreContent()
     {
         ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
         NombreContenido = cManager.getPlayingName();
     }
 
+    /// <summary>
+    /// Funcion que indica que la metrica no se encuentra publicada.
+    /// !! Usar por lo general en ReiniciarMetrica !!
+    /// </summary>
+    /// <returns></returns>
     protected void ReiniciarPublicada()
     {
         metricaPublicada = false;
     }
 
+    /// <summary>
+    /// Funcion que devuelve un json con la informacion de la metrica a partir de su modelo.
+    /// </summary>
+    /// <returns></returns>
     public string toString()
     {
         var modeloMetrica = getModelo();

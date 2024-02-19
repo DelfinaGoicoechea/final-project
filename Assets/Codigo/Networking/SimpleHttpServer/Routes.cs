@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace SimpleHttpServer
 {
+    /// <summary>
+    /// Establece las rutas para cada uno de los mensajes HTTP y la respuesta ante cada caso.
+    /// </summary>
     public class Routes
     {
         private List<Models.Route> routes;
@@ -120,7 +123,7 @@ namespace SimpleHttpServer
                             };
                         };
 
-                        // obtengo el json, y de el su volumen
+                        // Obtengo el json, y de el su volumen
                         DataVolumen jsonObject = DataVolumen.CreateFromJSON(request.Content);
                         float volume = jsonObject.volumen;
 

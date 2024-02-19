@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/// <summary>
+/// Controlador de animador de las manos del Oculus.
+/// </summary>
 public class HandAnimatorController : MonoBehaviour
 {
     [SerializeField] private InputActionProperty triggerAction;

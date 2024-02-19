@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 
 namespace Contents{
 
-    
+    /// <summary>
+    /// Definicion del tipo de contenido escena 3D
+    /// </summary>
     public class Escena: Content
     {
        [Tooltip("Nombre de la escena a cargar (solo util y visible para Unity)")]
