@@ -96,8 +96,17 @@ namespace Contents{
             }
         }
 
-        public override string getContentType(){
-            return "video";
+        /// <summary>
+        /// Agrega el nombre del contenido a un Diccionario que
+        ///  contiene listas de nombres de contenidos, bajo la key
+        ///  "videos".
+        /// </summary>
+        /// <param name="dictio"></param>
+        public override void addToDictionary(Dictionary<string, List<string>> dictio){
+            if (!dictio.ContainsKey("videos")){
+                dictio.Add("videos", new List<string>());
+            }
+            dictio["videos"].Add(this.nombre);
         }
 
         /// <summary>

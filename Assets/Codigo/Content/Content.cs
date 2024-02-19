@@ -29,7 +29,13 @@ namespace Contents{
         }
 
         public abstract void play();
-        public abstract string getContentType();
+
+        /// <summary>
+        /// Agrega el nombre del contenido a un Diccionario
+        /// que contiene listas de nombres de contenidos
+        /// </summary>
+        /// <param name="dictio"></param>
+        public abstract void addToDictionary(Dictionary<string, List<string>> dictio);
 
         /// <summary>
         /// Pauses any music plying in the scene
@@ -41,5 +47,7 @@ namespace Contents{
                 audioSource.Pause();
             }
         }
+
+        
     }
 }

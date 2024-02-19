@@ -37,8 +37,17 @@ namespace Contents{
             }
         }
 
-        public override string getContentType(){
-            return "3D";
+        /// <summary>
+        /// Agrega el nombre del contenido a un Diccionario que
+        ///  contiene listas de nombres de contenidos, bajo la key
+        ///  "3D".
+        /// </summary>
+        /// <param name="dictio"></param>
+        public override void addToDictionary(Dictionary<string, List<string>> dictio){
+            if (!dictio.ContainsKey("3D")){
+                dictio.Add("3D", new List<string>());
+            }
+            dictio["3D"].Add(this.nombre);
         }
 
         // Si aca ponemos un pause() que bloquee el movimiento del jugador,

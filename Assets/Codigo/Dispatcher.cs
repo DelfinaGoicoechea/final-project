@@ -105,12 +105,16 @@ namespace DispatcherSpace
 				return null;
 			StringBuilder json = new StringBuilder("{");
 			bool had3d = false;
-			bool hadVideo = false;
+			bool hadVideos = false;
+			bool hadPhotos = false;
             foreach (string contentType in contenidos.Keys)
             {
 				switch (contentType){
 					case "3D":
 						had3d = true;
+						if(hadVideos || hadPhotos){
+							json.Append(",");
+						}
 						json.Append("\"3D\": [");
 						foreach (string content in contenidos["3D"]){
 							json.Append($"\"{content}\",");
@@ -120,8 +124,8 @@ namespace DispatcherSpace
 						break;
 					
 					case "videos":
-						hadVideo = true;
-						if(had3d){
+						hadVideos = true;
+						if(had3d || hadPhotos){
 							json.Append(",");
 						}
 						json.Append("\"videos\": [");
@@ -133,7 +137,8 @@ namespace DispatcherSpace
 						break;
 
 					case "photos":
-						if(had3d || hadVideo){
+						hadPhotos = true;
+						if(had3d || hadVideos){
 							json.Append(",");
 						}
 						json.Append("\"photos\": [");
