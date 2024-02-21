@@ -257,8 +257,12 @@ namespace Contents{
 			// El video solo esta presente en la escena de la esfera
 			if(SceneManager.GetActiveScene().name == "SphereScene"){
 				VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-				if(videoPlayer.clip.audioTrackCount > 0){
-					videoPlayer.SetDirectAudioVolume(0, 0);
+				if (videoPlayer.clip != null)
+				{
+					if (videoPlayer.clip.audioTrackCount > 0)
+					{
+						videoPlayer.SetDirectAudioVolume(0, 0);
+					}
 				}
 			}
 		}
