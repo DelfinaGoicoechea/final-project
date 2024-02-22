@@ -4,6 +4,8 @@ Este repositorio aloja al componente de visualizacion de photos, videos y escena
 
 Link al lado del cliente, escrito en Flutter: [Flutter](https://github.com/Simonlanzavecchia/TranquiFlut)
 
+Información de utilidad:
+
 - Unity Editor:
   - Versión: [2021.3.32f1](https://unity.com/releases/editor/archive#download-archive-2021) con los módulos "OpenJDK" y "Android SDK & NDK Support"
 
