@@ -12,7 +12,7 @@ namespace Contents{
     /// </summary>
     public class Photo : Content
     {
-        public Material material;
+        public Material imageMaterial;
 
         // Start is called before the first frame update
         void Start()
@@ -41,7 +41,7 @@ namespace Contents{
                 
                 MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
                 Material[] meshmaterials = meshR.materials;
-                meshmaterials[0] = material;
+                meshmaterials[0] = imageMaterial;
                 meshR.materials = meshmaterials;
 
                 GameObject player = GameObject.FindWithTag("Player");
@@ -84,7 +84,7 @@ namespace Contents{
                 GameObject sphere = ContentManager.Instance.getSphere();
                 MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
                 Material[] meshmaterials = meshR.materials;
-                meshmaterials[0] = material;
+                meshmaterials[0] = imageMaterial;
                 meshR.materials = meshmaterials;
                 GameObject player = GameObject.FindWithTag("Player");
                 player.transform.position = sphere.transform.position;

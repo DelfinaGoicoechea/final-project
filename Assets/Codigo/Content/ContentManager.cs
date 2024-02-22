@@ -40,10 +40,10 @@ namespace Contents{
 		// Start is called before the first frame update
 		void Start()
 		{
-			StartCoroutine(LoadContents());
+			StartCoroutine(loadContents());
 		}
 
-		private IEnumerator LoadContents()
+		private IEnumerator loadContents()
 		{
 			Transform contentsTransform = transform.GetChild(1);
 			// Cargar Imagenes
@@ -156,14 +156,14 @@ namespace Contents{
 			{
 				this.currentlyPlaying = content;
 				content.play();
-				StartCoroutine(FadeIn(5f));
+				StartCoroutine(fadeIn(5f));
 				return true;
 			}
 			Debug.LogWarning("No se encontro el Contenido: " + scene);
 			return false;
 		}
 
-		public IEnumerator FadeIn(float duration)
+		private IEnumerator fadeIn(float duration)
 		{
 			float currentTime = 0;
 			float start = 0.0f;

@@ -24,7 +24,7 @@ public class MetricaTiempoEscenaActiva : Metric
     // El nombre de la metrica y de la escena ya estan dados
     // Se debe ingresar, a partir de los datos recolectados, el mensaje que se mostrara al cliente
     // Posible mejora: ingresar datos crudos y serializar de otra forma en cliente
-    public override Modelo getModelo()
+    protected override Modelo getModelo()
     {
         string m = "";
         if (tiempoMaxTranscurrido >= 60)

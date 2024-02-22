@@ -14,7 +14,7 @@ namespace Contents{
         public VideoClip video;
         public Material material;
         public RenderTexture renderTexture;
-        public bool equiangularCubemap;
+        public bool isEquiangularCubemap;
         private bool isPaused;
 
         // Start is called before the first frame update
@@ -42,7 +42,7 @@ namespace Contents{
             if (SceneManager.GetActiveScene().name == "SphereScene")
             {
                 ContentManager cm = ContentManager.Instance;
-                GameObject sphere = (equiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
+                GameObject sphere = (isEquiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
                 
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
                 GameObject player = GameObject.FindWithTag("Player");
@@ -132,7 +132,7 @@ namespace Contents{
             {
                 GameObject sphere;
                 ContentManager cm = ContentManager.Instance;
-                sphere = (equiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
+                sphere = (isEquiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
 
                 // Asigno el material a la esfera
                 MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();

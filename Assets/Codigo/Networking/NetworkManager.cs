@@ -23,7 +23,6 @@ namespace SimpleHttpServer
         public static NetworkManager Instance { get; private set; }
         public TMP_Text toPrint;
         private HttpServer httpServer;
-        private Int32 port;
 
         private DNS_SD dns_sd;
 
@@ -82,7 +81,7 @@ namespace SimpleHttpServer
         {
             yield return new WaitForSeconds(2);
             IPAddress ip = getIP();
-            port = httpServer.getPort();
+            Int32 port = httpServer.getPort();
             Debug.Log("Listening in ip: " + ip + "  port: " + port);
             if (toPrint != null)
                 toPrint.text = "ip:" + ip + " port:" + port; // TODO: Eventually delete "toPrint", and this line too

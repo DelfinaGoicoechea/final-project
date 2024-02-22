@@ -23,7 +23,7 @@ public class MetricaHeadsetInactivo : Metric
         get { return "MetricaHeadsetInactivo"; }
     }
 
-    public override Modelo getModelo()
+    protected override Modelo getModelo()
     {
         string m = "";
         if (segundosMaxInactivo >= 60)

@@ -33,7 +33,7 @@ public abstract class Metric : MonoBehaviour
     /// Funcion a sobrescribir por cada metrica, donde se devuelva el modelo establecido debajo para enviarlo al cliente.
     /// </summary>
     /// <returns></returns>
-    public abstract Modelo getModelo();
+    protected abstract Modelo getModelo();
 
     public class Modelo
     {
