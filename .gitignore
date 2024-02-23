@@ -71,6 +71,12 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
-/Assets/Visuales/Content/Videos/*
+# Log files
 /Logs/*
 debug.log
+
+# El contenido se comparte en drive, tanto cada imagen/video como el .meta que los identifica
+/Assets/Visuales/Content/Videos/*
+/Assets/Visuales/Content/Photos/*.jpg
+/Assets/Visuales/Content/Photos/*.jpeg
+/Assets/Visuales/Content/Photos/*.meta
