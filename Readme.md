@@ -3,6 +3,7 @@
 Este repositorio aloja al componente de visualizacion de photos, videos y escenas 3D del sistema Tranquilidad 360. Muchas veces se hace referencia a este componente como "Servidor", ya que es quien va a recibir los mensajes por parte del cliente mobile.
 
 Link al lado del cliente, escrito en Flutter: [Flutter](https://github.com/Simonlanzavecchia/TranquiFlut)
+Link al Drive con los contenidos a insertar en fotos y videos: [Drive](https://drive.google.com/drive/folders/15eV8e_d9GiqZK-1TQkJpykFT8Hkizrxa?usp=drive_link)
 
 ### Información de utilidad:
 
