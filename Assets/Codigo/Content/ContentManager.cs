@@ -160,8 +160,9 @@ namespace Contents{
 					currentlyPlaying.stop();
 				}
 				this.currentlyPlaying = content;
-				content.play();
-				StartCoroutine(fadeIn(5f));
+                Time.timeScale = 1.0f;
+                content.play();
+				StartCoroutine(fadeIn(2.5f));
 				return true;
 			}
 			Debug.LogWarning("No se encontro el Contenido: " + scene);
@@ -232,15 +233,16 @@ namespace Contents{
 			float currentTime = 0.0f;
 			float start = configuredVolume;
 			float end = 0.0f;
-			float duration = 5f;
-			while (currentTime < duration)
+			float duration = 2.5f;
+            if (currentlyPlaying != null)
+            {
+                currentlyPlaying.pause();
+            }
+            while (currentTime < duration)
 			{
 				currentTime += Time.fixedDeltaTime;
 				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
 				yield return new WaitForFixedUpdate();
-			}
-			if (currentlyPlaying != null){
-				currentlyPlaying.pause();
 			}
 			yield return null;
 		}
