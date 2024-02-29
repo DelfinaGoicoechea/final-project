@@ -154,6 +154,11 @@ namespace Contents{
 			Content content = contents.Find(x => x.nombre.Equals(scene));
 			if (content != null)
 			{
+				if(this.currentlyPlaying != null && this.currentlyPlaying != content){
+					// me aseguro de parar la reproduccion del anterior,
+					// antes de reproducir el nuevo contenido
+					currentlyPlaying.stop();
+				}
 				this.currentlyPlaying = content;
 				content.play();
 				StartCoroutine(fadeIn(5f));
@@ -268,7 +273,12 @@ namespace Contents{
 		}
 
 		public string getPlayingName(){
-			return currentlyPlaying.nombre;
+			if (currentlyPlaying != null){
+				return currentlyPlaying.nombre;
+			}
+			else{
+				return null;
+			}
 		}
 	}
 }

@@ -42,12 +42,20 @@ namespace Contents{
         /// </summary>
         public virtual void pause()
         {
+            // TODO: audioSource se podria pausar desde pause() en contentManager,
+            // estas lineas parecen ser innecesarias y sobrecomplicar el asunto.
             AudioSource audioSource = ContentManager.Instance.audioSource;
             if (this.sound != null){
                 audioSource.Pause();
             }
         }
 
-        
+        public virtual void stop()
+        {
+            AudioSource audioSource = ContentManager.Instance.audioSource;
+            if (this.sound != null){
+                audioSource.Stop();
+            }
+        }
     }
 }

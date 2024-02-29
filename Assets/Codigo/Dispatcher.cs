@@ -47,15 +47,14 @@ namespace DispatcherSpace
         public HttpResponse play(string scene, Func<bool, HttpResponse> callback)
         {	
 			string currentlyPlaying = cManager.getPlayingName();
+			// chequeo si ya hay contenido en reproduccion, 
+			// y si es un cambio de contenido, o resumir una pausa
 			if(currentlyPlaying != null && !currentlyPlaying.Equals(scene)){
-				// Levanta las metricas de la escena saliente (antes del cambio).
+				// Levanta las metricas de la escena saliente (antes del cambio)
 				mManager.LevantarMetricasEscena();
-            	bool sceneFound = cManager.playContent(scene);
-            	return callback(sceneFound);
-			}else{
-				// El contenido ya estaba en reproduccion
-				return callback(true);
 			}
+            bool sceneFound = cManager.playContent(scene);
+            return callback(sceneFound);
         }
 
 		/// <summary>

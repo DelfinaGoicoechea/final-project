@@ -31,22 +31,18 @@ namespace Contents{
 
         public override void play()
         {
-
-            isPaused = false;
-
             // Pauso audio que se haya configurado al ver una imagen
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
-
+            Debug.Log(SceneManager.GetActiveScene().name);
             // Siempre las imagenes y videos se reproducen en la escena de esferas
-            if (SceneManager.GetActiveScene().name == "SphereScene")
+            if (SceneManager.GetActiveScene().name == "SphereScene") // Sera comparacion por punteros?
             {
                 ContentManager cm = ContentManager.Instance;
                 GameObject sphere = (isEquiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
                 
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
                 GameObject player = GameObject.FindWithTag("Player");
-            
                 if (isPaused)
                 {
                     videoPlayer.Play();
@@ -83,11 +79,11 @@ namespace Contents{
                 videoPlayer.Play();
                 meshR.materials = meshmaterials;
                 player.transform.position = sphere.transform.position;
+                isPaused = false;
             }
             else
             {
                 SceneManager.LoadScene("SphereScene");
-
                 // Espero a que carge la escena, para no tener problemas al buscar la esfera
                 if (SceneManager.GetActiveScene().name != "SphereScene")
                 {
@@ -118,6 +114,14 @@ namespace Contents{
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
             videoPlayer.Pause();
             isPaused = true;
+        }
+
+        public override void stop()
+        {
+            base.stop();
+            VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+            videoPlayer.Stop();
+            isPaused = false;
         }
 
         private IEnumerator waitForSceneLoad(string sceneName, AudioSource audioSource)
@@ -164,6 +168,7 @@ namespace Contents{
                 meshR.materials = meshmaterials;
                 player.transform.position = sphere.transform.position;
             }
+            isPaused = false;
         }
     }
 }
