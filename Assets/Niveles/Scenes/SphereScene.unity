@@ -274,6 +274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NombreContenido: 
+  Mensaje: 
   metricaPublicada: 0
   tiempoLimite: 5
 --- !u!1 &142898291
@@ -400,7 +401,7 @@ VideoPlayer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 373432188}
   m_Enabled: 1
-  m_VideoClip: {fileID: 32900000, guid: f1b724545a81ffe4c901532bb700313f, type: 3}
+  m_VideoClip: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
   m_TargetCameraAlpha: 1
   m_TargetCamera3DLayout: 0
   m_TargetCamera: {fileID: 0}
@@ -417,7 +418,7 @@ VideoPlayer:
   - {fileID: 0}
   m_DirectAudioVolumes:
   - 1
-  m_Url: 
+  m_Url: file://C:/Users/Tranquilidad/Desktop/Test VR New/Assets/StreamingAssets/RioCanada.webm
   m_EnabledAudioTracks: 01
   m_DirectAudioMutes: 00
   m_ControlledAudioTrackCount: 1

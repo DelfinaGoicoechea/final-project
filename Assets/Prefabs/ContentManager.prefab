@@ -96,6 +96,57 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: Main
   sceneName: Main
+--- !u!1 &8140836783175202693
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5543280992658777646}
+  - component: {fileID: 6430018349307493475}
+  m_Layer: 0
+  m_Name: trenNoruega
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5543280992658777646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140836783175202693}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8216540717577473006}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6430018349307493475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8140836783175202693}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e1f953cffa7a114b8e81de292c8f44c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thumbnail: {fileID: 2800000, guid: c0c8ef42b34b71f4480ff9211d461ff5, type: 3}
+  sound: {fileID: 0}
+  nombre: Tren noruego
+  video: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
+  material: {fileID: 2100000, guid: f5faec58b2fe1354aa0f72e31b5865f2, type: 2}
+  renderTexture: {fileID: 8400000, guid: 205c69285322fbf41b6ae0f5002c8d7c, type: 2}
+  isEquiangularCubemap: 0
 --- !u!1 &8216540715953134332
 GameObject:
   m_ObjectHideFlags: 0
@@ -178,7 +229,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: dc6b5d6b10bb8c0489cd2e018afab84d, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: Mar azul
-  material: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
+  imageMaterial: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
 --- !u!1 &8216540716124840403
 GameObject:
   m_ObjectHideFlags: 0
@@ -354,7 +405,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: e903d7a3505b17445a17ab3e3dd95991, type: 3}
   sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
   nombre: Calle festiva
-  material: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
 --- !u!1 &8216540716262589908
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,7 +453,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 9fa9b560382c82d45b775675607311f4, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: Bosque de pinos
-  material: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
+  imageMaterial: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
 --- !u!1 &8216540716366605905
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,7 +501,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 7c2d9a4a7931dab47a85824cbb763244, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: Mar colorido
-  material: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
 --- !u!1 &8216540716520445044
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,7 +549,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 588facc2190d2d944aaeff8754be12e4, type: 3}
   sound: {fileID: 8300000, guid: cb0383393c0f3244b9d8533b9cc451e0, type: 3}
   nombre: Cielo nocturno
-  material: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
 --- !u!1 &8216540716786038010
 GameObject:
   m_ObjectHideFlags: 0
@@ -681,7 +732,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: a2856ae240f4db04a9c637ca48056d1f, type: 3}
   sound: {fileID: 8300000, guid: 6791a4116eb32e44da14c47729b4d4d6, type: 3}
   nombre: Bosque Nevado
-  material: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
 --- !u!1 &8216540717177267771
 GameObject:
   m_ObjectHideFlags: 0
@@ -729,7 +780,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 4709c224b103f634799a8d23086082b0, type: 3}
   sound: {fileID: 8300000, guid: 440ce731bcc080848ac56a7b910aac50, type: 3}
   nombre: Muelle
-  material: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
 --- !u!1 &8216540717577473001
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,6 +810,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8216540718048004333}
+  - {fileID: 5543280992658777646}
   m_Father: {fileID: 8216540716978143274}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -849,7 +901,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 9bb0d665dc6f2b342950c38fc0629bc1, type: 3}
   sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
   nombre: Iglesia
-  material: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
 --- !u!1 &8216540717909920681
 GameObject:
   m_ObjectHideFlags: 0
@@ -945,7 +997,7 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
   sound: {fileID: 8300000, guid: cb0383393c0f3244b9d8533b9cc451e0, type: 3}
   nombre: Valle
-  material: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
+  imageMaterial: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
 --- !u!1 &8216540718048004332
 GameObject:
   m_ObjectHideFlags: 0
@@ -996,4 +1048,4 @@ MonoBehaviour:
   video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
   material: {fileID: 2100000, guid: b242c65006a121743b80e0f4050f7ebf, type: 2}
   renderTexture: {fileID: 8400000, guid: 1e08bcf0583d69c428f97b9c0333d037, type: 2}
-  equiangularCubemap: 1
+  isEquiangularCubemap: 1
