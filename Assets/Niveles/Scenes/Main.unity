@@ -915,6 +915,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5543280992658777646, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216540715976620675, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
     - target: {fileID: 8216540716124840400, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
       propertyPath: m_Volume
       value: 1
@@ -927,6 +935,22 @@ PrefabInstance:
       propertyPath: BypassEffects
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8216540716129985541, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
+    - target: {fileID: 8216540716262589914, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
+    - target: {fileID: 8216540716366605911, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
+    - target: {fileID: 8216540716520445050, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
     - target: {fileID: 8216540716786038009, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -1018,6 +1042,26 @@ PrefabInstance:
     - target: {fileID: 8216540716786038014, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
       propertyPath: sphere
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8216540717175707342, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
+    - target: {fileID: 8216540717177267769, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
+    - target: {fileID: 8216540717901532558, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
+    - target: {fileID: 8216540717980148932, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: imageMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
+    - target: {fileID: 8216540718048004338, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: isEquiangularCubemap
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
