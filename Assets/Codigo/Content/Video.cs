@@ -34,62 +34,13 @@ namespace Contents{
             // Pauso audio que se haya configurado al ver una imagen
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
-            Debug.Log(SceneManager.GetActiveScene().name);
             // Siempre las imagenes y videos se reproducen en la escena de esferas
-            if (SceneManager.GetActiveScene().name == "SphereScene") // Sera comparacion por punteros?
-            {
-                ContentManager cm = ContentManager.Instance;
-                GameObject sphere = (isEquiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
-                
-                VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-                GameObject player = GameObject.FindWithTag("Player");
-                if (isPaused)
-                {
-                    videoPlayer.Play();
-                    isPaused = false;
-                    if (this.sound != null){
-                        audioSource.Play();
-                    }
-                    return;
-                }
-
-                // Asigno el material para la esfera
-                MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
-                Material[] meshmaterials = meshR.materials;
-                meshmaterials[0] = material;
-
-                // Asigno RenderTexture y video al VideoPlayer
-                videoPlayer.Stop();
-                videoPlayer.clip = video;
-                videoPlayer.targetTexture = renderTexture;
-                if (this.sound != null)
-                {
-                    if (video.audioTrackCount > 0)
-                    {
-                        videoPlayer.SetDirectAudioVolume(0, 0);
-                    }
-                    audioSource.clip = this.sound;
-                    audioSource.Play();
-                }
-                else
-                {
-                    videoPlayer.SetDirectAudioVolume(0, 1);
-                }
-                videoPlayer.Prepare();
-                videoPlayer.Play();
-                meshR.materials = meshmaterials;
-                player.transform.position = sphere.transform.position;
-                isPaused = false;
-            }
-            else
+            if (SceneManager.GetActiveScene().name != "SphereScene")
             {
                 SceneManager.LoadScene("SphereScene");
-                // Espero a que carge la escena, para no tener problemas al buscar la esfera
-                if (SceneManager.GetActiveScene().name != "SphereScene")
-                {
-                    StartCoroutine(waitForSceneLoad("SphereScene", audioSource));
-                }
             }
+            // Espero a que carge la escena, para no tener problemas al buscar la esfera
+            StartCoroutine(waitForSceneLoadThenPlay("SphereScene", audioSource));
         }
 
         /// <summary>
@@ -124,7 +75,7 @@ namespace Contents{
             isPaused = false;
         }
 
-        private IEnumerator waitForSceneLoad(string sceneName, AudioSource audioSource)
+        private IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource)
         {
             // Busy wait, pero el delay es que debo esperar realmente es minimo
             while (SceneManager.GetActiveScene().name != sceneName)
@@ -145,6 +96,16 @@ namespace Contents{
 
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
                 GameObject player = GameObject.FindWithTag("Player");
+
+                if (isPaused)
+                {
+                    videoPlayer.Play();
+                    isPaused = false;
+                    if (this.sound != null){
+                        audioSource.Play();
+                    }
+                    yield break;
+                }
                 
                 // Asigno RenderTexture y video al VideoPlayer
                 videoPlayer.Stop();

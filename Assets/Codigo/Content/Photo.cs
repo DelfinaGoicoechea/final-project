@@ -30,47 +30,22 @@ namespace Contents{
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
 
-            // Si no estoy en la escena adecuada, me voy a ella
-            // Siempre las imagenes y videos se reproducen en la escena de esferas
-            if (SceneManager.GetActiveScene().name == "SphereScene")
+            if (this.sound != null)
             {
-                VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-                videoPlayer.Pause();
-
-                GameObject sphere = ContentManager.Instance.getSphere();
-                
-                MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
-                Material[] meshmaterials = meshR.materials;
-                meshmaterials[0] = imageMaterial;
-                meshR.materials = meshmaterials;
-
-                GameObject player = GameObject.FindWithTag("Player");
-                player.transform.position = sphere.transform.position;
-
-                if (this.sound != null)
-                {
-                    audioSource.clip = this.sound;
-                    audioSource.Play();
-                }
+                audioSource.clip = this.sound;
+                audioSource.Play();
             }
-            else
+            
+            // Siempre las imagenes y videos se reproducen en la escena de esferas
+            if (SceneManager.GetActiveScene().name != "SphereScene")
             {
                 SceneManager.LoadScene("SphereScene");
-                if (this.sound != null)
-                {
-                    audioSource.clip = this.sound;
-                    audioSource.Play();
-                }
-
-                // Espero a que carge la escena, para no tener problemas al buscar la esfera
-                if (SceneManager.GetActiveScene().name != "SphereScene")
-                {
-                    StartCoroutine(waitForSceneLoad("SphereScene"));
-                }
             }
+            // Espero a que carge la escena, para no tener problemas al buscar la esfera
+            StartCoroutine(waitForSceneLoadThenPlay("SphereScene"));
         }
 
-        private IEnumerator waitForSceneLoad(string sceneName)
+        private IEnumerator waitForSceneLoadThenPlay(string sceneName)
         {
             // Busy wait, pero el delay que debo esperar realmente es minimo
             while (SceneManager.GetActiveScene().name != sceneName)
