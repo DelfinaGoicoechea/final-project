@@ -76,6 +76,13 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+sceneTransform.gameObject.name+" no tiene un script Escena");
 				}
 			}
+
+			// Cargar contenidos en FileSystem
+			FileSystemContentLoader fsLoader = new FileSystemContentLoader();
+			List<Photo> photosToAdd = fsLoader.LoadImages();
+			foreach(Photo photo in photosToAdd) {
+				contents.Add(photo);
+			}
 			yield return null;
 		}
 
@@ -219,7 +226,10 @@ namespace Contents{
 				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
 				yield return new WaitForFixedUpdate();
 			}
-			this.playContent("Main");
+			// Solo voy a PlayContent si me tiran Stop y actualmente no estoy en la escena Main
+			bool alreadyInMain = this.currentlyPlaying == null || this.currentlyPlaying != null && this.currentlyPlaying.nombre == "Main";
+			if (!alreadyInMain)
+				this.playContent("Main");
 			yield return null;
 		}
 
