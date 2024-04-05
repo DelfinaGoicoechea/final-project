@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using System.Text.RegularExpressions;
 
 namespace Contents{
     public class FileSystemContentLoader
@@ -16,17 +17,19 @@ namespace Contents{
         {
             List<Photo> imageList = new List<Photo>();
             if (Directory.Exists(Application.persistentDataPath))
-            {
-                
-                string worldsFolder = Application.persistentDataPath;
-        
-                DirectoryInfo d = new DirectoryInfo(worldsFolder);
-                // TODO: cargar tambien imagenes png
-                foreach (var file in d.GetFiles("*.jpg"))
+            { 
+                string imagesDirectory = Application.persistentDataPath;
+                DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
+                // TODO: dar soporte a .webp, usando https://github.com/netpyoung/unity.webp
+                Regex regex = new Regex("(.jpg\\Z)|(.png\\Z)");
+                foreach (var file in imagesDirectoryInfo.GetFiles())
                 {
-                    Debug.Log(file.FullName);
-                    Photo photo = contentCreator.CreatePhoto(file);
-                    imageList.Add(photo);
+                    if(regex.IsMatch(file.FullName))
+                    {
+                        Debug.Log($"Agrego el contenido: {file.FullName}");
+                        Photo photo = contentCreator.CreatePhoto(file);
+                        imageList.Add(photo);
+                    }
                 }
             }
             else
