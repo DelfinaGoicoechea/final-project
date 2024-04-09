@@ -36,12 +36,7 @@ namespace Contents{
             }
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
-            if (this.sound != null)
-            {
-                audioSource.clip = this.sound;
-                audioSource.Play();
-            }
-
+            base.play();
         }
 
         public override void pause()

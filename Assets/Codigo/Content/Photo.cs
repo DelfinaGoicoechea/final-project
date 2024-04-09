@@ -27,14 +27,7 @@ namespace Contents{
         }
         public override void play()
         {
-            AudioSource audioSource = ContentManager.Instance.audioSource;
-            audioSource.Pause();
-
-            if (this.sound != null)
-            {
-                audioSource.clip = this.sound;
-                audioSource.Play();
-            }
+            base.play();
             
             // Siempre las imagenes y videos se reproducen en la escena de esferas
             if (SceneManager.GetActiveScene().name != "SphereScene")

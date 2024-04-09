@@ -28,7 +28,21 @@ namespace Contents{
             
         }
 
-        public abstract void play();
+        public virtual void play(){
+            // Paro la reproduccion del sonido de cualquier Content previo
+            AudioSource audioSource = ContentManager.Instance.audioSource;
+            audioSource.Pause();
+
+            if (this.sound != null)
+            {
+                if (sound.loadState == AudioDataLoadState.Unloaded)
+                {
+                    sound.LoadAudioData();
+                }
+                audioSource.clip = this.sound;
+                audioSource.Play();
+            }
+        }
 
         /// <summary>
         /// Agrega el nombre del contenido a un Diccionario
@@ -55,6 +69,7 @@ namespace Contents{
             AudioSource audioSource = ContentManager.Instance.audioSource;
             if (this.sound != null){
                 audioSource.Stop();
+                sound.UnloadAudioData();
             }
         }
     }

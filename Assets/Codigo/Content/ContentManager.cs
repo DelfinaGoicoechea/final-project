@@ -49,10 +49,13 @@ namespace Contents{
 			// Cargar Imagenes
 			Transform photosTransform = contentsTransform.GetChild(0);
 			foreach (Transform photoTransform in photosTransform){
-				Content photo = photoTransform.gameObject.GetComponent<Photo>();
-				if(photo != null){
+				Content photo = photoTransform.gameObject.GetComponent<Content>();
+				if(photo != null)
+				{
 					contents.Add(photo);
-				}else{
+				}
+				else
+				{
 					Debug.LogWarning("El GameObject "+photoTransform.gameObject.name+" no tiene un script Photo");
 				}
 			}

@@ -118,8 +118,7 @@ namespace Contents{
                     {
                         videoPlayer.SetDirectAudioVolume(0, 0);
                     }
-                    audioSource.clip = this.sound;
-                    audioSource.Play();
+                    base.play();
                 }
                 else
                 {
