@@ -12,6 +12,35 @@ namespace Contents{
     public class FileSystemContentLoader
 	{
         private ContentCreator contentCreator = new ContentCreator();
+        private ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
+
+        public List<AudioContainer> LoadAudios()
+        {
+            List<AudioContainer> audioList = new List<AudioContainer>();
+            if (Directory.Exists(Application.persistentDataPath))
+            {
+                string audiosDirectory = Application.persistentDataPath;
+                DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
+                // TODO: Averiguar que extensiones son validas en android
+                Regex regex = new Regex("(.wav\\Z)");
+                Transform audiosTransform = cManager.transform.GetChild(2);
+                foreach (var file in audiosDirectoryInfo.GetFiles())
+                {
+                    if(regex.IsMatch(file.FullName))
+                    {
+                        Debug.Log($"Agrego el audio: {file.FullName}");
+                        string filename = Path.GetFileNameWithoutExtension(file.FullName);
+                        GameObject auxGameObject =  new GameObject("audio "+filename);
+                        auxGameObject.transform.parent = audiosTransform;
+                        PathAudioContainer audioContainer = auxGameObject.AddComponent<PathAudioContainer>();
+                        audioContainer.nombre = filename;
+                        audioContainer.audioPath = file.FullName;
+                        audioList.Add(audioContainer);
+                    }
+                }
+            }
+            return audioList;
+        }
 
         public List<Photo> LoadImages()
         {

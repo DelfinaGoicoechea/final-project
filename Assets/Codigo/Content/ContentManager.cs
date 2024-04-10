@@ -16,6 +16,7 @@ namespace Contents{
 	{
 		public AudioSource audioSource;
 		public List<Content> contents;
+		private List<AudioContainer> audios = new List<AudioContainer>();
 		private GameObject sphere;
 		private GameObject sphereEAC;
 		private Content currentlyPlaying;
@@ -41,8 +42,31 @@ namespace Contents{
 		void Start()
 		{
 			StartCoroutine(loadContents());
+			StartCoroutine(loadAudios());
 		}
 
+		private IEnumerator loadAudios()
+		{
+			Transform audiosTransform = transform.GetChild(2);
+			foreach (Transform audioTransform in audiosTransform){
+				AudioContainer audioContainer = audioTransform.gameObject.GetComponent<AudioContainer>();
+				if(audioContainer != null)
+				{
+					audios.Add(audioContainer);
+				}
+				else
+				{
+					Debug.LogWarning("El GameObject "+audioTransform.gameObject.name+" no tiene un script AudioContainer");
+				}
+			}
+			// Cargar audios en FileSystem
+			FileSystemContentLoader fsLoader = new FileSystemContentLoader();
+			List<AudioContainer> audiosToAdd = fsLoader.LoadAudios();
+			foreach(AudioContainer audioContainer in audiosToAdd) {
+				audios.Add(audioContainer);
+			}
+			yield return null;
+		}
 		private IEnumerator loadContents()
 		{
 			Transform contentsTransform = transform.GetChild(1);
@@ -133,6 +157,20 @@ namespace Contents{
 			}else{
 				return null;
 			}
+		}
+
+		/// <summary>
+		/// Returns a List with the names of the available Audios for scenes.
+		/// </summary>
+		/// <returns>List<string></returns>
+		public List<string> getAudios()
+		{
+			List<string> availableAudiosList = new List<string>();
+			foreach (AudioContainer audioContainer in audios)
+			{
+				availableAudiosList.Add(audioContainer.nombre);
+			}
+			return availableAudiosList;
 		}
 		
 		/// <summary>

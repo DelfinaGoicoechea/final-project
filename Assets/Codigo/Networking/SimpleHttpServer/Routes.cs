@@ -219,6 +219,42 @@ namespace SimpleHttpServer
                     }
                 },
                 new Route {
+                    Name = "get Audios Handler",
+                    UrlRegex = @"^/GetAudios$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string audios) =>
+                        {
+                            if(audios != null)
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = audios,
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "No se encontro audios",
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "404"
+                                };
+                            }
+                        };
+
+                        // Necesito usar un  task, porque setVolumen() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () => { return dispatcher.getAudios(callback); }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
                     Name = "Stop Advertisment Handler",
                     UrlRegex = @"^/RegisterClient$",
                     Method = "POST",

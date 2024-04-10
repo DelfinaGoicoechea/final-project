@@ -166,6 +166,19 @@ namespace DispatcherSpace
 			return callback(encodedThumbnail);
 		}
 
+		public HttpResponse getAudios(Func<string, HttpResponse> callback)
+		{
+			List<string> availableAudios = cManager.getAudios();
+			StringBuilder json = new StringBuilder("{\"audios\": [");
+			foreach (string audio in availableAudios)
+			{
+				json.Append($"\"{audio}\",");
+			}
+			json = json.Remove(json.Length-1, 1);
+			json.Append("]}");
+			return callback(json.ToString());
+		}
+
 		/// <summary>
 		/// Funcion para dejar de publicar servicio mDNS. No usada.
 		/// </summary>
