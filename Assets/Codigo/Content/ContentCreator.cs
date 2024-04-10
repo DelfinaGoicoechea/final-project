@@ -16,7 +16,7 @@ namespace Contents{
         {
             RenderTexture renderTexture = RenderTexture.GetTemporary(resolution.x, resolution.y);
             Graphics.Blit(null, renderTexture, material);
-            Texture2D texture = new Texture2D(resolution.x, resolution.y, TextureFormat.ARGB32, false);
+            Texture2D texture = new Texture2D(resolution.x, resolution.y, TextureFormat.RGB24, false);
             texture.filterMode = FilterMode.Bilinear;
             texture.wrapMode = TextureWrapMode.Clamp;
             RenderTexture.active = renderTexture;
@@ -26,18 +26,18 @@ namespace Contents{
             return texture;
         }
 
-
         /// <summary>
 	    /// Crea un contenido Photo a partir de el path a una imagen.
         /// La imagen debe ser de tipo jpg o png (al menos de momento).
         /// El GameObject asociado a la Photo, DEBE ser agregado a ContentManager,
         /// o se va a perder al cambiar de escena o ejecutar Stop.
 	    /// </summary>
-        public Photo CreatePhoto(FileInfo imageFileInfo, AudioClip sound = null){
+        public Photo CreatePhoto(FileInfo imageFileInfo, AudioContainer soundContainer = null){
             // --------------- Cargar Textura ---------------
             byte[] bytes = File.ReadAllBytes(imageFileInfo.FullName);
-            Texture2D loadTexture = new Texture2D(1,1);
+            Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
             ImageConversion.LoadImage(loadTexture, bytes);
+            loadTexture.Compress(false);
 
             // --------------- Cargar Material ---------------
             Shader shader = Shader.Find("Skybox/Panoramic");
@@ -57,7 +57,7 @@ namespace Contents{
             GameObject auxGameObject =  new GameObject(filename);
             Photo photo = auxGameObject.AddComponent<Photo>();
             photo.thumbnail = thumbnail;
-            photo.sound = sound;
+            photo.soundContainer = soundContainer;
             photo.nombre = filename;
             photo.imageMaterial = imageMaterial;
             
