@@ -11,7 +11,7 @@ namespace Contents{
     public abstract class Content : MonoBehaviour
     {
         public Texture2D thumbnail;
-        public AudioClip sound;
+        public AudioContainer soundContainer;
         
         [Tooltip("Nombre a mostrar a los usuarios")]
         public string nombre;
@@ -33,13 +33,10 @@ namespace Contents{
             AudioSource audioSource = ContentManager.Instance.audioSource;
             audioSource.Pause();
 
-            if (this.sound != null)
+            if (this.soundContainer != null)
             {
-                if (sound.loadState == AudioDataLoadState.Unloaded)
-                {
-                    sound.LoadAudioData();
-                }
-                audioSource.clip = this.sound;
+                soundContainer.LoadAudio();
+                audioSource.clip = this.soundContainer.sound;
                 audioSource.Play();
             }
         }
@@ -59,7 +56,7 @@ namespace Contents{
             // TODO: audioSource se podria pausar desde pause() en contentManager,
             // estas lineas parecen ser innecesarias y sobrecomplicar el asunto.
             AudioSource audioSource = ContentManager.Instance.audioSource;
-            if (this.sound != null){
+            if (this.soundContainer != null){
                 audioSource.Pause();
             }
         }
@@ -67,9 +64,9 @@ namespace Contents{
         public virtual void stop()
         {
             AudioSource audioSource = ContentManager.Instance.audioSource;
-            if (this.sound != null){
+            if (this.soundContainer != null){
                 audioSource.Stop();
-                sound.UnloadAudioData();
+                soundContainer.UnloadAudio();
             }
         }
     }

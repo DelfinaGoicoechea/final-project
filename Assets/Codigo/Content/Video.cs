@@ -101,7 +101,7 @@ namespace Contents{
                 {
                     videoPlayer.Play();
                     isPaused = false;
-                    if (this.sound != null){
+                    if (this.soundContainer != null){
                         audioSource.Play();
                     }
                     yield break;
@@ -112,7 +112,7 @@ namespace Contents{
                 videoPlayer.clip = video;
                 videoPlayer.targetTexture = renderTexture;
 
-                if (this.sound != null)
+                if (this.soundContainer != null)
                 {
                     if (video.audioTrackCount > 0)
                     {
