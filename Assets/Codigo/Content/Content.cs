@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 namespace Contents{
     
@@ -35,9 +36,12 @@ namespace Contents{
 
             if (this.soundContainer != null)
             {
-                soundContainer.LoadAudio();
-                audioSource.clip = this.soundContainer.sound;
-                audioSource.Play();
+                Action assignmentAuxFunc = () => {
+                    audioSource.clip = this.soundContainer.sound;
+                    audioSource.Play();
+                };
+                soundContainer.LoadPlayAudio(assignmentAuxFunc);
+
             }
         }
 

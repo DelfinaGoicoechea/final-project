@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 namespace Contents{
     
@@ -12,13 +13,15 @@ namespace Contents{
         [Tooltip("Nombre a mostrar a los usuarios")]
         public string nombre = "Default Audio Name";
 
-        public virtual void LoadAudio()
+        public virtual void LoadPlayAudio(Action assignmentAuxFunc = null)
         {
             if (this.sound != null)
             {
                 if (sound.loadState == AudioDataLoadState.Unloaded)
                 {
                     sound.LoadAudioData();
+                    if(assignmentAuxFunc != null)
+                        assignmentAuxFunc();
                 }
             }
         }
