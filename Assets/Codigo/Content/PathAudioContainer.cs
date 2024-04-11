@@ -7,12 +7,20 @@ using System;
 namespace Contents{
     
     /// <summary>
-    /// Tipo abstracto de contenido, luego extendido por Fotos, Videos y Escenas 3D.
+    /// Clase encargada de representar al audio proveniente sel sistema
+    /// de archivos de un contenido, y controlar la carga y liberación
+    /// de memoria asociada al archivo de audio.
     /// </summary>
     public class PathAudioContainer : AudioContainer
     {
         public string audioPath;
 
+        /// <summary>
+        /// Carga y comienza la reproducción del sonido.
+        /// assignmentAuxFunc es util para la asignación del audio y
+        /// comienzo de reproducción de forma asicrona.
+        /// </summary>
+        /// <param name="assignmentAuxFunc"></param>
         public override void LoadPlayAudio(Action assignmentAuxFunc = null)
         {
             AudioClip clip = null;
@@ -44,6 +52,9 @@ namespace Contents{
             };  
         }
 
+        /// <summary>
+        /// Libera la memoria asociada al audio.
+        /// </summary>
         public override void UnloadAudio()
         {
             if (this.sound != null)

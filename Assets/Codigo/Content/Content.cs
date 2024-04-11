@@ -36,12 +36,15 @@ namespace Contents{
 
             if (this.soundContainer != null)
             {
+                // Es necesario pasar una funcion que asigne y comience la reproduccion (assignmentAuxFunc),
+                // porque soundContainer.LoadPlayAudio() puede ejecutar la obtencion del
+                // sonido de forma asincrona (PathAudioContainer), por lo que no está asegurado
+                // que el audio esté cargado para darle play luego de LoadPlayAudio().
                 Action assignmentAuxFunc = () => {
                     audioSource.clip = this.soundContainer.sound;
                     audioSource.Play();
                 };
                 soundContainer.LoadPlayAudio(assignmentAuxFunc);
-
             }
         }
 
