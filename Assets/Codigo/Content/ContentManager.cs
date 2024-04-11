@@ -21,7 +21,6 @@ namespace Contents{
 		private GameObject sphereEAC;
 		private Content currentlyPlaying;
 		private float configuredVolume = 1.0f;
-		
 
 		public static ContentManager Instance { get; private set; }
 		private void Awake()
@@ -42,10 +41,13 @@ namespace Contents{
 		void Start()
 		{
 			StartCoroutine(loadContents());
-			StartCoroutine(loadAudios());
 		}
 
-		private IEnumerator loadAudios()
+		private void loadCustomizations(){
+			// TODO: Guardar personalización de contenidos, y cargarla acá al iniciar la app
+			return;
+		}
+		private void loadAudios()
 		{
 			Transform audiosTransform = transform.GetChild(2);
 			foreach (Transform audioTransform in audiosTransform){
@@ -65,7 +67,7 @@ namespace Contents{
 			foreach(AudioContainer audioContainer in audiosToAdd) {
 				audios.Add(audioContainer);
 			}
-			yield return null;
+			return;
 		}
 		private IEnumerator loadContents()
 		{
@@ -110,6 +112,9 @@ namespace Contents{
 			foreach(Photo photo in photosToAdd) {
 				contents.Add(photo);
 			}
+			
+			// Cargar audio del FileSystem
+			loadAudios();
 			yield return null;
 		}
 
@@ -133,6 +138,119 @@ namespace Contents{
 				sphere = GameObject.FindWithTag("ProjectionSphere");
 				sphereEAC = GameObject.FindWithTag("ProjectionSphereEAC");
 			}
+		}
+
+		public bool customizeEscena(string oldName, string newName = null, string newAudio = null)
+		{
+			Content content = contents.Find(x => x.nombre.Equals(oldName));
+			if (content == null){
+				Debug.Log($"El contenido {newName} no existe");
+				return false;
+			}
+			else{
+				if(content.GetType() != typeof(Contents.Escena)){
+					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
+					// sabe el tipo del contenido, pero mas vale prevenir que curar.
+					Debug.LogWarning($"El contenido {oldName} existe, pero el tipo no es Escena");
+					return false;
+				}
+				Escena scene = (Escena) content;
+				if (newName != null){
+					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
+					if (contentNewName != null){
+						Debug.Log($"Ya existe un contenido llamado \"{newName}\"");
+						return false;
+					}
+					scene.nombre = newName;
+				}	
+				if (newAudio != null){
+					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+					if(audioContainer == null){
+						Debug.Log($"El audio solicitado \"{newAudio}\" no existe");
+						return false;
+					}
+					scene.soundContainer = audioContainer;
+				}
+				//TODO: Guardar los cambios en un .json (o por el estilo)
+			}
+			return true;
+		}
+
+		public bool customizePhoto(string oldName, string newName = null, string newAudio = null)
+		{
+			Content content = contents.Find(x => x.nombre.Equals(oldName));
+			if (content == null){
+				Debug.Log($"El contenido {newName} no existe");
+				return false;
+			}
+			else{
+				if(content.GetType() != typeof(Contents.Photo)){
+					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
+					// sabe el tipo del contenido, pero mas vale prevenir que curar.
+					Debug.LogWarning($"El contenido {oldName} existe, pero el tipo no es Photo");
+					return false;
+				}
+				Photo photo = (Photo) content;
+				if (newName != null){
+					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
+					if (contentNewName != null){
+						Debug.Log($"Ya existe un contenido llamado \"{newName}\"");
+						return false;
+					}
+					photo.nombre = newName;
+				}	
+				if (newAudio != null){
+					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+					if(audioContainer == null){
+						Debug.Log($"El audio solicitado \"{newAudio}\" no existe");
+						return false;
+					}
+					photo.soundContainer = audioContainer;
+				}
+				//TODO: Guardar los cambios en un .json (o por el estilo)
+			}
+			return true;
+		}
+
+		public bool customizeVideo(string oldName, string newName = null, string newAudio = null , bool? isEquiangular = null)
+		{
+			Content content = contents.Find(x => x.nombre.Equals(oldName));
+			if (content != null)
+			{
+				if(content.GetType() != typeof(Contents.Video))
+				{
+					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
+					// sabe el tipo del contenido, pero mas vale prevenir que curar.
+					Debug.LogWarning($"El contenido {oldName} existe, pero el tipo no es Video");
+					return false;
+				}
+				Video video = (Video) content;
+				if (isEquiangular != null)
+					video.isEquiangularCubemap = (bool) isEquiangular;
+				if (newName != null){
+					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
+					if (contentNewName != null){
+						Debug.Log($"Ya existe un contenido llamado \"{newName}\"");
+						return false;
+					}
+					video.nombre = newName;
+				}
+				if (newAudio != null){
+					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+					if(audioContainer == null){
+						Debug.Log($"El audio solicitado \"{newAudio}\" no existe");
+						return false;
+					}
+					video.soundContainer = audioContainer;
+				}
+				//TODO: personalizar y guardar
+			}
+			else
+			{
+				Debug.Log("El nombre de contenido solicitado no existe");
+				return false;
+			}
+			return true;
 		}
 
 		/// <summary>
