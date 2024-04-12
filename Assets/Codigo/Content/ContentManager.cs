@@ -108,7 +108,7 @@ namespace Contents{
 
 			// Cargar contenidos en FileSystem
 			FileSystemContentLoader fsLoader = new FileSystemContentLoader();
-			List<Photo> photosToAdd = fsLoader.LoadImages();
+			List<PathPhoto> photosToAdd = fsLoader.LoadImages();
 			foreach(Photo photo in photosToAdd) {
 				contents.Add(photo);
 			}

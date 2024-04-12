@@ -42,9 +42,9 @@ namespace Contents{
             return audioList;
         }
 
-        public List<Photo> LoadImages()
+        public List<PathPhoto> LoadImages()
         {
-            List<Photo> imageList = new List<Photo>();
+            List<PathPhoto> imageList = new List<PathPhoto>();
             if (Directory.Exists(Application.persistentDataPath))
             { 
                 string imagesDirectory = Application.persistentDataPath;
@@ -56,7 +56,7 @@ namespace Contents{
                     if(regex.IsMatch(file.FullName))
                     {
                         Debug.Log($"Agrego el contenido: {file.FullName}");
-                        Photo photo = contentCreator.CreatePhoto(file);
+                        PathPhoto photo = contentCreator.CreatePathPhoto(file);
                         imageList.Add(photo);
                     }
                 }
