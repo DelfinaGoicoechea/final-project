@@ -279,6 +279,143 @@ namespace SimpleHttpServer
                         //return dispatcher.stopAdvertising(callback);
                     }
                 },
+                new Route {
+                    Name = "Customize Photo Handler",
+                    UrlRegex = @"^/CustomizePhoto$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string warning) =>
+                        {
+                            if (warning == "")
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Imagen modificada con exito",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = warning,
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        DataCustomizePhoto jsonObject = DataCustomizePhoto.CreateFromJSON(request.Content);
+                        string oldName = jsonObject.oldName;
+                        string newName = jsonObject.newName;
+                        string newAudio = jsonObject.newAudio;
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            oldName, newName, newAudio,
+                            (string oldName, string newName, string newAudio) =>
+                            {
+                                return dispatcher.customizePhoto(oldName, newName, newAudio, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "Customize Video Handler",
+                    UrlRegex = @"^/CustomizeVideo$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string warning) =>
+                        {
+                            if (warning == "")
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Video modificado con exito",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = warning,
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        DataCustomizeVideo jsonObject = DataCustomizeVideo.CreateFromJSON(request.Content);
+                        string oldName = jsonObject.oldName;
+                        string newName = jsonObject.newName;
+                        string newAudio = jsonObject.newAudio;
+                        bool isEquiangular = jsonObject.isEquiangular;
+                        bool changedRepresentation = jsonObject.changedRepresentation;
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            oldName, isEquiangular, changedRepresentation, newName, newAudio, 
+                            (string oldName, bool isEquiangular, bool changedRepresentation, string newName, string newAudio) =>
+                            {
+                                return dispatcher.customizeVideo(oldName,isEquiangular,changedRepresentation,newName,newAudio,callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "Customize Escena Handler",
+                    UrlRegex = @"^/CustomizeEscena$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string warning) =>
+                        {
+                            if (warning == "")
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Escena modificada con exito",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = warning,
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        DataCustomizeEscena jsonObject = DataCustomizeEscena.CreateFromJSON(request.Content);
+                        string oldName = jsonObject.oldName;
+                        string newName = jsonObject.newName;
+                        string newAudio = jsonObject.newAudio;
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            oldName, newName, newAudio,
+                            (string oldName, string newName, string newAudio) =>
+                            {
+                                return dispatcher.customizeEscena(oldName, newName, newAudio, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
             };
         }
 

@@ -140,117 +140,130 @@ namespace Contents{
 			}
 		}
 
-		public bool customizeEscena(string oldName, string newName = null, string newAudio = null)
+		public string customizeEscena(string oldName, string newName = null, string newAudio = null)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(oldName));
 			if (content == null){
-				Debug.Log($"El contenido {newName} no existe");
-				return false;
+				string warning = $"El contenido {oldName} no existe";
+				Debug.LogWarning(warning);
+				return warning;
 			}
 			else{
 				if(content.GetType() != typeof(Contents.Escena)){
 					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
 					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					Debug.LogWarning($"El contenido {oldName} existe, pero el tipo no es Escena");
-					return false;
+					string warning = $"El contenido {oldName} existe, pero el tipo no es Escena";
+					Debug.LogWarning(warning);
+					return warning;
 				}
 				Escena scene = (Escena) content;
 				if (newName != null){
 					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
 					if (contentNewName != null){
-						Debug.Log($"Ya existe un contenido llamado \"{newName}\"");
-						return false;
+						string warning = $"Ya existe un contenido llamado \"{newName}\"";
+						Debug.LogWarning(warning);
+						return warning;
 					}
 					scene.nombre = newName;
 				}	
 				if (newAudio != null){
 					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
 					if(audioContainer == null){
-						Debug.Log($"El audio solicitado \"{newAudio}\" no existe");
-						return false;
+						string warning = $"El audio solicitado \"{newAudio}\" no existe";
+						Debug.LogWarning(warning);
+						return warning;
 					}
 					scene.soundContainer = audioContainer;
 				}
 				//TODO: Guardar los cambios en un .json (o por el estilo)
 			}
-			return true;
+			return "";
 		}
 
-		public bool customizePhoto(string oldName, string newName = null, string newAudio = null)
+		public string customizePhoto(string oldName, string newName = null, string newAudio = null)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(oldName));
 			if (content == null){
-				Debug.Log($"El contenido {newName} no existe");
-				return false;
+				string warning = $"El contenido {oldName} no existe";
+				Debug.LogWarning(warning);
+				return warning;
 			}
 			else{
 				if(content.GetType() != typeof(Contents.Photo)){
 					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
 					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					Debug.LogWarning($"El contenido {oldName} existe, pero el tipo no es Photo");
-					return false;
+					string warning = $"El contenido {oldName} existe, pero el tipo no es Photo";
+					Debug.LogWarning(warning);
+					return warning;
 				}
 				Photo photo = (Photo) content;
 				if (newName != null){
 					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
 					if (contentNewName != null){
-						Debug.Log($"Ya existe un contenido llamado \"{newName}\"");
-						return false;
+						string warning = $"Ya existe un contenido llamado \"{newName}\"";
+						Debug.LogWarning($"Ya existe un contenido llamado \"{newName}\"");
+						return warning;
 					}
 					photo.nombre = newName;
 				}	
 				if (newAudio != null){
 					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
 					if(audioContainer == null){
-						Debug.Log($"El audio solicitado \"{newAudio}\" no existe");
-						return false;
+						string warning = $"El audio solicitado \"{newAudio}\" no existe";
+						Debug.LogWarning(warning);
+						return warning;
 					}
 					photo.soundContainer = audioContainer;
 				}
 				//TODO: Guardar los cambios en un .json (o por el estilo)
 			}
-			return true;
+			return "";
 		}
 
-		public bool customizeVideo(string oldName, string newName = null, string newAudio = null , bool? isEquiangular = null)
+		public string customizeVideo(string oldName, bool isEquiangular, bool changedRepresentation, string newName = null, string newAudio = null)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(oldName));
-			if (content != null)
+			if (content == null){
+				string warning = $"El contenido {oldName} no existe";
+				Debug.LogWarning(warning);
+				return warning;
+			}
+			else
 			{
 				if(content.GetType() != typeof(Contents.Video))
 				{
 					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
 					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					Debug.LogWarning($"El contenido {oldName} existe, pero el tipo no es Video");
-					return false;
+					string warning = $"El contenido {oldName} existe, pero el tipo no es Video";
+					Debug.LogWarning(warning);
+					return warning;
 				}
 				Video video = (Video) content;
-				if (isEquiangular != null)
-					video.isEquiangularCubemap = (bool) isEquiangular;
+				if (changedRepresentation){
+					video.isEquiangularCubemap = isEquiangular;
+				}
+					
 				if (newName != null){
 					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
 					if (contentNewName != null){
-						Debug.Log($"Ya existe un contenido llamado \"{newName}\"");
-						return false;
+						string warning = $"Ya existe un contenido llamado \"{newName}\"";
+						Debug.LogWarning(warning);
+						return warning;
 					}
 					video.nombre = newName;
 				}
 				if (newAudio != null){
 					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
 					if(audioContainer == null){
-						Debug.Log($"El audio solicitado \"{newAudio}\" no existe");
-						return false;
+						string warning = $"El audio solicitado \"{newAudio}\" no existe";
+						Debug.LogWarning(warning);
+						return warning;
 					}
 					video.soundContainer = audioContainer;
 				}
 				//TODO: personalizar y guardar
 			}
-			else
-			{
-				Debug.Log("El nombre de contenido solicitado no existe");
-				return false;
-			}
-			return true;
+			return "";
 		}
 
 		/// <summary>

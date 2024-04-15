@@ -189,6 +189,21 @@ namespace DispatcherSpace
 			return callback();
 		}
 
+		public HttpResponse customizePhoto(string oldName, string newName, string newAudio, Func<string, HttpResponse> callback){
+			string resultado = cManager.customizePhoto(oldName, newName, newAudio);
+			return callback(resultado);
+		}
+
+		public HttpResponse customizeVideo(string oldName, bool isEquiangular, bool changedRepresentation, string newName, string newAudio, Func<string, HttpResponse> callback){
+			string resultado = cManager.customizeVideo(oldName, isEquiangular, changedRepresentation, newName, newAudio);
+			return callback(resultado);
+		}
+
+		public HttpResponse customizeEscena(string oldName, string newName, string newAudio, Func<string, HttpResponse> callback){
+			string resultado = cManager.customizeEscena(oldName, newName, newAudio);
+			return callback(resultado);
+		}
+
         // Update is called once per frame
 		public void Update() {
 			lock(_executionQueue) {
@@ -204,6 +219,56 @@ namespace DispatcherSpace
 					StartCoroutine (action);
 				});
 			}
+		}
+
+		/// <summary>
+		/// Enqueue functions with Three strings and a boolean as arguments
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>		
+        public Task<HttpResponse> EnqueueAsync(string arg1, bool arg2, bool arg3,string arg4, string arg5,  Func<string, bool, bool, string, string, HttpResponse> action)
+		{
+			var tcs = new TaskCompletionSource<HttpResponse>();
+
+			void WrappedAction() {
+				try 
+				{
+					HttpResponse response = action(arg1, arg2, arg3, arg4, arg5);
+					tcs.TrySetResult(response);
+				} catch (Exception ex) 
+				{
+					tcs.TrySetException(ex);
+				}
+			}
+
+			Enqueue(ActionWrapper(WrappedAction));
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Enqueue functions with Three string arguments
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>		
+        public Task<HttpResponse> EnqueueAsync(string arg1,string arg2, string arg3, Func<string, string, string, HttpResponse> action)
+		{
+			var tcs = new TaskCompletionSource<HttpResponse>();
+
+			void WrappedAction() {
+				try 
+				{
+					HttpResponse response = action(arg1, arg2, arg3);
+					tcs.TrySetResult(response);
+				} catch (Exception ex) 
+				{
+					tcs.TrySetException(ex);
+				}
+			}
+
+			Enqueue(ActionWrapper(WrappedAction));
+			return tcs.Task;
 		}
 
         /// <summary>
