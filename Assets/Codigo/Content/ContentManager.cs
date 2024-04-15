@@ -5,6 +5,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using System.Text;
+using System.IO;
+using SimpleHttpServer.Models;
 
 namespace Contents{
 
@@ -45,6 +48,28 @@ namespace Contents{
 
 		private void loadCustomizations(){
 			// TODO: Guardar personalización de contenidos, y cargarla acá al iniciar la app
+			string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
+			if(File.Exists(cambiosFileLocation)){
+				var cambios = File.ReadLines(cambiosFileLocation);
+				foreach (string cambio in cambios){
+					DataSavedCustomizations jsonCambios = DataSavedCustomizations.CreateFromJSON(cambio);
+					switch(jsonCambios.contentType)
+					{
+						case "escena":
+						    DataCustomizeEscena dce = DataCustomizeEscena.CreateFromJSON(jsonCambios.cambios);
+							customizeEscena(dce.oldName, dce.newName, dce.newAudio, false);
+							break;
+						case "photo":
+						    DataCustomizePhoto dcph = DataCustomizePhoto.CreateFromJSON(jsonCambios.cambios);
+							customizePhoto(dcph.oldName, dcph.newName, dcph.newAudio, false);
+							break;
+						case "video":
+							DataCustomizeVideo dcv = DataCustomizeVideo.CreateFromJSON(jsonCambios.cambios);
+							customizeVideo(dcv.oldName, dcv.isEquiangular, dcv.changedRepresentation, dcv.newName, dcv.newAudio, false);
+							break;
+					}
+				}
+			}
 			return;
 		}
 		private void loadAudios()
@@ -67,6 +92,7 @@ namespace Contents{
 			foreach(AudioContainer audioContainer in audiosToAdd) {
 				audios.Add(audioContainer);
 			}
+			loadCustomizations();
 			return;
 		}
 		private IEnumerator loadContents()
@@ -140,7 +166,7 @@ namespace Contents{
 			}
 		}
 
-		public string customizeEscena(string oldName, string newName = null, string newAudio = null)
+		public string customizeEscena(string oldName, string newName = null, string newAudio = null, bool saveChange = true)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(oldName));
 			if (content == null){
@@ -175,12 +201,31 @@ namespace Contents{
 					}
 					scene.soundContainer = audioContainer;
 				}
-				//TODO: Guardar los cambios en un .json (o por el estilo)
+			}
+			
+			// Si realmente hubo cambios, los guardo
+			if(saveChange && (newName != null || newAudio != null)){
+				StringBuilder cambios = new StringBuilder("\n{\"contentType\":\"escena\",");
+				cambios.Append($"\"cambios\":\"{{\\\"oldName\\\":\\\"{oldName}\\\",");
+				if(newName != null)
+					cambios.Append($"\\\"newName\\\":\\\"{newName}\\\",");
+				if(newAudio != null)
+					cambios.Append($"\\\"newAudio\\\":\\\"{newAudio}\\\",");
+				cambios = cambios.Remove(cambios.Length-1, 1);
+				cambios.Append("}\"}");
+				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
+				if(!File.Exists(cambiosFileLocation)){
+					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
+					File.Create(cambiosFileLocation).Dispose();
+				}
+				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
+					streamWriter.Write(cambios.ToString());
+				}
 			}
 			return "";
 		}
 
-		public string customizePhoto(string oldName, string newName = null, string newAudio = null)
+		public string customizePhoto(string oldName, string newName = null, string newAudio = null, bool saveChange = true)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(oldName));
 			if (content == null){
@@ -215,12 +260,31 @@ namespace Contents{
 					}
 					photo.soundContainer = audioContainer;
 				}
-				//TODO: Guardar los cambios en un .json (o por el estilo)
+			}
+
+			// Si realmente hubo cambios, los guardo
+			if(saveChange && (newName != null || newAudio != null)){
+				StringBuilder cambios = new StringBuilder("\n{\"contentType\":\"photo\",");
+				cambios.Append($"\"cambios\":\"{{\\\"oldName\\\":\\\"{oldName}\\\",");
+				if(newName != null)
+					cambios.Append($"\\\"newName\\\":\\\"{newName}\\\",");
+				if(newAudio != null)
+					cambios.Append($"\\\"newAudio\\\":\\\"{newAudio}\\\",");
+				cambios = cambios.Remove(cambios.Length-1, 1);
+				cambios.Append("}\"}");
+				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
+				if(!File.Exists(cambiosFileLocation)){
+					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
+					File.Create(cambiosFileLocation).Dispose();
+				}
+				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
+					streamWriter.Write(cambios.ToString());
+				}
 			}
 			return "";
 		}
 
-		public string customizeVideo(string oldName, bool isEquiangular, bool changedRepresentation, string newName = null, string newAudio = null)
+		public string customizeVideo(string oldName, bool isEquiangular, bool changedRepresentation, string newName = null, string newAudio = null, bool saveChange = true)
 		{
 			Content content = contents.Find(x => x.nombre.Equals(oldName));
 			if (content == null){
@@ -261,7 +325,31 @@ namespace Contents{
 					}
 					video.soundContainer = audioContainer;
 				}
-				//TODO: personalizar y guardar
+			}
+
+			// Si realmente hubo cambios, los guardo
+			if(saveChange && (newName != null || newAudio != null || changedRepresentation)){
+				StringBuilder cambios = new StringBuilder("\n{\"contentType\":\"video\",");
+				cambios.Append($"\"cambios\":\"{{\\\"oldName\\\":\\\"{oldName}\\\",");
+				if(newName != null)
+					cambios.Append($"\\\"newName\\\":\\\"{newName}\\\",");
+				if(newAudio != null)
+					cambios.Append($"\\\"newAudio\\\":\\\"{newAudio}\\\",");
+				if(changedRepresentation){
+					string isEquiangular_lowercase = $"{isEquiangular}".ToLower();
+					cambios.Append($"\\\"isEquiangular\\\":{isEquiangular_lowercase},");
+					cambios.Append($"\\\"changedRepresentation\\\":true,");
+				}
+				cambios = cambios.Remove(cambios.Length-1, 1);
+				cambios.Append("}\"}");
+				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
+				if(!File.Exists(cambiosFileLocation)){
+					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
+					File.Create(cambiosFileLocation).Dispose();
+				}
+				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
+					streamWriter.Write(cambios.ToString());
+				}
 			}
 			return "";
 		}

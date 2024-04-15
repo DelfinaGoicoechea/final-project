@@ -18,6 +18,16 @@ namespace SimpleHttpServer.Models
     }
 
     [System.Serializable]
+    public class DataSavedCustomizations{
+        public string contentType;
+        public string cambios;
+        public static DataSavedCustomizations CreateFromJSON(string jsonString)
+        {
+            return JsonUtility.FromJson<DataSavedCustomizations>(jsonString);
+        }
+    }
+
+    [System.Serializable]
     public class DataCustomizePhoto{
         public string oldName;
         public string newName;
