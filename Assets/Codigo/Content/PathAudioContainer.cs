@@ -25,7 +25,7 @@ namespace Contents{
         {
             AudioClip clip = null;
             // TODO: Probar cambiar a .mp3 y que funcione bien en Android
-            UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip(audioPath, AudioType.WAV);
+            UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://"+audioPath, AudioType.WAV);
             UnityWebRequestAsyncOperation uwrao = uwr.SendWebRequest();
             uwrao.completed += (result) => {
                 // wrap tasks in try/catch, otherwise it'll fail silently
