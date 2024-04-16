@@ -25,31 +25,44 @@ namespace Contents{
         {
             AudioClip clip = null;
             // TODO: Probar cambiar a .mp3 y que funcione bien en Android
-            UnityWebRequest uwr = UnityWebRequestMultimedia.GetAudioClip("file://"+audioPath, AudioType.WAV);
-            UnityWebRequestAsyncOperation uwrao = uwr.SendWebRequest();
-            uwrao.completed += (result) => {
-                // wrap tasks in try/catch, otherwise it'll fail silently
-                try
-                {
-                    bool isNetworkError = uwr.result == UnityWebRequest.Result.ConnectionError;
-                    bool isHttpError = uwr.result == UnityWebRequest.Result.ProtocolError;
-                    if (isNetworkError || isHttpError) Debug.Log($"{uwr.error}");
-                    else
+            string extension  = Path.GetExtension(audioPath);
+            UnityWebRequest uwr = null;
+            if (extension == ".mp3"){
+                uwr = UnityWebRequestMultimedia.GetAudioClip("file://"+audioPath, AudioType.MPEG);
+            }
+            else{
+                // Actualmente FileSystemContentLoader.cs solo escanea por .mp3 o .wav, 
+                // pero más vale chequear por si se agrega algun formato mas en el futuro.
+                if (extension == ".wav"){
+                    uwr = UnityWebRequestMultimedia.GetAudioClip("file://"+audioPath, AudioType.WAV);
+                }
+            }
+            if(uwr != null){
+                UnityWebRequestAsyncOperation uwrao = uwr.SendWebRequest();
+                uwrao.completed += (result) => {
+                    // wrap tasks in try/catch, otherwise it'll fail silently
+                    try
                     {
-                        clip = DownloadHandlerAudioClip.GetContent(uwr);
+                        bool isNetworkError = uwr.result == UnityWebRequest.Result.ConnectionError;
+                        bool isHttpError = uwr.result == UnityWebRequest.Result.ProtocolError;
+                        if (isNetworkError || isHttpError) Debug.Log($"{uwr.error}");
+                        else
+                        {
+                            clip = DownloadHandlerAudioClip.GetContent(uwr);
+                        }
+                        string filename = Path.GetFileNameWithoutExtension(audioPath);
+                        clip.name = filename;
+                        sound = clip;
+                        if (assignmentAuxFunc != null)
+                            assignmentAuxFunc();
                     }
-                    string filename = Path.GetFileNameWithoutExtension(audioPath);
-                    clip.name = filename;
-                    sound = clip;
-                    if (assignmentAuxFunc != null)
-                        assignmentAuxFunc();
-                }
-                catch (Exception err)
-                {
-                    Debug.Log($"{err.Message}, {err.StackTrace}");
-                }
-                uwr.Dispose();
-            };  
+                    catch (Exception err)
+                    {
+                        Debug.Log($"{err.Message}, {err.StackTrace}");
+                    }
+                    uwr.Dispose();
+                };
+            }
         }
 
         /// <summary>
