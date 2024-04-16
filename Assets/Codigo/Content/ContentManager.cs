@@ -234,7 +234,8 @@ namespace Contents{
 				return warning;
 			}
 			else{
-				if(content.GetType() != typeof(Contents.Photo)){
+				Type tipoContent = content.GetType();
+				if(content.GetType() != typeof(Contents.Photo) && !tipoContent.IsSubclassOf(typeof(Contents.Photo))){
 					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
 					// sabe el tipo del contenido, pero mas vale prevenir que curar.
 					string warning = $"El contenido {oldName} existe, pero el tipo no es Photo";
