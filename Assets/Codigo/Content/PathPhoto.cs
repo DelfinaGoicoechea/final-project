@@ -13,12 +13,21 @@ namespace Contents{
     public class PathPhoto : Photo
     {
         public string imagePath;
+        private bool hasThumbnail = false;
 
         // Start is called before the first frame update
         void Start()
         {
             Shader shader = Shader.Find("Skybox/Panoramic");
             imageMaterial = new Material(shader);
+            string thumbnailLocation = $"{Application.persistentDataPath}/thumbnails/{this.nombre}.png";
+            if(File.Exists(thumbnailLocation)){
+                byte[] bytes = File.ReadAllBytes(thumbnailLocation);
+                Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
+                ImageConversion.LoadImage(loadTexture, bytes);
+                this.thumbnail = loadTexture;
+                hasThumbnail = true;
+            }
         }
 
         // Update is called once per frame
@@ -38,14 +47,24 @@ namespace Contents{
             imageMaterial.mainTexture = loadTexture;
             imageMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
             base.play();
+            if(!hasThumbnail){
+                StartCoroutine(captureThumbnail());
+            }
         }
 
         public override void stop(){
-            //TODO: Eliminar Imagen de RAM
             Object.Destroy(imageMaterial.mainTexture);
             imageMaterial.mainTexture = null;
         }
 
-        //TODO: Actualizar Thumbnail al tomar foto de la escena en su primera carga
+        private IEnumerator captureThumbnail(){
+            while (SceneManager.GetActiveScene().name != "SphereScene")
+            {
+                yield return new WaitForSeconds(1);
+            }
+            Texture2D image = ThumbnailCreator.Capture(this.nombre);
+            this.thumbnail = image;
+            this.hasThumbnail = true;
+        }
     }
 }
