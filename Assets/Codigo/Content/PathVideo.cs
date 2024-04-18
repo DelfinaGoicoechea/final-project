@@ -76,25 +76,35 @@ namespace Contents{
                         Debug.Log($"{err.Message}, {err.StackTrace}");
                     }
                 }
+                videoPlayer.Prepare();
                 videoPlayer.Play();
                 meshR.materials = meshmaterials;
                 player.transform.position = sphere.transform.position;
             }
             isPaused = false;
             if(!hasThumbnail){
-                StartCoroutine(captureThumbnail());
+                StartCoroutine(captureThumbnail(sceneName));
             }
         }
 
-        protected IEnumerator captureThumbnail(){
+        protected IEnumerator captureThumbnail(string sceneName){
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-            while (!videoPlayer.isPlaying)
+            
+            while (SceneManager.GetActiveScene().name == sceneName && !(videoPlayer.isPlaying && videoPlayer.isPrepared))
             {
                 yield return new WaitForSeconds(1);
             }
-            Texture2D image = ThumbnailCreator.Capture(this.nombre);
-            this.thumbnail = image;
-            this.hasThumbnail = true;
+
+            // Espero 2 segundos mas para asegurarme por completo de que el primer frame ya haya cargado
+            // (No encontre una manera confiable de esperar al primer frame cuando se usa RenderTexture)
+            yield return new WaitForSeconds(2);
+
+            // Me aseguro de que se siga en la misma escena, y no se haya cambiado de escena en esos 2 segundos
+            if(SceneManager.GetActiveScene().name == sceneName){
+                Texture2D image = ThumbnailCreator.Capture(this.nombre);
+                this.thumbnail = image;
+                this.hasThumbnail = true;
+            }
         }
     }
 }
