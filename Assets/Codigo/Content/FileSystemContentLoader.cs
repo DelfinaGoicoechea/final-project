@@ -67,5 +67,31 @@ namespace Contents{
             }
             return imageList;
         }
+
+        public List<PathVideo> LoadVideos()
+        {
+            List<PathVideo> videoList = new List<PathVideo>();
+            if (Directory.Exists(Application.persistentDataPath))
+            { 
+                string imagesDirectory = Application.persistentDataPath;
+                DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
+                // TODO: ver si se puede reproducir mkv
+                Regex regex = new Regex("(.mp4\\Z)|(.webm\\Z)");
+                foreach (var file in imagesDirectoryInfo.GetFiles())
+                {
+                    if(regex.IsMatch(file.FullName))
+                    {
+                        Debug.Log($"Agrego el contenido: {file.FullName}");
+                        PathVideo video = contentCreator.CreatePathVideo(file);
+                        videoList.Add(video);
+                    }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(Application.persistentDataPath);
+            }
+            return videoList;
+        }
     }
 }

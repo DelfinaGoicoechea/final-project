@@ -10,7 +10,7 @@ public class ThumbnailCreator
             _camera = GameObject.FindWithTag("ThumbnailCamera").GetComponent<Camera>();
         RenderTexture activeRenderTexture = RenderTexture.active;
         RenderTexture.active = _camera.targetTexture;
- 
+
         _camera.Render();
         Debug.Log(_camera.targetTexture);
  
@@ -20,11 +20,11 @@ public class ThumbnailCreator
         RenderTexture.active = activeRenderTexture;
  
         byte[] bytes = image.EncodeToPNG();
-        UnityEngine.Object.Destroy(image);
-        if (!Directory.Exists(Application.persistentDataPath + "/thumbnails")){
-            Directory.CreateDirectory(Application.persistentDataPath + "/thumbnails");
+        char OsSep = Path.DirectorySeparatorChar;
+        if (!Directory.Exists(Application.persistentDataPath + $"{OsSep}thumbnails")){
+            Directory.CreateDirectory(Application.persistentDataPath + $"{OsSep}thumbnails");
         }
-        File.WriteAllBytes(Application.persistentDataPath + "/thumbnails/" + name + ".png", bytes);
+        File.WriteAllBytes(Application.persistentDataPath + $"{OsSep}thumbnails{OsSep}" + name + ".png", bytes);
         return image;
     }
 }

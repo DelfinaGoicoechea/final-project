@@ -350,7 +350,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5543280992658777646}
-  - component: {fileID: 6430018349307493475}
+  - component: {fileID: 5117160190631993339}
   m_Layer: 0
   m_Name: trenNoruega
   m_TagString: Untagged
@@ -373,7 +373,7 @@ Transform:
   m_Father: {fileID: 8216540717577473006}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6430018349307493475
+--- !u!114 &5117160190631993339
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -382,16 +382,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8140836783175202693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1f953cffa7a114b8e81de292c8f44c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b324a84067429d4bae003a94e7333f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: c0c8ef42b34b71f4480ff9211d461ff5, type: 3}
   soundContainer: {fileID: 0}
   nombre: Tren noruego
-  video: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
   material: {fileID: 2100000, guid: f5faec58b2fe1354aa0f72e31b5865f2, type: 2}
   renderTexture: {fileID: 8400000, guid: 205c69285322fbf41b6ae0f5002c8d7c, type: 2}
   isEquiangularCubemap: 0
+  video: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
 --- !u!1 &8216540715953134332
 GameObject:
   m_ObjectHideFlags: 0
@@ -1253,7 +1253,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8216540718048004333}
-  - component: {fileID: 8216540718048004338}
+  - component: {fileID: 904898093951880649}
   m_Layer: 0
   m_Name: playa1
   m_TagString: Untagged
@@ -1276,7 +1276,7 @@ Transform:
   m_Father: {fileID: 8216540717577473006}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8216540718048004338
+--- !u!114 &904898093951880649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1285,16 +1285,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 8216540718048004332}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0e1f953cffa7a114b8e81de292c8f44c, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b324a84067429d4bae003a94e7333f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: f226cfe95412a51439f6c21c4a13134e, type: 3}
   soundContainer: {fileID: 7185524963068412162}
   nombre: Playa
-  video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
   material: {fileID: 2100000, guid: b242c65006a121743b80e0f4050f7ebf, type: 2}
   renderTexture: {fileID: 8400000, guid: 1e08bcf0583d69c428f97b9c0333d037, type: 2}
   isEquiangularCubemap: 1
+  video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
 --- !u!1 &8804792793420688156
 GameObject:
   m_ObjectHideFlags: 0

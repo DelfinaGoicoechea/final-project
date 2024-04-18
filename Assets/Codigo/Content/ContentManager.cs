@@ -138,7 +138,11 @@ namespace Contents{
 			foreach(Photo photo in photosToAdd) {
 				contents.Add(photo);
 			}
-			
+			List<PathVideo> videosToAdd = fsLoader.LoadVideos();
+			foreach(Video video in videosToAdd) {
+				contents.Add(video);
+			}
+
 			// Cargar audio del FileSystem
 			loadAudios();
 			yield return null;

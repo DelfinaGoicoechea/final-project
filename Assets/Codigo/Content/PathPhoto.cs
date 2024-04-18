@@ -20,7 +20,7 @@ namespace Contents{
         {
             Shader shader = Shader.Find("Skybox/Panoramic");
             imageMaterial = new Material(shader);
-            string thumbnailLocation = $"{Application.persistentDataPath}/thumbnails/{this.nombre}.png";
+            string thumbnailLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}thumbnails{Path.DirectorySeparatorChar}{this.nombre}.png";
             if(File.Exists(thumbnailLocation)){
                 byte[] bytes = File.ReadAllBytes(thumbnailLocation);
                 Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
