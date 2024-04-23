@@ -299,7 +299,8 @@ namespace Contents{
 			}
 			else
 			{
-				if(content.GetType() != typeof(Contents.Video))
+				Type tipoContent = content.GetType();
+				if(!tipoContent.IsSubclassOf(typeof(Contents.Video)))
 				{
 					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
 					// sabe el tipo del contenido, pero mas vale prevenir que curar.
