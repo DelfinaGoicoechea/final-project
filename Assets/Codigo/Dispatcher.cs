@@ -204,6 +204,29 @@ namespace DispatcherSpace
 			return callback(resultado);
 		}
 
+		public HttpResponse getContentConfig(string name, Func<string, HttpResponse> callback){
+			Dictionary<string,string> config = cManager.getContentConfig(name);
+			// Si el contenido no existe, se retorna null
+			if (config == null){
+				return callback(null);
+			}
+
+			StringBuilder jsonConfig = new StringBuilder("{");
+			foreach (string key in config.Keys)
+			{
+				jsonConfig.Append($"\"{key}\":");
+				// isEAC era un boolean, asi que lo trato distinto
+				if(key == "isEAC"){
+					jsonConfig.Append(config[key]+",");
+				}else{
+					jsonConfig.Append($"\""+config[key]+"\",");
+				}
+			}
+			jsonConfig = jsonConfig.Remove(jsonConfig.Length-1, 1);
+			jsonConfig.Append("}");
+			return callback(jsonConfig.ToString());
+		}
+
         // Update is called once per frame
 		public void Update() {
 			lock(_executionQueue) {

@@ -76,5 +76,14 @@ namespace Contents{
                 soundContainer.UnloadAudio();
             }
         }
+
+        public virtual Dictionary<string,string> getCurrentConfig(){
+            Dictionary<string,string> config = new Dictionary<string,string>();
+            config["name"] = this.nombre;
+            if (soundContainer != null){
+                config["sound"] = soundContainer.nombre;
+            }
+            return config;
+        }
     }
 }

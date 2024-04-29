@@ -416,6 +416,53 @@ namespace SimpleHttpServer
                         return task.Result;
                     }
                 },
+                new Route {
+                    Name = "get Config Handler",
+                    UrlRegex = @"^/GetConfig$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string config) =>
+                        {
+                            if(config != null){
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = config,
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "El contenido solicitado no fue encontrado",
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "404"
+                                };
+                            }
+                        };
+
+                        if(!request.Headers.ContainsKey("scene")){
+                            return new HttpResponse()
+                            {
+                                ContentAsUTF8 = "No se indico la escena a obtener",
+                                ReasonPhrase = "Not Found",
+                                StatusCode = "404"
+                            };
+                            
+                        }
+
+                        string scene = request.Headers["scene"];
+
+                        // Necesito usar un  task, porque setVolumen() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () => { return dispatcher.getContentConfig(scene, callback); }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
             };
         }
 

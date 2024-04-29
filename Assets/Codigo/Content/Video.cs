@@ -74,6 +74,12 @@ namespace Contents{
             isPaused = false;
         }
 
+        public override Dictionary<string,string> getCurrentConfig(){
+            Dictionary<string,string> config = base.getCurrentConfig();
+            config["isEAC"] = $"{isEquiangularCubemap}".ToLower();
+            return config;
+        }
+
         protected abstract IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource);
     }
 }

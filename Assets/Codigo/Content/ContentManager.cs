@@ -189,7 +189,7 @@ namespace Contents{
 				Escena scene = (Escena) content;
 				if (newName != null){
 					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null){
+					if (contentNewName != null && content != contentNewName){
 						string warning = $"Ya existe un contenido llamado \"{newName}\"";
 						Debug.LogWarning(warning);
 						return warning;
@@ -197,13 +197,18 @@ namespace Contents{
 					scene.nombre = newName;
 				}	
 				if (newAudio != null){
-					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
-					if(audioContainer == null){
-						string warning = $"El audio solicitado \"{newAudio}\" no existe";
-						Debug.LogWarning(warning);
-						return warning;
+					if(newAudio == ""){
+						scene.soundContainer = null;
+					}else{
+						AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+						if(audioContainer == null){
+							string warning = $"El audio solicitado \"{newAudio}\" no existe";
+							Debug.LogWarning(warning);
+							return warning;
+						}
+						scene.soundContainer = audioContainer;
 					}
-					scene.soundContainer = audioContainer;
+
 				}
 			}
 			
@@ -249,7 +254,7 @@ namespace Contents{
 				Photo photo = (Photo) content;
 				if (newName != null){
 					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null){
+					if (contentNewName != null && content != contentNewName){
 						string warning = $"Ya existe un contenido llamado \"{newName}\"";
 						Debug.LogWarning($"Ya existe un contenido llamado \"{newName}\"");
 						return warning;
@@ -257,13 +262,18 @@ namespace Contents{
 					photo.nombre = newName;
 				}	
 				if (newAudio != null){
-					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
-					if(audioContainer == null){
-						string warning = $"El audio solicitado \"{newAudio}\" no existe";
-						Debug.LogWarning(warning);
-						return warning;
+					if(newAudio == ""){
+						photo.soundContainer = null;
+					}else{
+						AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+						if(audioContainer == null){
+							string warning = $"El audio solicitado \"{newAudio}\" no existe";
+							Debug.LogWarning(warning);
+							return warning;
+						}
+						photo.soundContainer = audioContainer;
 					}
-					photo.soundContainer = audioContainer;
+
 				}
 			}
 
@@ -315,7 +325,7 @@ namespace Contents{
 					
 				if (newName != null){
 					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null){
+					if (contentNewName != null && content != contentNewName){
 						string warning = $"Ya existe un contenido llamado \"{newName}\"";
 						Debug.LogWarning(warning);
 						return warning;
@@ -323,13 +333,17 @@ namespace Contents{
 					video.nombre = newName;
 				}
 				if (newAudio != null){
-					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
-					if(audioContainer == null){
-						string warning = $"El audio solicitado \"{newAudio}\" no existe";
-						Debug.LogWarning(warning);
-						return warning;
+					if(newAudio == ""){
+						video.soundContainer = null;
+					}else{
+						AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+						if(audioContainer == null){
+							string warning = $"El audio solicitado \"{newAudio}\" no existe";
+							Debug.LogWarning(warning);
+							return warning;
+						}
+						video.soundContainer = audioContainer;
 					}
-					video.soundContainer = audioContainer;
 				}
 			}
 
@@ -382,6 +396,15 @@ namespace Contents{
 			}else{
 				return null;
 			}
+		}
+
+		public Dictionary<string,string> getContentConfig(string name){
+			Content content = contents.Find(x => x.nombre.Equals(name));
+			if (content != null){
+				Dictionary<string,string> config = content.getCurrentConfig();
+				return config;
+			}
+			return null;
 		}
 
 		/// <summary>
