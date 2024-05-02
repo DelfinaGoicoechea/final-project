@@ -120,21 +120,15 @@ namespace Contents{
             bool isEAC = true;
             video.isEquiangularCubemap = isEAC;
             if (isEAC){
-                RenderTexture renderTex = Resources.Load("RT_EAC") as RenderTexture;
                 Shader shader = Shader.Find("Custom/EAC-sphere");
                 Material renderMaterial = new Material(shader);
-                renderMaterial.mainTexture = renderTex;
                 renderMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
                 video.material = renderMaterial;
-                video.renderTexture = renderTex;
             }else{
-                RenderTexture renderTex = Resources.Load("RT_360_4K") as RenderTexture;
                 Shader shader = Shader.Find("Sprites/Default");
                 Material renderMaterial = new Material(shader);
-                renderMaterial.mainTexture = renderTex;
                 renderMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
                 video.material = renderMaterial;
-                video.renderTexture = renderTex;
             }
             
 

@@ -61,21 +61,21 @@ namespace Contents{
                 videoPlayer.Stop();
                 videoPlayer.url = null;
                 videoPlayer.clip = video;
-                videoPlayer.targetTexture = renderTexture;
-
+                
                 if (this.soundContainer != null)
                 {
                     if (video.audioTrackCount > 0)
                     {
                         videoPlayer.SetDirectAudioVolume(0, 0);
                     }
-                    base.play();
                 }
                 else
                 {
                     videoPlayer.SetDirectAudioVolume(0, 1);;
                 }
-                videoPlayer.Play();
+                // Creo un rendertexture a partir de la resolucion de video, y le doy play
+                videoPlayer.prepareCompleted += this.getVideoSizeAndPlay;
+                videoPlayer.Prepare();
                 meshR.materials = meshmaterials;
                 player.transform.position = sphere.transform.position;
             }

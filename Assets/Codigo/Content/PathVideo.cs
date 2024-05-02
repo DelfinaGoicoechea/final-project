@@ -51,7 +51,6 @@ namespace Contents{
                 videoPlayer.Stop();
                 videoPlayer.clip = null;
                 videoPlayer.url = $"file://{videoFilePath}";
-                videoPlayer.targetTexture = renderTexture;
 
                 if (this.soundContainer != null)
                 {
@@ -63,7 +62,6 @@ namespace Contents{
                     {
                         Debug.Log($"{err.Message}, {err.StackTrace}");
                     }
-                    base.play();
                 }
                 else
                 {
@@ -76,8 +74,9 @@ namespace Contents{
                         Debug.Log($"{err.Message}, {err.StackTrace}");
                     }
                 }
+                // Creo un rendertexture a partir de la resolucion de video, y le doy play
+                videoPlayer.prepareCompleted += this.getVideoSizeAndPlay;
                 videoPlayer.Prepare();
-                videoPlayer.Play();
                 meshR.materials = meshmaterials;
                 player.transform.position = sphere.transform.position;
             }

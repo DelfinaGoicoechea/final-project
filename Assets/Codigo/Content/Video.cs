@@ -12,9 +12,24 @@ namespace Contents{
     public abstract class Video : Content
     {
         public Material material;
-        public RenderTexture renderTexture;
         public bool isEquiangularCubemap;
         protected bool isPaused;
+
+        /// <summary>
+        /// Se obtiene la resolucion del video a partir de una textura temporal 
+        /// del VideoPlayer, a partir de eso se crea una RenderTexture, se asigna 
+        /// tanto como target del videoPlayer, como al material propio de Content.
+        ///  "videos".
+        /// </summary>
+        /// <param name="videoPlayer"></param>
+        protected void getVideoSizeAndPlay(VideoPlayer videoPlayer){
+            int width = videoPlayer.texture.width;
+            int height = videoPlayer.texture.height;
+            RenderTexture rendTex = new RenderTexture(width, height, 16, RenderTextureFormat.ARGB32);
+            videoPlayer.targetTexture = rendTex;
+            this.material.mainTexture = rendTex;
+            videoPlayer.Play();
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -72,6 +87,8 @@ namespace Contents{
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
             videoPlayer.Stop();
             isPaused = false;
+            Object.Destroy(material.mainTexture);
+            material.mainTexture = null;
         }
 
         public override Dictionary<string,string> getCurrentConfig(){
