@@ -85,5 +85,7 @@ namespace Contents{
             }
             return config;
         }
+
+        public abstract bool delete ();
     }
 }

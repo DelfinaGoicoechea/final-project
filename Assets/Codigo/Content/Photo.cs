@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System;
 
 namespace Contents{
 
@@ -70,6 +72,35 @@ namespace Contents{
                 dictio.Add("photos", new List<string>());
             }
             dictio["photos"].Add(this.nombre);
+        }
+
+        public override bool delete() {
+            string disablesFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}disables.txt";
+            if (!File.Exists(disablesFileLocation)) {
+                try {
+                    File.Create(disablesFileLocation).Dispose();
+                    using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
+                        streamWriter.Write(this.nombre);
+                    }
+                    return true;
+                } catch (Exception e) {
+                    Debug.Log(e.StackTrace);
+                    return false;
+                }
+            } else {
+                // si el archivo existe, pero esta vacio, no meto salto de linea al inicio
+                long fileLength = new FileInfo(disablesFileLocation).Length;
+                string toWrite = (fileLength == 0) ? this.nombre : "\n"+this.nombre;
+                try {
+                    using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
+                        streamWriter.Write(toWrite);
+			        }
+                    return true;
+                } catch (Exception e) {
+                    Debug.Log(e.StackTrace);
+                    return false;
+                }
+            }
         }
     }
 }

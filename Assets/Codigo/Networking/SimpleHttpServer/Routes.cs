@@ -463,6 +463,49 @@ namespace SimpleHttpServer
                         return task.Result;
                     }
                 },
+                new Route {
+                    Name = "Delete Content Handler",
+                    UrlRegex = @"^/Delete$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        {
+                            if (isOk)
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "El contenido se elimino correctamente",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "El contenido no pudo ser eliminado",
+                                    ReasonPhrase = "Internal Server Error",
+                                    StatusCode = "500"
+                                };
+                            }
+                        };
+
+                        DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
+                        string scene = jsonObject.scene;
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            scene,
+                            (string scene) =>
+                            {
+                                return dispatcher.deleteContenido(scene, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
             };
         }
 

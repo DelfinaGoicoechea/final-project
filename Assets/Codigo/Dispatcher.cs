@@ -204,6 +204,18 @@ namespace DispatcherSpace
 			return callback(resultado);
 		}
 
+		public HttpResponse deleteContenido(string scene, Func<bool, HttpResponse> callback)
+        {	
+			string currentlyPlaying = cManager.getPlayingName();
+			// chequeo si el contenido esta en reproduccion
+			if(currentlyPlaying != null && !currentlyPlaying.Equals(scene)){
+				// Levanta las metricas de la escena saliente (antes de la eliminacion)
+				mManager.LevantarMetricasEscena();
+			}
+            bool wasSuccesfull = cManager.deleteContent(scene);
+            return callback(wasSuccesfull);
+        }
+
 		public HttpResponse getContentConfig(string name, Func<string, HttpResponse> callback){
 			Dictionary<string,string> config = cManager.getContentConfig(name);
 			// Si el contenido no existe, se retorna null

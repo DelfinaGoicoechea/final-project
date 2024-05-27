@@ -47,31 +47,53 @@ namespace Contents{
 		}
 
 		private void loadCustomizations(){
-			// TODO: Guardar personalización de contenidos, y cargarla acá al iniciar la app
 			string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
 			if(File.Exists(cambiosFileLocation)){
-				var cambios = File.ReadLines(cambiosFileLocation);
+				string[] cambios = File.ReadAllLines(cambiosFileLocation);
+				List<string> linesToRemove = new List<string>();
 				foreach (string cambio in cambios){
+					string result;
+					Debug.Log("cambio: " + cambio);
 					DataSavedCustomizations jsonCambios = DataSavedCustomizations.CreateFromJSON(cambio);
 					switch(jsonCambios.contentType)
 					{
 						case "escena":
 						    DataCustomizeEscena dce = DataCustomizeEscena.CreateFromJSON(jsonCambios.cambios);
-							customizeEscena(dce.oldName, dce.newName, dce.newAudio, false);
+							result = customizeEscena(dce.oldName, dce.newName, dce.newAudio, false);
+							if (result == $"El contenido {dce.oldName} no existe"){
+								linesToRemove.Add(cambio);
+							}
 							break;
 						case "photo":
 						    DataCustomizePhoto dcph = DataCustomizePhoto.CreateFromJSON(jsonCambios.cambios);
-							customizePhoto(dcph.oldName, dcph.newName, dcph.newAudio, false);
+							result  = customizePhoto(dcph.oldName, dcph.newName, dcph.newAudio, false);
+							if (result == $"El contenido {dcph.oldName} no existe"){
+								linesToRemove.Add(cambio);
+							}
 							break;
 						case "video":
 							DataCustomizeVideo dcv = DataCustomizeVideo.CreateFromJSON(jsonCambios.cambios);
-							customizeVideo(dcv.oldName, dcv.isEquiangular, dcv.changedRepresentation, dcv.newName, dcv.newAudio, false);
+							result = customizeVideo(dcv.oldName, dcv.isEquiangular, dcv.changedRepresentation, dcv.newName, dcv.newAudio, false);
+							if (result == $"El contenido {dcv.oldName} no existe"){
+								linesToRemove.Add(cambio);
+							}
 							break;
 					}
 				}
+
+				// Si se debe eliminar alguna linea, lo reflejo en el archivo almacenado
+				if(linesToRemove.Count > 0){
+					StreamWriter streamWriter = File.CreateText(cambiosFileLocation);
+					foreach (string cambio in cambios){
+						if (!linesToRemove.Contains(cambio)){
+							streamWriter.WriteLine(cambio);
+						}
+					}
+					streamWriter.Close();
+				}
 			}
-			return;
 		}
+
 		private void loadAudios()
 		{
 			Transform audiosTransform = transform.GetChild(2);
@@ -94,6 +116,17 @@ namespace Contents{
 			}
 			loadCustomizations();
 			return;
+		}
+
+		private void loadDisables()
+		{
+			string disablesFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}disables.txt";
+            if (File.Exists(disablesFileLocation)) {
+				var disables = File.ReadLines(disablesFileLocation);
+				foreach (string contentToDisable in disables){
+					deleteContent(contentToDisable, true);
+				}
+			}
 		}
 		private IEnumerator loadContents()
 		{
@@ -131,6 +164,8 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+sceneTransform.gameObject.name+" no tiene un script Escena");
 				}
 			}
+			
+			loadDisables();
 
 			// Cargar contenidos en FileSystem
 			FileSystemContentLoader fsLoader = new FileSystemContentLoader();
@@ -208,7 +243,6 @@ namespace Contents{
 						}
 						scene.soundContainer = audioContainer;
 					}
-
 				}
 			}
 			
@@ -223,10 +257,17 @@ namespace Contents{
 				cambios = cambios.Remove(cambios.Length-1, 1);
 				cambios.Append("}\"}");
 				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
-				if(!File.Exists(cambiosFileLocation)){
+				if(!File.Exists(cambiosFileLocation)){ 
 					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
 					File.Create(cambiosFileLocation).Dispose();
+				} else {
+					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
+					long fileLength = new FileInfo(cambiosFileLocation).Length;
+					if (fileLength == 0) {
+						cambios.Remove(0,1); 
+					}
 				}
+
 				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
 					streamWriter.Write(cambios.ToString());
 				}
@@ -273,7 +314,6 @@ namespace Contents{
 						}
 						photo.soundContainer = audioContainer;
 					}
-
 				}
 			}
 
@@ -291,7 +331,14 @@ namespace Contents{
 				if(!File.Exists(cambiosFileLocation)){
 					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
 					File.Create(cambiosFileLocation).Dispose();
+				} else {
+					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
+					long fileLength = new FileInfo(cambiosFileLocation).Length;
+					if (fileLength == 0) {
+						cambios.Remove(0,1); 
+					}
 				}
+
 				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
 					streamWriter.Write(cambios.ToString());
 				}
@@ -366,7 +413,14 @@ namespace Contents{
 				if(!File.Exists(cambiosFileLocation)){
 					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
 					File.Create(cambiosFileLocation).Dispose();
+				} else {
+					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
+					long fileLength = new FileInfo(cambiosFileLocation).Length;
+					if (fileLength == 0) {
+						cambios.Remove(0,1); 
+					}
 				}
+
 				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
 					streamWriter.Write(cambios.ToString());
 				}
@@ -460,6 +514,35 @@ namespace Contents{
                 content.play();
 				StartCoroutine(fadeIn(2.5f));
 				return true;
+			}
+			Debug.LogWarning("No se encontro el Contenido: " + scene);
+			return false;
+		}
+
+		public bool deleteContent(string scene, bool fromLoadContents = false){
+			Content content = contents.Find(x => x.nombre.Equals(scene));
+			if (content != null)
+			{
+				if(this.currentlyPlaying != null && this.currentlyPlaying == content) {
+					// Me aseguro de frenar la reproducción, porque lo voy a eliminar
+					currentlyPlaying.stop();
+					this.stop();
+				}
+
+				// si vengo de LoadContents => salteo el paso de agregar al archivo de disables,
+				// y directamente asigno deleteExitoso = true;
+				bool deleteExitoso = (fromLoadContents) ? true : content.delete();
+
+				if (deleteExitoso){
+					bool listRemoveExitoso = contents.Remove(content);
+					if (listRemoveExitoso) {
+						Destroy(content.gameObject);
+						return true;
+					}
+					return false;
+				}
+				Debug.LogWarning("Ocurrio un error durante content.delete(), de: " + scene);
+				return false;
 			}
 			Debug.LogWarning("No se encontro el Contenido: " + scene);
 			return false;

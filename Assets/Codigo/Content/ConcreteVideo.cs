@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using System.IO;
+using System;
 
 namespace Contents{
 
@@ -80,6 +82,32 @@ namespace Contents{
                 player.transform.position = sphere.transform.position;
             }
             isPaused = false;
+        }
+        
+        public override bool delete() {
+            string disablesFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}disables.txt";
+            if (!File.Exists(disablesFileLocation)) {
+                try {
+                    File.Create(disablesFileLocation).Dispose();
+                    using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
+                        streamWriter.Write(this.nombre);
+                    }
+                    return true;
+                } catch (Exception e) {
+                    Debug.Log(e.StackTrace);
+                    return false;
+                }
+            } else {
+                try {
+                    using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
+				        streamWriter.Write("\n"+this.nombre); 
+			        }
+                    return true;
+                } catch (Exception e) {
+                    Debug.Log(e.StackTrace);
+                    return false;
+                }
+            }
         }
     }
 }
