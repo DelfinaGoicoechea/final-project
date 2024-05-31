@@ -10,8 +10,8 @@ namespace Contents{
 	/// </summary>
     public class ContentCreator
     {
-
         private ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
+
         private static Texture2D CreateThumbnail(ref Material material, Vector2Int resolution, string filename = "")
         {
             RenderTexture renderTexture = RenderTexture.GetTemporary(resolution.x, resolution.y);
@@ -27,12 +27,11 @@ namespace Contents{
         }
 
         private static Texture2D GetThumbnail(string filename){
-            // Confirmar existencia de la carpeta de thumbnails
-                // Confirmar existencia del archivo
+            
             string thumbFolder = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}thumbnails";
-            Directory.CreateDirectory(thumbFolder);
+            Directory.CreateDirectory(thumbFolder); // Confirma existencia de la carpeta de thumbnails
             string thumbFileLocation = $"{thumbFolder}{Path.DirectorySeparatorChar}{filename}.png";
-            if (File.Exists(thumbFileLocation)){
+            if (File.Exists(thumbFileLocation)){ // Confirma existencia del archivo
                 byte[] bytes = File.ReadAllBytes(thumbFileLocation);
                 Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
                 ImageConversion.LoadImage(loadTexture, bytes);
@@ -50,27 +49,9 @@ namespace Contents{
         /// o se va a perder al cambiar de escena o ejecutar Stop.
 	    /// </summary>
         public PathPhoto CreatePathPhoto(FileInfo imageFileInfo, AudioContainer soundContainer = null){
-            // --------------- Cargar Textura ---------------
-            /*
-            byte[] bytes = File.ReadAllBytes(imageFileInfo.FullName);
-            Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
-            ImageConversion.LoadImage(loadTexture, bytes);
-            loadTexture.Compress(false);
-            /*
-
-            // --------------- Cargar Material ---------------
-            /*
-            Shader shader = Shader.Find("Skybox/Panoramic");
-            Material imageMaterial = new Material(shader);
-            imageMaterial.mainTexture = loadTexture;
-            imageMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
-            */
-
             // --------------- Crear Photo ---------------
-            //Texture2D thumbnail = CreateThumbnail(ref imageMaterial, new Vector2Int(512, 512));
             string filename = imageFileInfo.Name.Split('.')[0];
             Texture2D thumbnail = GetThumbnail(filename);
-            
 
             // Se DEBE crear un GameObject, porque un MonoBehavior (Photo)
             // siempre es componente de un GameObject. 
@@ -82,7 +63,6 @@ namespace Contents{
             photo.soundContainer = soundContainer;
             photo.nombre = filename;
             photo.imagePath = imageFileInfo.FullName;
-            //photo.imageMaterial = imageMaterial;
             
             // Tengo que agregar auxGameObject como hijo de ContentManager para que no se
             // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 
@@ -93,7 +73,8 @@ namespace Contents{
             auxGameObject.transform.parent = photosTransform;
             return photo;
         }
-                /// <summary>
+        
+        /// <summary>
 	    /// Crea un contenido PathVideo a partir de el path a un video.
         /// El video debe ser con extension mp4 o webm (al menos de momento).
         /// El GameObject asociado al PathVideo, DEBE ser agregado a ContentManager,
