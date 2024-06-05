@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using System.IO;
 using System;
 
 namespace Contents{
@@ -104,6 +105,28 @@ namespace Contents{
                 this.thumbnail = image;
                 this.hasThumbnail = true;
             }
+        }
+
+        public override bool delete () {
+            // delete video
+            try {
+                File.Delete(videoFilePath);
+            } catch (Exception e) {
+                Debug.Log(e.StackTrace);
+                return false;
+            }
+            // delete thumbnail}
+            if (hasThumbnail) {
+                char OsSep = Path.DirectorySeparatorChar;
+                string thumbLocation = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{nombre}.png";
+                try {
+                    File.Delete(thumbLocation);
+                } catch (Exception e) {
+                    Debug.Log(e.StackTrace);
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

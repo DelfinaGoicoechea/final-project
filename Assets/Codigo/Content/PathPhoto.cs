@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Video;
 using UnityEngine.SceneManagement;
+using System;
 
 namespace Contents{
     /// <summary>
@@ -53,7 +54,7 @@ namespace Contents{
         }
 
         public override void stop(){
-            Object.Destroy(imageMaterial.mainTexture);
+            UnityEngine.Object.Destroy(imageMaterial.mainTexture);
             imageMaterial.mainTexture = null;
         }
 
@@ -65,6 +66,28 @@ namespace Contents{
             Texture2D image = ThumbnailCreator.Capture(this.nombre);
             this.thumbnail = image;
             this.hasThumbnail = true;
+        }
+
+        public override bool delete () {
+            // delete imagen
+            try {
+                File.Delete(imagePath);
+            } catch (Exception e) {
+                Debug.Log(e.StackTrace);
+                return false;
+            }
+            // delete thumbnail}
+            if (hasThumbnail) {
+                char OsSep = Path.DirectorySeparatorChar;
+                string thumbLocation = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{nombre}.png";
+                try {
+                    File.Delete(thumbLocation);
+                } catch (Exception e) {
+                    Debug.Log(e.StackTrace);
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Contents{
             {
                 string audiosDirectory = Application.persistentDataPath;
                 DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
-                // TODO: Averiguar porque no reproduce .mp3 en Android
                 Regex regex = new Regex("(.wav\\Z)|(.mp3\\Z)");
                 Transform audiosTransform = cManager.transform.GetChild(2);
                 foreach (var file in audiosDirectoryInfo.GetFiles())
