@@ -144,12 +144,14 @@ namespace Contents{
                             ImageConversion.LoadImage(loadTexture, bytes);
                             Shader shader = Shader.Find("Skybox/Panoramic");
                             photo.imageMaterial = new Material(shader);
-                            photo.thumbnail = loadTexture;
+                            string filename = file.Name.Split('.')[0];
+                            photo.thumbnail = ContentCreator.GetThumbnail(filename);
                             photo.imageMaterial.mainTexture = loadTexture;
                             photo.imageMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esfera
                         }
                         walk.setThumbnail(walk.getFirst().getThumbnail());
                     }
+                    imageList.Add(walk);
                 }
             }
             else

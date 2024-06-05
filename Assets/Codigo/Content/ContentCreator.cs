@@ -27,7 +27,7 @@ namespace Contents{
             return texture;
         }
 
-        private static Texture2D GetThumbnail(string filename){
+        public static Texture2D GetThumbnail(string filename){
             
             string thumbFolder = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}thumbnails";
             Directory.CreateDirectory(thumbFolder); // Confirma existencia de la carpeta de thumbnails
@@ -79,6 +79,7 @@ namespace Contents{
         public Walk CreateWalk(string name, AudioContainer soundContainer = null){
             GameObject auxGameObject = new GameObject(name);
             Walk camino = auxGameObject.AddComponent<Walk>(); 
+            camino.nombre = name;
             Transform contentTransform = cManager.transform.GetChild(1);
             Transform walkTransform = contentTransform.GetChild(3);
             auxGameObject.transform.parent = walkTransform;

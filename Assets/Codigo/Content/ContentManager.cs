@@ -195,10 +195,11 @@ namespace Contents{
 				contents.Add(video);
 			}
 			List<Walk> walksToAdd = fsLoader.LoadWalks();
-			GameObject auxGameObject = new GameObject(name);
-            Walk camino = auxGameObject.AddComponent<Walk>();
-			contents.Add(camino);
-						List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
+			foreach (Walk walk in walksToAdd)
+			{
+				contents.Add(walk);
+			}
+			List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
 			foreach(ExternalApp app in appsToAdd){
 				contents.Add(app);
 			}
@@ -565,6 +566,7 @@ namespace Contents{
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public Texture2D getThumbnail(string scene){
+			Debug.Log("La escena que se carga es: " + scene);
 			Content content = contents.Find(x => x.nombre.Equals(scene));
 			if (content == null){
 				Debug.LogWarning("No se encontro el Contenido: " + scene);
