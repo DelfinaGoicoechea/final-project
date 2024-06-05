@@ -78,6 +78,13 @@ namespace Contents{
 								linesToRemove.Add(cambio);
 							}
 							break;
+						case "extApp":
+							DataCustomizeApp dca = DataCustomizeApp.CreateFromJSON(jsonCambios.cambios);
+							result = customizeExtApp(dca.oldName, dca.newName, dca.packageName, false);
+							if (result == $"El contenido {dca.oldName} no existe"){
+								linesToRemove.Add(cambio);
+							}
+							break;
 					}
 				}
 
@@ -177,6 +184,10 @@ namespace Contents{
 			foreach(Video video in videosToAdd) {
 				contents.Add(video);
 			}
+			List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
+			foreach(ExternalApp app in appsToAdd){
+				contents.Add(app);
+			}
 
 			// Cargar audio del FileSystem
 			loadAudios();
@@ -229,7 +240,7 @@ namespace Contents{
 						Debug.LogWarning(warning);
 						return warning;
 					}
-					scene.nombre = newName;
+					scene.changeNombre(newName);
 				}	
 				if (newAudio != null){
 					if(newAudio == ""){
@@ -300,7 +311,7 @@ namespace Contents{
 						Debug.LogWarning($"Ya existe un contenido llamado \"{newName}\"");
 						return warning;
 					}
-					photo.nombre = newName;
+					photo.changeNombre(newName); // Util porque renombra thumbnails
 				}	
 				if (newAudio != null){
 					if(newAudio == ""){
@@ -377,7 +388,7 @@ namespace Contents{
 						Debug.LogWarning(warning);
 						return warning;
 					}
-					video.nombre = newName;
+					video.changeNombre(newName);
 				}
 				if (newAudio != null){
 					if(newAudio == ""){
@@ -428,6 +439,47 @@ namespace Contents{
 			return "";
 		}
 
+		public string customizeExtApp(string oldName, string newName = null, string packageName = null, bool saveChange = true)
+		{
+			Content content = contents.Find(x => x.nombre.Equals(oldName));
+			if (content == null){
+				string warning = $"El contenido {oldName} no existe";
+				Debug.LogWarning(warning);
+				return warning;
+			}
+			else{
+				if(content.GetType() != typeof(Contents.ExternalApp)){
+					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
+					// sabe el tipo del contenido, pero mas vale prevenir que curar.
+					string warning = $"El contenido {oldName} existe, pero el tipo no es Aplicacion";
+					Debug.LogWarning(warning);
+					return warning;
+				}
+				ExternalApp extApp = (ExternalApp) content;
+				if (newName != null){
+					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
+					if (contentNewName != null && content != contentNewName){
+						string warning = $"Ya existe un contenido llamado \"{newName}\"";
+						Debug.LogWarning(warning);
+						return warning;
+					}
+					extApp.changeNombre(newName);
+				}	
+				if (packageName != null){
+					if(packageName == ""){
+						string warning = $"El packagenName de {extApp.nombre} no puede estar vacio";
+						Debug.LogWarning(warning);
+						return warning;
+					}else{
+						extApp.changePackageName(packageName);
+					}
+				}
+			}
+			
+			// Los cambios ya se guardan en changeNombre() y changePackageName()
+			return "";
+		}
+
 		/// <summary>
 		/// Returns a Map with the keys being the content types (3D, video, photo),
 		///  and the value being a list with the names of the available contents of
@@ -473,6 +525,24 @@ namespace Contents{
 				availableAudiosList.Add(audioContainer.nombre);
 			}
 			return availableAudiosList;
+		}
+
+		/// <summary>
+		/// Adds an entry for an external app (like Google Earth and such).
+		/// </summary>
+		/// <param name="scene"></param>
+		/// <returns></returns>
+		public bool addExternalApp(string visibleName, string packageName){
+			Content content = contents.Find(x => x.nombre.Equals(visibleName));
+			if(content != null){
+				return false;
+			}
+			ContentCreator contentCreator = new ContentCreator();
+			ExternalApp externalApp = contentCreator.CreateExternalApp(visibleName,packageName,true);
+			// el true previo hace que se cree una entrada para la app en un archivo con la lista
+			// de apps, así el listado persiste entre ejecuciones.
+			contents.Add(externalApp);
+			return true;
 		}
 		
 		/// <summary>
@@ -529,8 +599,8 @@ namespace Contents{
 					this.stop();
 				}
 
-				// si vengo de LoadContents => salteo el paso de agregar al archivo de disables,
-				// y directamente asigno deleteExitoso = true;
+				// si vengo de (LoadContents -> LoadDisables) => salteo el paso de agregar 
+				// al archivo de disables, y directamente asigno deleteExitoso = true;
 				bool deleteExitoso = (fromLoadContents) ? true : content.delete();
 
 				if (deleteExitoso){

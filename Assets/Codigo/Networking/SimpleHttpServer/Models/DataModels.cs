@@ -28,6 +28,32 @@ namespace SimpleHttpServer.Models
     }
 
     [System.Serializable]
+    public class ExternalAppInfo{
+        public string visibleName;
+        public string packageName;
+        public static ExternalAppInfo CreateFromJSON(string jsonString)
+        {
+            return JsonUtility.FromJson<ExternalAppInfo>(jsonString);
+        }
+
+        public string CreateJSON()
+        {
+           return JsonUtility.ToJson(this);
+        }
+    }
+
+    [System.Serializable]
+    public class DataCustomizeApp{
+        public string oldName;
+        public string newName;
+        public string packageName;
+        public static DataCustomizeApp CreateFromJSON(string jsonString)
+        {
+            return JsonUtility.FromJson<DataCustomizeApp>(jsonString);
+        }
+    }
+
+    [System.Serializable]
     public class DataCustomizePhoto{
         public string oldName;
         public string newName;

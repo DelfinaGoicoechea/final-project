@@ -417,6 +417,51 @@ namespace SimpleHttpServer
                     }
                 },
                 new Route {
+                    Name = "Customize External App Handler",
+                    UrlRegex = @"^/CustomizeApp$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string warning) =>
+                        {
+                            if (warning == "")
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Escena modificada con exito",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = warning,
+                                    ReasonPhrase = "Not Found",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        DataCustomizeApp jsonObject = DataCustomizeApp.CreateFromJSON(request.Content);
+                        string oldName = jsonObject.oldName;
+                        string newName = jsonObject.newName;
+                        string packageName = jsonObject.packageName;
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            oldName, newName, packageName,
+                            (string oldName, string newName, string packageName) =>
+                            {
+                                return dispatcher.customizeExtApp(oldName, newName, packageName, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
                     Name = "get Config Handler",
                     UrlRegex = @"^/GetConfig$",
                     Method = "GET",
@@ -500,6 +545,50 @@ namespace SimpleHttpServer
                             (string scene) =>
                             {
                                 return dispatcher.deleteContenido(scene, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                 new Route {
+                    Name = "Add External App Handler",
+                    UrlRegex = @"^/AddApp$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        {
+                            if (isOk)
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Se agrego la app",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Ya existe un contenido con el nombre inidcado",
+                                    ReasonPhrase = "Bad Request",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        ExternalAppInfo jsonObject = ExternalAppInfo.CreateFromJSON(request.Content);
+                        string visibleName = jsonObject.visibleName;
+                        string packageName = jsonObject.packageName;
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            visibleName, packageName,
+                            (string visibleName, string packageName) =>
+                            {
+                                return dispatcher.addExternalApp(visibleName, packageName, callback);
                             }
                         );
                         task.Wait();

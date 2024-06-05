@@ -204,6 +204,11 @@ namespace DispatcherSpace
 			return callback(resultado);
 		}
 
+		public HttpResponse customizeExtApp(string oldName, string newName, string packageName, Func<string, HttpResponse> callback){
+			string resultado = cManager.customizeExtApp(oldName, newName, packageName);
+			return callback(resultado);
+		}
+
 		public HttpResponse deleteContenido(string scene, Func<bool, HttpResponse> callback)
         {	
 			string currentlyPlaying = cManager.getPlayingName();
@@ -215,6 +220,11 @@ namespace DispatcherSpace
             bool wasSuccesfull = cManager.deleteContent(scene);
             return callback(wasSuccesfull);
         }
+
+		public HttpResponse addExternalApp(string visibleName, string packageName, Func<bool, HttpResponse> callback){
+			bool resultado = cManager.addExternalApp(visibleName, packageName);
+			return callback(resultado);
+		}
 
 		public HttpResponse getContentConfig(string name, Func<string, HttpResponse> callback){
 			Dictionary<string,string> config = cManager.getContentConfig(name);
@@ -295,6 +305,31 @@ namespace DispatcherSpace
 				try 
 				{
 					HttpResponse response = action(arg1, arg2, arg3);
+					tcs.TrySetResult(response);
+				} catch (Exception ex) 
+				{
+					tcs.TrySetException(ex);
+				}
+			}
+
+			Enqueue(ActionWrapper(WrappedAction));
+			return tcs.Task;
+		}
+
+		/// <summary>
+		/// Enqueue functions with Two string arguments
+		/// </summary>
+		/// <param name="argument"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>		
+        public Task<HttpResponse> EnqueueAsync(string arg1,string arg2, Func<string, string, HttpResponse> action)
+		{
+			var tcs = new TaskCompletionSource<HttpResponse>();
+
+			void WrappedAction() {
+				try 
+				{
+					HttpResponse response = action(arg1, arg2);
 					tcs.TrySetResult(response);
 				} catch (Exception ex) 
 				{

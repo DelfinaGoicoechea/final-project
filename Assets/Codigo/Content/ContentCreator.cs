@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Text;
 
 namespace Contents{
 	/// <summary>
@@ -121,6 +122,57 @@ namespace Contents{
             Transform videosTransform = contentsTransform.GetChild(1);
             auxGameObject.transform.parent = videosTransform;
             return video;
+        }
+
+        /// <summary>
+	    /// Crea un contenido ExternalApp a partir del nombre de paquete.
+        /// El GameObject asociado a la ExternalApp, DEBE ser agregado a ContentManager,
+        /// o se va a perder al cambiar de escena o ejecutar Stop.
+	    /// </summary>
+        public ExternalApp CreateExternalApp(string visibleName, string packageName, bool saveToFile){
+            // --------------- Crear Photo ---------------
+            Texture2D thumbnail = GetThumbnail(visibleName);
+
+            // Se DEBE crear un GameObject, porque un MonoBehavior (Photo)
+            // siempre es componente de un GameObject. 
+            // Ademas, si Photo/Content deja de ser un MonoBehavior, no se puede asignar
+            // a un GameObject en UnityEditor con referencias a otros elementos.
+            GameObject auxGameObject =  new GameObject(visibleName);
+            ExternalApp externalApp = auxGameObject.AddComponent<ExternalApp>();
+            externalApp.thumbnail = thumbnail;
+            externalApp.soundContainer = null;
+            externalApp.nombre = visibleName;
+            externalApp.packageName = packageName;
+            
+            // Tengo que agregar auxGameObject como hijo de ContentManager para que no se
+            // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 
+            // porque esto no es un MonoBehavior, y si lo vuelvo un MonoBehavior, no lo 
+            // puedo crear con new en FileSystemContentLoader. Unity es un dolor de cabeza.
+            Transform contentsTransform = cManager.transform.GetChild(1);
+            Transform appsTransform = contentsTransform.GetChild(4);
+            auxGameObject.transform.parent = appsTransform;
+
+            // opcionalmente agrego una entrada a un listado de apps
+            if(saveToFile){
+                string extAppsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}externalApps.txt";
+				StringBuilder appInfo = new StringBuilder($"\n{{\"visibleName\":\"{visibleName}\",");
+				appInfo.Append($"\"packageName\":\"{packageName}\"}}");
+				if(!File.Exists(extAppsFileLocation)){
+					appInfo.Remove(0,1); // Quito el salto de linea inicial (si es la primer app de la lista)
+					File.Create(extAppsFileLocation).Dispose();
+				} else {
+					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
+					long fileLength = new FileInfo(extAppsFileLocation).Length;
+					if (fileLength == 0) {
+						appInfo.Remove(0,1); 
+					}
+				}
+
+				using (StreamWriter streamWriter = File.AppendText(extAppsFileLocation)){
+					streamWriter.Write(appInfo.ToString());
+				}
+            }
+            return externalApp;
         }
     }
 }

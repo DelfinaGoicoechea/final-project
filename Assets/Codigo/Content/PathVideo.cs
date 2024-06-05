@@ -108,6 +108,9 @@ namespace Contents{
         }
 
         public override bool delete () {
+            if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
+                UnityEngine.Object.Destroy(thumbnail);
+            }
             // delete video
             try {
                 File.Delete(videoFilePath);
@@ -126,6 +129,41 @@ namespace Contents{
                     return false;
                 }
             }
+            return true;
+        }
+
+        public override bool changeNombre(string newName){
+            char OsSep = Path.DirectorySeparatorChar;
+            string oldThPath = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{nombre}.png";
+            string newThPath = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{newName}.png";
+
+            // Cambio el nombre del archivo de thumbnail en caso de que exista
+            if (hasThumbnail) {
+                if (File.Exists(oldThPath)) {
+                    try {
+                        File.Move(oldThPath, newThPath);
+                    } catch (Exception e) {
+                        Debug.LogWarning(e.StackTrace);
+                        return false;
+                    }
+                }
+            } else {
+                // Puede que no tenga thumbnail, pero solo porque se cambio el nombre del contenido
+                // respecto del nombre original.
+                // Entonces al buscar bajo nombre no se encontro un thumbnail, ya que aparece bajo el
+                // nombre cambiado.
+                // Esto surge de "ContentManager -> LoadCustomization()"
+                if (File.Exists(newThPath)) {
+                    // borro de memoria la textura vieja (default) y cargo la  nueva.
+                    UnityEngine.Object.Destroy(thumbnail);
+                    byte[] bytes = File.ReadAllBytes(newThPath);
+                    Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
+                    ImageConversion.LoadImage(loadTexture, bytes);
+                    this.thumbnail = loadTexture;
+                    hasThumbnail = true;
+                }
+            }
+            this.nombre = newName;
             return true;
         }
     }

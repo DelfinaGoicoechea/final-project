@@ -86,6 +86,11 @@ namespace Contents{
             return config;
         }
 
+        public virtual bool changeNombre(string newName){
+            this.nombre = newName;
+            return true;
+        }
+
         public abstract bool delete ();
     }
 }

@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 using System.Text.RegularExpressions;
+using SimpleHttpServer.Models;
 
 namespace Contents{
     public class FileSystemContentLoader
@@ -91,6 +92,29 @@ namespace Contents{
                 Directory.CreateDirectory(Application.persistentDataPath);
             }
             return videoList;
+        }
+
+        public List<ExternalApp> LoadExternalApps(){
+            List<ExternalApp> appsList = new List<ExternalApp>();
+            if (Directory.Exists(Application.persistentDataPath)){ 
+                string externalAppsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}externalApps.txt";
+                if(File.Exists(externalAppsFileLocation)){
+                    string[] stringAppInfos = File.ReadAllLines(externalAppsFileLocation);
+                    ContentCreator contentCreator = new ContentCreator();
+                    foreach (string stringAppInfo in stringAppInfos){
+                        ExternalAppInfo extAppInfo = ExternalAppInfo.CreateFromJSON(stringAppInfo);
+                        string name = extAppInfo.visibleName;
+                        string packg = extAppInfo.packageName;
+                        ExternalApp extApp = contentCreator.CreateExternalApp(name, packg, false);
+                        appsList.Add(extApp);
+                    }
+                }
+            }
+            else
+            {
+                Directory.CreateDirectory(Application.persistentDataPath);
+            }
+            return appsList;
         }
     }
 }
