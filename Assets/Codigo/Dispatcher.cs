@@ -106,12 +106,13 @@ namespace DispatcherSpace
 			bool had3d = false;
 			bool hadVideos = false;
 			bool hadPhotos = false;
+			bool hadWalks = false;
             foreach (string contentType in contenidos.Keys)
             {
 				switch (contentType){
 					case "3D":
 						had3d = true;
-						if(hadVideos || hadPhotos){
+						if(hadVideos || hadPhotos || hadWalks){
 							json.Append(",");
 						}
 						json.Append("\"3D\": [");
@@ -124,7 +125,7 @@ namespace DispatcherSpace
 					
 					case "videos":
 						hadVideos = true;
-						if(had3d || hadPhotos){
+						if(had3d || hadPhotos || hadWalks){
 							json.Append(",");
 						}
 						json.Append("\"videos\": [");
@@ -137,7 +138,7 @@ namespace DispatcherSpace
 
 					case "photos":
 						hadPhotos = true;
-						if(had3d || hadVideos){
+						if(had3d || hadVideos || hadWalks){
 							json.Append(",");
 						}
 						json.Append("\"photos\": [");
@@ -147,6 +148,20 @@ namespace DispatcherSpace
 						json = json.Remove(json.Length-1, 1);
             			json.Append("]");
 						break;
+
+					case "walks":
+						hadWalks = true;
+						if (hadPhotos || hadVideos || had3d){
+							json.Append(",");
+						}
+						json.Append("\"walks\": [");
+						foreach (string content in contenidos["walks"]){
+							json.Append($"\"{content}\",");
+						}
+						json = json.Remove(json.Length-1, 1);
+            			json.Append("]");
+						break;
+					
 				}
             }
             json.Append("}");

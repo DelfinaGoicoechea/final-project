@@ -93,7 +93,44 @@ namespace Contents{
             auxGameObject.transform.parent = photosTransform;
             return photo;
         }
-                /// <summary>
+
+        public Walk CreateWalk(string name, AudioContainer soundContainer = null){
+            GameObject auxGameObject = new GameObject(name);
+            Walk camino = auxGameObject.AddComponent<Walk>(); 
+            Transform contentTransform = cManager.transform.GetChild(1);
+            Transform walkTransform = contentTransform.GetChild(3);
+            auxGameObject.transform.parent = walkTransform;
+            return camino;
+
+        }
+
+        /// <summary>
+	    /// Crea un contenido camino a partir de el path a una imagen.
+        /// Las imagenes deben ser de tipo jpg o png (al menos de momento).
+        /// El GameObject asociado a la Photo, DEBE ser agregado a ContentManager,
+        /// o se va a perder al cambiar de escena o ejecutar Stop.
+	    /// </summary>
+        public Photo CreatePhotoForWalk(FileInfo imageFileInfo, AudioContainer soundContainer = null){
+            string filename = imageFileInfo.Name.Split('.')[0];
+            Texture2D thumbnail = GetThumbnail(filename);
+
+            GameObject auxGameObject =  new GameObject(filename);
+            Photo photo = auxGameObject.AddComponent<Photo>();
+            photo.thumbnail = thumbnail;
+            photo.soundContainer = soundContainer;
+            photo.nombre = filename;
+            
+            Transform contentTransform = cManager.transform.GetChild(1);
+            Transform walkTransform = contentTransform.GetChild(3);
+            Transform photoTransform = walkTransform.GetChild(0);
+            auxGameObject.transform.parent = photoTransform;
+            return photo;
+            
+        }
+
+
+        
+        /// <summary>
 	    /// Crea un contenido PathVideo a partir de el path a un video.
         /// El video debe ser con extension mp4 o webm (al menos de momento).
         /// El GameObject asociado al PathVideo, DEBE ser agregado a ContentManager,

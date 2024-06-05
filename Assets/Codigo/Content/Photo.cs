@@ -71,5 +71,9 @@ namespace Contents{
             }
             dictio["photos"].Add(this.nombre);
         }
+
+        public Texture2D getThumbnail(){
+            return thumbnail;
+        }
     }
 }
