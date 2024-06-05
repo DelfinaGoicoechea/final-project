@@ -201,6 +201,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 4e36e1bc84c527b4cbff259da56dc7e1, type: 3}
   nombre: Navidad
+--- !u!1 &5429516267251586021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2273672592544036504}
+  m_Layer: 0
+  m_Name: ExternalApps
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2273672592544036504
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5429516267251586021}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8216540716978143274}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5968729310586168208
 GameObject:
   m_ObjectHideFlags: 0
@@ -341,6 +372,37 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &8122455487270228303
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7622581893896462729}
+  m_Layer: 0
+  m_Name: Walks
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7622581893896462729
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8122455487270228303}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8216540716978143274}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8140836783175202693
 GameObject:
   m_ObjectHideFlags: 0
@@ -389,7 +451,6 @@ MonoBehaviour:
   soundContainer: {fileID: 0}
   nombre: Tren noruego
   material: {fileID: 2100000, guid: f5faec58b2fe1354aa0f72e31b5865f2, type: 2}
-  renderTexture: {fileID: 8400000, guid: 205c69285322fbf41b6ae0f5002c8d7c, type: 2}
   isEquiangularCubemap: 0
   video: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
 --- !u!1 &8216540715953134332
@@ -928,6 +989,8 @@ Transform:
   - {fileID: 8216540717771585012}
   - {fileID: 8216540717577473006}
   - {fileID: 8216540715953134333}
+  - {fileID: 7622581893896462729}
+  - {fileID: 2273672592544036504}
   m_Father: {fileID: 8216540716786038009}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1292,7 +1355,6 @@ MonoBehaviour:
   soundContainer: {fileID: 7185524963068412162}
   nombre: Playa
   material: {fileID: 2100000, guid: b242c65006a121743b80e0f4050f7ebf, type: 2}
-  renderTexture: {fileID: 8400000, guid: 1e08bcf0583d69c428f97b9c0333d037, type: 2}
   isEquiangularCubemap: 1
   video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
 --- !u!1 &8804792793420688156

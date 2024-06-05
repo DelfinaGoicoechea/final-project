@@ -74,6 +74,10 @@ namespace Contents{
             dictio["photos"].Add(this.nombre);
         }
 
+        public Texture2D getThumbnail(){
+            return thumbnail;
+        }
+
         public override bool delete() {
             if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
                 UnityEngine.Object.Destroy(thumbnail);

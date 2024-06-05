@@ -171,7 +171,17 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+sceneTransform.gameObject.name+" no tiene un script Escena");
 				}
 			}
-			
+			// Cargar caminos
+			Transform walksTransform = contentsTransform.GetChild(3);
+			foreach (Transform walkTransform in walksTransform){
+				Content walk = walkTransform.gameObject.GetComponent<Walk>();
+				if(walk != null){
+					contents.Add(walk);
+				}else{
+					Debug.LogWarning("El GameObject "+ walkTransform.gameObject.name+" no tiene un script Walk");
+				}
+			}
+
 			loadDisables();
 
 			// Cargar contenidos en FileSystem
@@ -184,7 +194,11 @@ namespace Contents{
 			foreach(Video video in videosToAdd) {
 				contents.Add(video);
 			}
-			List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
+			List<Walk> walksToAdd = fsLoader.LoadWalks();
+			GameObject auxGameObject = new GameObject(name);
+            Walk camino = auxGameObject.AddComponent<Walk>();
+			contents.Add(camino);
+						List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
 			foreach(ExternalApp app in appsToAdd){
 				contents.Add(app);
 			}
