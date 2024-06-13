@@ -107,6 +107,7 @@ namespace DispatcherSpace
 			bool hadVideos = false;
 			bool hadPhotos = false;
 			bool hadWalks = false;
+			bool hadApps = false;
             foreach (string contentType in contenidos.Keys)
             {
 				switch (contentType){
@@ -161,7 +162,18 @@ namespace DispatcherSpace
 						json = json.Remove(json.Length-1, 1);
             			json.Append("]");
 						break;
-					
+					case "App":
+						hadApps = true;
+						if (hadPhotos || hadVideos || had3d || hadWalks){
+							json.Append(",");
+						}
+						json.Append("\"App\": [");
+						foreach (string content in contenidos["App"]){
+							json.Append($"\"{content}\",");
+						}
+						json = json.Remove(json.Length-1, 1);
+            			json.Append("]");
+						break;
 				}
             }
             json.Append("}");
