@@ -44,17 +44,26 @@ namespace DispatcherSpace
         }
 
 		/// Funcion que realiza la accion de play y retorna la respuesta http acorde (codigo)
-        public HttpResponse play(string scene, Func<bool, HttpResponse> callback)
+        public HttpResponse play(string scene, Func<bool, string, HttpResponse> callback)
         {	
 			string currentlyPlaying = cManager.getPlayingName();
 			// chequeo si ya hay contenido en reproduccion, 
 			// y si es un cambio de contenido, o resumir una pausa
+			string metricasJson = "";
 			if(currentlyPlaying != null && !currentlyPlaying.Equals(scene)){
 				// Levanta las metricas de la escena saliente (antes del cambio)
 				mManager.LevantarMetricasEscena();
+				// Obtengo las metricas a reportar de la escena saliente
+				List<string> metricas = mManager.ReportarMetricas();
+				DataMetricsList serializer = new DataMetricsList(metricas);
+				metricasJson = serializer.getAsJSON();
 			}
+			// TODO: Me vendria bien retornar metricas y boolean, pero hay que 
+			// 		 ver como los uso para informar todo
+			// 		 Por el momento solo mando el string para ver si compila y funciona mi idea
+			// 		 de enviar las metricas en cada play()
             bool sceneFound = cManager.playContent(scene);
-            return callback(sceneFound);
+            return callback(sceneFound, metricasJson);
         }
 
 		/// <summary>

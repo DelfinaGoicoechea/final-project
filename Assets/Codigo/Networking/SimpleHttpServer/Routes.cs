@@ -24,13 +24,13 @@ namespace SimpleHttpServer
                     UrlRegex = @"^/Play$",
                     Method = "POST",
                     Callable = (HttpRequest request) => {
-                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        Func<bool, string, HttpResponse> callback = (bool isOk, string metricas) =>
                         {
                             if (isOk)
                             {
                                 return new HttpResponse()
                                 {
-                                    ContentAsUTF8 = "El contenido comenzo a reproducirse",
+                                    ContentAsUTF8 = metricas,
                                     ReasonPhrase = "OK",
                                     StatusCode = "200"
                                 };
@@ -39,7 +39,7 @@ namespace SimpleHttpServer
                             {
                                 return new HttpResponse()
                                 {
-                                    ContentAsUTF8 = "El contenido solicitado no fue encontrado",
+                                    ContentAsUTF8 = metricas,
                                     ReasonPhrase = "Not Found",
                                     StatusCode = "404"
                                 };
@@ -358,7 +358,7 @@ namespace SimpleHttpServer
                         bool isEquiangular = jsonObject.isEquiangular;
                         bool changedRepresentation = jsonObject.changedRepresentation;
 
-                        // Necesito usar un  task, porque play() se debe 
+                        // Necesito usar un  task, porque customizeVideo() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             oldName, isEquiangular, changedRepresentation, newName, newAudio, 
@@ -403,7 +403,7 @@ namespace SimpleHttpServer
                         string newName = jsonObject.newName;
                         string newAudio = jsonObject.newAudio;
 
-                        // Necesito usar un  task, porque play() se debe 
+                        // Necesito usar un  task, porque customizeEscena() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             oldName, newName, newAudio,
@@ -448,7 +448,7 @@ namespace SimpleHttpServer
                         string newName = jsonObject.newName;
                         string packageName = jsonObject.packageName;
 
-                        // Necesito usar un  task, porque play() se debe 
+                        // Necesito usar un  task, porque customizeExtApp() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             oldName, newName, packageName,
@@ -538,7 +538,7 @@ namespace SimpleHttpServer
                         DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
                         string scene = jsonObject.scene;
 
-                        // Necesito usar un  task, porque play() se debe 
+                        // Necesito usar un  task, porque deleteContenido() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             scene,
@@ -582,7 +582,7 @@ namespace SimpleHttpServer
                         string visibleName = jsonObject.visibleName;
                         string packageName = jsonObject.packageName;
 
-                        // Necesito usar un  task, porque play() se debe 
+                        // Necesito usar un  task, porque addExternalApp() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             visibleName, packageName,
