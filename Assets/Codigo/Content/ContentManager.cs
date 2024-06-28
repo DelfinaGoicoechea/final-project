@@ -21,7 +21,6 @@ namespace Contents{
 		public List<Content> contents;
 		private List<AudioContainer> audios = new List<AudioContainer>();
 		private GameObject sphere;
-		private GameObject sphereEAC;
 		private Content currentlyPlaying;
 		private float configuredVolume = 1.0f;
 
@@ -227,7 +226,6 @@ namespace Contents{
 			{
 				// Busco ProjectionSphere
 				sphere = GameObject.FindWithTag("ProjectionSphere");
-				sphereEAC = GameObject.FindWithTag("ProjectionSphereEAC");
 			}
 		}
 
@@ -650,22 +648,11 @@ namespace Contents{
 
 		/// <summary>
 		/// returns the sphere used to project a 360 image/video.
-		/// Check getSphereEAC for a special case.
 		/// </summary>
 		/// <returns></returns>
 		public GameObject getSphere()
 		{
 			return sphere;
-		}
-
-		/// <summary>
-		/// returns the sphere used to project an "EquiAngularCubemap" image/video.
-		/// Usually found in 4K videos from Youtube.
-		/// </summary>
-		/// <returns></returns>
-			public GameObject getSphereEAC()
-		{
-			return sphereEAC;
 		}
 
 		/// <summary>

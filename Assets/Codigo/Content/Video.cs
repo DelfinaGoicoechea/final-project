@@ -14,6 +14,8 @@ namespace Contents{
         public Material material;
         public bool isEquiangularCubemap;
         protected bool isPaused;
+        protected static Vector3 noRotation = Vector3.zero;
+        protected static Vector3 eacRotation = new Vector3(0.0f, 0.0f, 90.0f);
 
         /// <summary>
         /// Se obtiene la resolucion del video a partir de una textura temporal 

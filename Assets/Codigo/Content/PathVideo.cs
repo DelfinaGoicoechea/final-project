@@ -28,7 +28,7 @@ namespace Contents{
             {
                 GameObject sphere;
                 ContentManager cm = ContentManager.Instance;
-                sphere = (isEquiangularCubemap) ? cm.getSphereEAC() : cm.getSphere();
+                sphere = cm.getSphere();
 
                 // Asigno el material a la esfera
                 MeshRenderer meshR = sphere.GetComponent<MeshRenderer>();
@@ -36,7 +36,6 @@ namespace Contents{
                 meshmaterials[0] = material;
 
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-                GameObject player = GameObject.FindWithTag("Player");
 
                 if (isPaused)
                 {
@@ -78,8 +77,9 @@ namespace Contents{
                 // Creo un rendertexture a partir de la resolucion de video, y le doy play
                 videoPlayer.prepareCompleted += this.getVideoSizeAndPlay;
                 videoPlayer.Prepare();
+                // Acomodo la rotacion de la esfera porque el shader EAC esta rotado 90 grados
+                sphere.transform.eulerAngles = (isEquiangularCubemap) ? eacRotation : noRotation;
                 meshR.materials = meshmaterials;
-                player.transform.position = sphere.transform.position;
             }
             isPaused = false;
             if(!hasThumbnail){

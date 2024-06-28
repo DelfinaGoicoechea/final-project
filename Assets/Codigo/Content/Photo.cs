@@ -56,8 +56,7 @@ namespace Contents{
                 Material[] meshmaterials = meshR.materials;
                 meshmaterials[0] = imageMaterial;
                 meshR.materials = meshmaterials;
-                GameObject player = GameObject.FindWithTag("Player");
-                player.transform.position = sphere.transform.position;
+                sphere.transform.eulerAngles = Vector3.zero; // Acomodo la rotacion de la esfera, por si la cambio algun video
             }
         }
 
