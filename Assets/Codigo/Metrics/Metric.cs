@@ -54,7 +54,7 @@ public abstract class Metric : MonoBehaviour
     void Awake()
     {
         ReiniciarNombreContent();
-        ReiniciarPublicada();
+        ReiniciarPublicada(); // Es necesario? la variable ya se inicializa en false
     }
 
     /// <summary>

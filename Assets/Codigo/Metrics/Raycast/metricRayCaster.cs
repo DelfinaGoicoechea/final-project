@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.PhysicsModule;
+using System;
+using System.Globalization;
 
-public class metricRayCaster : MonoBehaviour
+public class MetricRayCaster : MonoBehaviour
 {
     private Camera playerCamera;
     private Transform lastHitTransform = null;
+    public MetricaObservarObjetos metric;
     
     // Start is called before the first frame update
     void Start()
@@ -24,10 +26,12 @@ public class metricRayCaster : MonoBehaviour
     {
         Ray ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
         if(Physics.Raycast(ray, out RaycastHit hit, 100f)){
-                if(hit.transform.TryGetComponent<MetricRayReceiver>(out MetricRayReceiver mrr)){
+                if(hit.transform.TryGetComponent<MetricRayReceiver>(out MetricRayReceiver rayReceiver)){
                     if(hit.transform != lastHitTransform){ // emite una sola vez aunque lo siga mirando.
                         lastHitTransform = hit.transform;
-                        Debug.Log(mrr.getMessage());
+                        string msg = rayReceiver.getMessage();
+                        string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
+                        this.metric.addObjectMessage($"{currentTime}: {rayReceiver.getMessage()}");
                     }
                 }
         } else { // reinicio lastHitTransform cuando deja de haber un hit (ya no lo mira)
