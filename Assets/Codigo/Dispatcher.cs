@@ -58,13 +58,18 @@ namespace DispatcherSpace
 				DataMetricsList serializer = new DataMetricsList(metricas);
 				metricasJson = serializer.getAsJSON();
 			}
-			// TODO: Me vendria bien retornar metricas y boolean, pero hay que 
-			// 		 ver como los uso para informar todo
-			// 		 Por el momento solo mando el string para ver si compila y funciona mi idea
-			// 		 de enviar las metricas en cada play()
             bool sceneFound = cManager.playContent(scene);
             return callback(sceneFound, metricasJson);
         }
+		public HttpResponse getTriggeredMetrics(Func<string, HttpResponse> callback){
+			string metricasJson = "";
+			mManager.LevantarMetricasEscena();
+			// Obtengo las metricas a reportar de la escena saliente
+			List<string> metricas = mManager.ReportarMetricas();
+			DataMetricsList serializer = new DataMetricsList(metricas);
+			metricasJson = serializer.getAsJSON();
+			return callback(metricasJson);
+		}
 
 		/// <summary>
 		/// Funcion que realiza la accion de pausa y retorna la respuesta http acorde (codigo)

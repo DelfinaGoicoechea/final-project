@@ -551,7 +551,7 @@ namespace SimpleHttpServer
                         return task.Result;
                     }
                 },
-                 new Route {
+                new Route {
                     Name = "Add External App Handler",
                     UrlRegex = @"^/AddApp$",
                     Method = "POST",
@@ -593,6 +593,52 @@ namespace SimpleHttpServer
                         );
                         task.Wait();
                         return task.Result;
+                    }
+                },
+                new Route {
+                    // "Get Current Metrics
+                    // Permite obtener las metricas de la escena actual sin llamar a play. 
+                    // Es util para permitir reproduccion de la forma:
+                    // 1. Photo, Video o Escena
+                    // 2. ExternalApp
+                    // de manera que desde Flutter antes de cambiar de aplicacion, pide las metricas de lo anterior, y
+                    // ya no hay peligro de que se pierdan si android decide cerrar la app principal. 
+                    Name = "Get Triggered Metrics Handler", 
+                    UrlRegex = @"^/GetTriggeredMetrics$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string metricas) =>
+                        {
+                            return new HttpResponse()
+                            {
+                                ContentAsUTF8 = metricas,
+                                ReasonPhrase = "OK",
+                                StatusCode = "200"
+                            };
+                        };
+
+                        // Necesito usar un  task, porque play() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () =>
+                            {
+                                return dispatcher.getTriggeredMetrics(callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "Check Connection Handler",
+                    UrlRegex = @"^/CheckConnection$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        return new HttpResponse() {
+                            ContentAsUTF8 = "",
+                            ReasonPhrase = "OK",
+                            StatusCode = "200"
+                        };
                     }
                 },
             };
