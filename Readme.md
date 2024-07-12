@@ -23,3 +23,5 @@ Este repositorio aloja al componente de visualizacion de photos, videos y escena
 4. **Network discovery solo funciona en Android.** Esto es porque se realiza mediante llamados a un archivo .jar, cosa que se realiza mediante la JNI (Java Native Interface) solo presente en Android.
 	  - Se podría utilizar alguna biblioteca para que funcione en el editor, pero es trabajo extra que no consideramos que valga la pena.
 	  - La ip y puerto se imprimen por consola para cuando se ejecuta desde el editor.
+
+5. Para compilar la app a enviar al usuario, firmar utilizando el keystore ubicado en la misma carpeta que este Readme. El password es Tranquilidad360
