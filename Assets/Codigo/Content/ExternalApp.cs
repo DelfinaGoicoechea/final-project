@@ -64,12 +64,18 @@ namespace Contents{
 			if(File.Exists(extAppsFileLocation)){
                 string[] extAppInfos = File.ReadAllLines(extAppsFileLocation);
                 StreamWriter streamWriter = File.CreateText(extAppsFileLocation);
-                // Escribo todas las lineas excepto la que corresponde a esta ExternalApp
-                foreach (string info in extAppInfos) {
-                    print(info);
-                    ExternalAppInfo extAppInfo = ExternalAppInfo.CreateFromJSON(info);
-                    if (extAppInfo.visibleName != this.nombre) {
-                        streamWriter.WriteLine(info);
+                if(extAppInfos != null){
+                    // Escribo todas las lineas excepto la que corresponde a esta ExternalApp
+                    foreach (string info in extAppInfos) {
+                        if(info != null){
+                            ExternalAppInfo extAppInfo = ExternalAppInfo.CreateFromJSON(info);
+                            if(extAppInfo != null){
+                                if (extAppInfo.visibleName != null && extAppInfo.visibleName != this.nombre) {
+                                    streamWriter.WriteLine(info);
+                                }
+                            }
+                        }
+
                     }
                 }
                 streamWriter.Close();
