@@ -105,7 +105,7 @@ namespace Contents{
                         ExternalAppInfo extAppInfo = ExternalAppInfo.CreateFromJSON(stringAppInfo);
                         string name = extAppInfo.visibleName;
                         string packg = extAppInfo.packageName;
-                        ExternalApp extApp = contentCreator.CreateExternalApp(name, packg, false);
+                        ExternalApp extApp = contentCreator.CreateExternalApp(name, packg);
                         appsList.Add(extApp);
                     }
                 }

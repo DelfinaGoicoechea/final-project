@@ -551,7 +551,7 @@ namespace Contents{
 				return false;
 			}
 			ContentCreator contentCreator = new ContentCreator();
-			ExternalApp externalApp = contentCreator.CreateExternalApp(visibleName,packageName,true);
+			ExternalApp externalApp = contentCreator.CreateExternalApp(visibleName,packageName);
 			// el true previo hace que se cree una entrada para la app en un archivo con la lista
 			// de apps, así el listado persiste entre ejecuciones.
 			contents.Add(externalApp);

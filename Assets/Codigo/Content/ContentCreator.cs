@@ -166,7 +166,7 @@ namespace Contents{
         /// El GameObject asociado a la ExternalApp, DEBE ser agregado a ContentManager,
         /// o se va a perder al cambiar de escena o ejecutar Stop.
 	    /// </summary>
-        public ExternalApp CreateExternalApp(string visibleName, string packageName, bool saveToFile){
+        public ExternalApp CreateExternalApp(string visibleName, string packageName){
             // --------------- Crear Photo ---------------
             Texture2D thumbnail = GetThumbnail(visibleName);
 
@@ -188,27 +188,7 @@ namespace Contents{
             Transform contentsTransform = cManager.transform.GetChild(1);
             Transform appsTransform = contentsTransform.GetChild(4);
             auxGameObject.transform.parent = appsTransform;
-
-            // opcionalmente agrego una entrada a un listado de apps
-            if(saveToFile){
-                string extAppsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}externalApps.txt";
-				StringBuilder appInfo = new StringBuilder($"\n{{\"visibleName\":\"{visibleName}\",");
-				appInfo.Append($"\"packageName\":\"{packageName}\"}}");
-				if(!File.Exists(extAppsFileLocation)){
-					appInfo.Remove(0,1); // Quito el salto de linea inicial (si es la primer app de la lista)
-					File.Create(extAppsFileLocation).Dispose();
-				} else {
-					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
-					long fileLength = new FileInfo(extAppsFileLocation).Length;
-					if (fileLength == 0) {
-						appInfo.Remove(0,1); 
-					}
-				}
-
-				using (StreamWriter streamWriter = File.AppendText(extAppsFileLocation)){
-					streamWriter.Write(appInfo.ToString());
-				}
-            }
+            
             return externalApp;
         }
     }
