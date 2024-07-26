@@ -12,25 +12,25 @@ namespace SimpleHttpServer
     {
         public static HttpResponse InternalServerError()
         {
-            string content = File.ReadAllText("Assets/Codigo/Networking/SimpleHttpServer/Resources/Pages/500.html"); 
+            // string content = File.ReadAllText("Assets/Codigo/Networking/SimpleHttpServer/Resources/Pages/500.html"); 
 
             return new HttpResponse()
             {
                 ReasonPhrase = "InternalServerError",
                 StatusCode = "500",
-                ContentAsUTF8 = content
+                ContentAsUTF8 = "<h1>Internal Server Error</h1>"
             };
         }
 
         public static HttpResponse NotFound()
         {
-            string content = File.ReadAllText("Assets/Codigo/Networking/SimpleHttpServer/Resources/Pages/404.html");
+            // string content = File.ReadAllText("Assets/Codigo/Networking/SimpleHttpServer/Resources/Pages/404.html");
 
             return new HttpResponse()
             {
                 ReasonPhrase = "NotFound",
                 StatusCode = "404",
-                ContentAsUTF8 = content
+                ContentAsUTF8 = "<h1>Not Found</h1>"
             };
         }
     }
