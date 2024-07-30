@@ -14,6 +14,14 @@ namespace Contents{
 	{
         private ContentCreator contentCreator = new ContentCreator();
         private ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
+        
+        // TODO: dar soporte a .webp, usando https://github.com/netpyoung/unity.webp
+        private Regex imageExtensionRegex = new Regex("(.jpg\\Z)|(.png\\Z)");
+        private Regex audioExtensionRegex = new Regex("(.wav\\Z)|(.mp3\\Z)");
+
+        // TODO: ver si se puede reproducir mkv
+        private Regex videoExtensionRegex = new Regex("(.mp4\\Z)|(.webm\\Z)");
+
 
         public List<AudioContainer> LoadAudios()
         {
@@ -22,11 +30,10 @@ namespace Contents{
             {
                 string audiosDirectory = Application.persistentDataPath;
                 DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
-                Regex regex = new Regex("(.wav\\Z)|(.mp3\\Z)");
                 Transform audiosTransform = cManager.transform.GetChild(2);
                 foreach (var file in audiosDirectoryInfo.GetFiles())
                 {
-                    if(regex.IsMatch(file.FullName))
+                    if(audioExtensionRegex.IsMatch(file.FullName))
                     {
                         Debug.Log($"Agrego el audio: {file.FullName}");
                         string filename = Path.GetFileNameWithoutExtension(file.FullName);
@@ -42,6 +49,18 @@ namespace Contents{
             return audioList;
         }
 
+        public AudioContainer LoadSingleAudio(FileInfo fileinfo){
+            Debug.Log($"Agrego el audio: {fileinfo.FullName}");
+            string filename = Path.GetFileNameWithoutExtension(fileinfo.FullName);
+            GameObject auxGameObject =  new GameObject("audio "+filename);
+            Transform audiosTransform = cManager.transform.GetChild(2);
+            auxGameObject.transform.parent = audiosTransform;
+            PathAudioContainer audioContainer = auxGameObject.AddComponent<PathAudioContainer>();
+            audioContainer.nombre = filename;
+            audioContainer.audioPath = fileinfo.FullName;
+            return audioContainer;
+        }
+
         public List<PathPhoto> LoadImages()
         {
             List<PathPhoto> imageList = new List<PathPhoto>();
@@ -49,11 +68,9 @@ namespace Contents{
             { 
                 string imagesDirectory = Application.persistentDataPath;
                 DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
-                // TODO: dar soporte a .webp, usando https://github.com/netpyoung/unity.webp
-                Regex regex = new Regex("(.jpg\\Z)|(.png\\Z)");
                 foreach (var file in imagesDirectoryInfo.GetFiles())
                 {
-                    if(regex.IsMatch(file.FullName))
+                    if(imageExtensionRegex.IsMatch(file.FullName))
                     {
                         Debug.Log($"Agrego el contenido: {file.FullName}");
                         PathPhoto photo = contentCreator.CreatePathPhoto(file);
@@ -68,6 +85,21 @@ namespace Contents{
             return imageList;
         }
 
+        /// <summary>
+		/// Este metodo sirve para que la imagen que fue pasada usando adb, ahora
+		/// pueda ser cargada al ContentManager sin la necesidad de reiniciar la aplicacion.
+		/// </summary>
+		/// <param name="fileinfo"></param>
+		/// <returns></returns>
+		public PathPhoto LoadSingleImage(FileInfo fileinfo){
+            if(imageExtensionRegex.IsMatch(fileinfo.FullName)){
+                Debug.Log($"Agrego el contenido: {fileinfo.FullName}");
+                PathPhoto photo = contentCreator.CreatePathPhoto(fileinfo);
+                return photo;
+            }
+            return null;
+		}
+
         public List<PathVideo> LoadVideos()
         {
             List<PathVideo> videoList = new List<PathVideo>();
@@ -75,11 +107,9 @@ namespace Contents{
             { 
                 string imagesDirectory = Application.persistentDataPath;
                 DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
-                // TODO: ver si se puede reproducir mkv
-                Regex regex = new Regex("(.mp4\\Z)|(.webm\\Z)");
                 foreach (var file in imagesDirectoryInfo.GetFiles())
                 {
-                    if(regex.IsMatch(file.FullName))
+                    if(videoExtensionRegex.IsMatch(file.FullName))
                     {
                         Debug.Log($"Agrego el contenido: {file.FullName}");
                         PathVideo video = contentCreator.CreatePathVideo(file);
@@ -93,6 +123,21 @@ namespace Contents{
             }
             return videoList;
         }
+
+        /// <summary>
+		/// Este metodo sirve para que el video que fue pasado usando adb, ahora
+		/// pueda ser cargado al ContentManager sin la necesidad de reiniciar la aplicacion.
+		/// </summary>
+		/// <param name="fileinfo"></param>
+		/// <returns></returns>
+        public PathVideo LoadSingleVideo(FileInfo fileinfo){
+            if(videoExtensionRegex.IsMatch(fileinfo.FullName)){
+                Debug.Log($"Agrego el contenido: {fileinfo.FullName}");
+                PathVideo video = contentCreator.CreatePathVideo(fileinfo);
+                return video;
+            }
+            return null;
+		}
 
         public List<ExternalApp> LoadExternalApps(){
             List<ExternalApp> appsList = new List<ExternalApp>();
@@ -131,10 +176,9 @@ namespace Contents{
                     Walk walk = contentCreator.CreateWalk(directoryName);
                     string auxPath = Path.Combine(path, directoryName);
                     DirectoryInfo directoryInfo = new DirectoryInfo(auxPath);
-                    Regex regex = new Regex("(.jpg\\Z)|(.png\\Z)");
                     foreach (var file in directoryInfo.GetFiles())
                     {
-                        if (regex.IsMatch(file.FullName))
+                        if (imageExtensionRegex.IsMatch(file.FullName))
                         {
                             Debug.Log($"Agrego la imagen de camino: {file.FullName}");
                             Photo photo = contentCreator.CreatePhotoForWalk(file);

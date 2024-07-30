@@ -18,6 +18,7 @@ namespace SimpleHttpServer
 
         public Routes()
         {
+            // TODO: Crear una clase para cada ruta, asi pasa a estar mas organizado
             routes = new List<Models.Route>() {
                 new Route {
                     Name = "Play Handler",
@@ -589,6 +590,135 @@ namespace SimpleHttpServer
                             (string visibleName, string packageName) =>
                             {
                                 return dispatcher.addExternalApp(visibleName, packageName, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "Add Photo Handler",
+                    UrlRegex = @"^/AddPhoto$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        {
+                            if (isOk)
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Se agrego la imagen",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Ya existe un contenido con el nombre inidcado",
+                                    ReasonPhrase = "Bad Request",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        FilePathInfo jsonObject = FilePathInfo.CreateFromJSON(request.Content);
+                        string filepath = jsonObject.filepath;
+
+                        // Necesito usar un  task, porque addExternalApp() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            filepath,
+                            (string filepath) =>
+                            {
+                                return dispatcher.addPhoto(filepath, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "Add Video Handler",
+                    UrlRegex = @"^/AddVideo$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        {
+                            if (isOk)
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Se agrego el video",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Ya existe un contenido con el nombre inidcado",
+                                    ReasonPhrase = "Bad Request",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        FilePathInfo jsonObject = FilePathInfo.CreateFromJSON(request.Content);
+                        string filepath = jsonObject.filepath;
+
+                        // Necesito usar un  task, porque addExternalApp() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            filepath,
+                            (string filepath) =>
+                            {
+                                return dispatcher.addVideo(filepath, callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
+                new Route {
+                    Name = "Add Audio Handler",
+                    UrlRegex = @"^/AddAudio$",
+                    Method = "POST",
+                    Callable = (HttpRequest request) => {
+                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        {
+                            if (isOk)
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Se agrego el audio",
+                                    ReasonPhrase = "OK",
+                                    StatusCode = "200"
+                                };
+                            }
+                            else
+                            {
+                                return new HttpResponse()
+                                {
+                                    ContentAsUTF8 = "Ya existe un audio con el nombre inidcado",
+                                    ReasonPhrase = "Bad Request",
+                                    StatusCode = "400"
+                                };
+                            }
+                        };
+
+                        FilePathInfo jsonObject = FilePathInfo.CreateFromJSON(request.Content);
+                        string filepath = jsonObject.filepath;
+
+                        // Necesito usar un  task, porque addExternalApp() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            filepath,
+                            (string filepath) =>
+                            {
+                                return dispatcher.addAudio(filepath, callback);
                             }
                         );
                         task.Wait();

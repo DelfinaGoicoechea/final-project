@@ -61,6 +61,13 @@ namespace DispatcherSpace
             bool sceneFound = cManager.playContent(scene);
             return callback(sceneFound, metricasJson);
         }
+
+		/// <summary>
+		/// Permite obtener las metricas que fueron disparadas hasta el momento en la
+		/// reproduccion del contenido actual.
+		/// </summary>
+		/// <param name="callback"></param>
+		/// <returns></returns>
 		public HttpResponse getTriggeredMetrics(Func<string, HttpResponse> callback){
 			string metricasJson = "";
 			mManager.LevantarMetricasEscena();
@@ -264,6 +271,21 @@ namespace DispatcherSpace
 
 		public HttpResponse addExternalApp(string visibleName, string packageName, Func<bool, HttpResponse> callback){
 			bool resultado = cManager.addExternalApp(visibleName, packageName);
+			return callback(resultado);
+		}
+
+		public HttpResponse addPhoto(string filepath, Func<bool, HttpResponse> callback){
+			bool resultado = cManager.addPathImage(filepath);
+			return callback(resultado);
+		}
+
+		public HttpResponse addVideo(string filepath, Func<bool, HttpResponse> callback){
+			bool resultado = cManager.addPathVideo(filepath);
+			return callback(resultado);
+		}
+
+		public HttpResponse addAudio(string filepath, Func<bool, HttpResponse> callback){
+			bool resultado = cManager.addPathAudio(filepath);
 			return callback(resultado);
 		}
 

@@ -23,6 +23,7 @@ namespace Contents{
 		private GameObject sphere;
 		private Content currentlyPlaying;
 		private float configuredVolume = 1.0f;
+		private FileSystemContentLoader fsLoader;
 
 		public static ContentManager Instance { get; private set; }
 		private void Awake()
@@ -34,6 +35,7 @@ namespace Contents{
 			}
 			else
 			{
+				fsLoader = new FileSystemContentLoader();
 				Instance = this;
 			}
 			DontDestroyOnLoad(this.gameObject);
@@ -115,7 +117,6 @@ namespace Contents{
 				}
 			}
 			// Cargar audios en FileSystem
-			FileSystemContentLoader fsLoader = new FileSystemContentLoader();
 			List<AudioContainer> audiosToAdd = fsLoader.LoadAudios();
 			foreach(AudioContainer audioContainer in audiosToAdd) {
 				audios.Add(audioContainer);
@@ -184,7 +185,6 @@ namespace Contents{
 			loadDisables();
 
 			// Cargar contenidos en FileSystem
-			FileSystemContentLoader fsLoader = new FileSystemContentLoader();
 			List<PathPhoto> photosToAdd = fsLoader.LoadImages();
 			foreach(Photo photo in photosToAdd) {
 				contents.Add(photo);
@@ -556,6 +556,79 @@ namespace Contents{
 			// de apps, así el listado persiste entre ejecuciones.
 			contents.Add(externalApp);
 			return true;
+		}
+
+		/// <summary>
+		/// Este metodo sirve para que la imagen que fue pasada usando adb, ahora
+		/// pueda ser cargada al ContentManager sin la necesidad de reiniciar la aplicacion.
+		/// </summary>
+		/// <param name="filepath"></param>
+		/// <returns></returns>
+		public bool addPathImage(string filepath){
+			FileInfo fileInfo = new FileInfo(filepath);
+			string filename = fileInfo.Name.Split('.')[0];
+			
+			Content content = contents.Find(x => x.nombre.Equals(filename));
+			if(content != null){
+				// TODO: Deberia renombrarlo y proseguir, porque al reiniciar la app
+				// va a intentar cargarlo y crearlo igualmente.
+				return false;
+			}
+			PathPhoto photo = fsLoader.LoadSingleImage(fileInfo);
+			if(photo != null){
+				contents.Add(photo);
+				return true;
+			}
+			return false; // extension de archivo incompatible
+		}
+
+		/// <summary>
+		/// Este metodo sirve para que la imagen que fue pasada usando adb, ahora
+		/// pueda ser cargada al ContentManager sin la necesidad de reiniciar la aplicacion.
+		/// </summary>
+		/// <param name="filepath"></param>
+		/// <returns></returns>
+		public bool addPathVideo(string filepath){
+			FileInfo fileInfo = new FileInfo(filepath);
+			string filename = fileInfo.Name.Split('.')[0];
+			
+			Content content = contents.Find(x => x.nombre.Equals(filename));
+			if(content != null){
+				// TODO: Deberia renombrarlo y proseguir, porque al reiniciar la app
+				// va a intentar cargarlo y crearlo igualmente.
+				return false;
+			}
+			PathVideo video = fsLoader.LoadSingleVideo(fileInfo);
+			if(video != null){
+				contents.Add(video);
+				return true;
+			}
+			return false; // extension de archivo incompatible
+		}
+
+
+		/// <summary>
+		/// Este metodo sirve para que el audio que fue pasado usando adb, ahora
+		/// pueda ser cargado al ContentManager sin la necesidad de reiniciar la aplicacion.
+		/// </summary>
+		/// <param name="filepath"></param>
+		/// <returns></returns>
+		public bool addPathAudio(string filepath){
+			FileInfo fileInfo = new FileInfo(filepath);
+			string filename = fileInfo.Name.Split('.')[0];
+			
+			AudioContainer audio = audios.Find(x => x.nombre.Equals(filename));
+			if(audio != null){
+				// TODO: Deberia renombrarlo y proseguir, porque al reiniciar la app
+				// va a intentar cargarlo y crearlo igualmente.
+				return false;
+			}
+			AudioContainer audioContainer = fsLoader.LoadSingleAudio(fileInfo);
+			if(audioContainer != null){
+				audios.Add(audioContainer);
+				return true;
+			}
+			return false; // extension de archivo incompatible
 		}
 		
 		/// <summary>

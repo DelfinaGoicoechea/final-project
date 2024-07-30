@@ -43,6 +43,20 @@ namespace SimpleHttpServer.Models
     }
 
     [System.Serializable]
+    public class FilePathInfo{
+        public string filepath;
+        public static FilePathInfo CreateFromJSON(string jsonString)
+        {
+            return JsonUtility.FromJson<FilePathInfo>(jsonString);
+        }
+
+        public string CreateJSON()
+        {
+           return JsonUtility.ToJson(this);
+        }
+    }
+
+    [System.Serializable]
     public class DataCustomizeApp{
         public string oldName;
         public string newName;
