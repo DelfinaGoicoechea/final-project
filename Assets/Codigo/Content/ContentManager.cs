@@ -47,6 +47,7 @@ namespace Contents{
 			StartCoroutine(loadContents());
 		}
 
+
 		private void loadCustomizations(){
 			string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
 			if(File.Exists(cambiosFileLocation)){
@@ -102,9 +103,11 @@ namespace Contents{
 			}
 		}
 
-		private void loadAudios()
+
+		private void loadAudiosAndCustomizations()
 		{
 			Transform audiosTransform = transform.GetChild(2);
+			// Cargar audios definidos en tiempo de compilacion
 			foreach (Transform audioTransform in audiosTransform){
 				AudioContainer audioContainer = audioTransform.gameObject.GetComponent<AudioContainer>();
 				if(audioContainer != null)
@@ -116,14 +119,18 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+audioTransform.gameObject.name+" no tiene un script AudioContainer");
 				}
 			}
-			// Cargar audios en FileSystem
-			List<AudioContainer> audiosToAdd = fsLoader.LoadAudios();
+
+			// Cargar audios cargados con adb desde Flutter
+			List<AudioContainer> audiosToAdd = fsLoader.LoadAudios(audios);
 			foreach(AudioContainer audioContainer in audiosToAdd) {
 				audios.Add(audioContainer);
 			}
+
+			// Cargar personalizaciones a los contenidos existentes
 			loadCustomizations();
 			return;
 		}
+
 
 		private void loadDisables()
 		{
@@ -135,10 +142,12 @@ namespace Contents{
 				}
 			}
 		}
+
+
 		private IEnumerator loadContents()
 		{
 			Transform contentsTransform = transform.GetChild(1);
-			// Cargar Imagenes
+			// Cargar Imagenes definidas en tiempo de compilacion
 			Transform photosTransform = contentsTransform.GetChild(0);
 			foreach (Transform photoTransform in photosTransform){
 				Content photo = photoTransform.gameObject.GetComponent<Content>();
@@ -151,7 +160,8 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+photoTransform.gameObject.name+" no tiene un script Photo");
 				}
 			}
-			// Cargar Videos
+
+			// Cargar Videos definidos en tiempo de compilacion
 			Transform videosTransform = contentsTransform.GetChild(1);
 			foreach (Transform videoTransform in videosTransform){
 				Content video = videoTransform.gameObject.GetComponent<Video>();
@@ -161,7 +171,8 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+videoTransform.gameObject.name+" no tiene un script Video");
 				}
 			}
-			// Cargar Escenas 3D
+
+			// Cargar Escenas 3D definidas en tiempo de compilacion
 			Transform scenesTransform = contentsTransform.GetChild(2);
 			foreach (Transform sceneTransform in scenesTransform){
 				Content scene = sceneTransform.gameObject.GetComponent<Escena>();
@@ -171,7 +182,8 @@ namespace Contents{
 					Debug.LogWarning("El GameObject "+sceneTransform.gameObject.name+" no tiene un script Escena");
 				}
 			}
-			// Cargar caminos
+
+			// Cargar caminos definidos en tiempo de compilacion
 			Transform walksTransform = contentsTransform.GetChild(3);
 			foreach (Transform walkTransform in walksTransform){
 				Content walk = walkTransform.gameObject.GetComponent<Walk>();
@@ -182,29 +194,39 @@ namespace Contents{
 				}
 			}
 
+			// Desactivar contenidos ""eliminados"", porque no es posible eliminar
+			// aquellos que fueron definidos en tiempo de compilacion.
 			loadDisables();
 
-			// Cargar contenidos en FileSystem
-			List<PathPhoto> photosToAdd = fsLoader.LoadImages();
+			// Cargar Imagenes cargadas con adb desde Flutter
+			List<PathPhoto> photosToAdd = fsLoader.LoadImages(contents);
 			foreach(Photo photo in photosToAdd) {
 				contents.Add(photo);
 			}
-			List<PathVideo> videosToAdd = fsLoader.LoadVideos();
+
+			// Cargar Videos cargados con adb desde Flutter
+			List<PathVideo> videosToAdd = fsLoader.LoadVideos(contents);
 			foreach(Video video in videosToAdd) {
 				contents.Add(video);
 			}
+
+			// Cargar Walks cargados con adb desde Flutter
 			List<Walk> walksToAdd = fsLoader.LoadWalks();
 			foreach (Walk walk in walksToAdd)
 			{
 				contents.Add(walk);
 			}
+
+			// Cargar ExternalApps cargadas con adb desde Flutter
 			List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
 			foreach(ExternalApp app in appsToAdd){
 				contents.Add(app);
 			}
 
-			// Cargar audio del FileSystem
-			loadAudios();
+			// Cargar Audios, y luego las personalizaciones a los contenidos existentes
+			loadAudiosAndCustomizations();
+			// TODO: chequear: ni loadAudios, ni loadCustomization son corutinas, asi que
+			// deberia poder ejecutarlos a ambos aca sin anidar un llamado dentro del otro 
 			yield return null;
 		}
 
@@ -567,14 +589,7 @@ namespace Contents{
 		public bool addPathImage(string filepath){
 			FileInfo fileInfo = new FileInfo(filepath);
 			string filename = fileInfo.Name.Split('.')[0];
-			
-			Content content = contents.Find(x => x.nombre.Equals(filename));
-			if(content != null){
-				// TODO: Deberia renombrarlo y proseguir, porque al reiniciar la app
-				// va a intentar cargarlo y crearlo igualmente.
-				return false;
-			}
-			PathPhoto photo = fsLoader.LoadSingleImage(fileInfo);
+			PathPhoto photo = fsLoader.LoadSingleImage(fileInfo, contents);
 			if(photo != null){
 				contents.Add(photo);
 				return true;
@@ -591,14 +606,7 @@ namespace Contents{
 		public bool addPathVideo(string filepath){
 			FileInfo fileInfo = new FileInfo(filepath);
 			string filename = fileInfo.Name.Split('.')[0];
-			
-			Content content = contents.Find(x => x.nombre.Equals(filename));
-			if(content != null){
-				// TODO: Deberia renombrarlo y proseguir, porque al reiniciar la app
-				// va a intentar cargarlo y crearlo igualmente.
-				return false;
-			}
-			PathVideo video = fsLoader.LoadSingleVideo(fileInfo);
+			PathVideo video = fsLoader.LoadSingleVideo(fileInfo, contents);
 			if(video != null){
 				contents.Add(video);
 				return true;
@@ -623,7 +631,7 @@ namespace Contents{
 				// va a intentar cargarlo y crearlo igualmente.
 				return false;
 			}
-			AudioContainer audioContainer = fsLoader.LoadSingleAudio(fileInfo);
+			AudioContainer audioContainer = fsLoader.LoadSingleAudio(fileInfo, audios);
 			if(audioContainer != null){
 				audios.Add(audioContainer);
 				return true;

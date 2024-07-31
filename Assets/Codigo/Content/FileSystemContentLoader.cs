@@ -21,66 +21,123 @@ namespace Contents{
 
         // TODO: ver si se puede reproducir mkv
         private Regex videoExtensionRegex = new Regex("(.mp4\\Z)|(.webm\\Z)");
+        private string imagesDirectory = Application.persistentDataPath;
+        private string videosDirectory = Application.persistentDataPath;
+        private string walksDirectory = Path.Combine(Application.persistentDataPath, "camino");
+        private string audiosDirectory = Application.persistentDataPath;
 
+        private void findValidContentName(FileInfo contentFileInfo, List<Content> contents, string contentDirectory){
+            int i = 1;
+            bool validNameFound = false;
+            string filename = contentFileInfo.Name.Split('.')[0];
+            string fileExt = contentFileInfo.Name.Split('.')[1];
+            DirectoryInfo contentsDirectoryInfo = new DirectoryInfo(contentDirectory);
+            FileInfo[] contentsFileInfos = contentsDirectoryInfo.GetFiles();
+            char separator = Path.DirectorySeparatorChar;
+            while (!validNameFound) {
+                string newContentName = filename + i;
+                // Busco Content.nombre repetido
+                Content contentFound = contents.Find(x => x.nombre.Equals(newContentName));
+                // Busco nombre de archivo repetido
+                FileInfo fileFound = Array.Find(
+                    contentsFileInfos,
+                    finfo => finfo.Name.Split('.')[0].Equals(newContentName)
+                );
+                if (contentFound == null && fileFound == null) {
+                    string newFilePath = $"{contentFileInfo.DirectoryName}{separator}{newContentName}.{fileExt}";
+                    contentFileInfo.MoveTo(newFilePath);
+                    validNameFound = true;
+                } else {
+                    i++ ;
+                }
+            }
+        }
 
-        public List<AudioContainer> LoadAudios()
+        public List<AudioContainer> LoadAudios(List<AudioContainer> audios)
         {
             List<AudioContainer> audioList = new List<AudioContainer>();
-            if (Directory.Exists(Application.persistentDataPath))
+            if (Directory.Exists(audiosDirectory))
             {
                 string audiosDirectory = Application.persistentDataPath;
                 DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
                 Transform audiosTransform = cManager.transform.GetChild(2);
-                foreach (var file in audiosDirectoryInfo.GetFiles())
+                foreach (var audioFileInfo in audiosDirectoryInfo.GetFiles())
                 {
-                    if(audioExtensionRegex.IsMatch(file.FullName))
+                    if(audioExtensionRegex.IsMatch(audioFileInfo.FullName))
                     {
-                        Debug.Log($"Agrego el audio: {file.FullName}");
-                        string filename = Path.GetFileNameWithoutExtension(file.FullName);
-                        GameObject auxGameObject =  new GameObject("audio "+filename);
-                        auxGameObject.transform.parent = audiosTransform;
-                        PathAudioContainer audioContainer = auxGameObject.AddComponent<PathAudioContainer>();
-                        audioContainer.nombre = filename;
-                        audioContainer.audioPath = file.FullName;
+                        AudioContainer audioContainer = LoadSingleAudio(audioFileInfo, audios);
                         audioList.Add(audioContainer);
                     }
                 }
+            } else {
+                Directory.CreateDirectory(audiosDirectory);
             }
             return audioList;
         }
 
-        public AudioContainer LoadSingleAudio(FileInfo fileinfo){
-            Debug.Log($"Agrego el audio: {fileinfo.FullName}");
-            string filename = Path.GetFileNameWithoutExtension(fileinfo.FullName);
+        public AudioContainer LoadSingleAudio(FileInfo audioFileInfo, List<AudioContainer> audios){
+            string filename = Path.GetFileNameWithoutExtension(audioFileInfo.FullName);
+            string fileExt = audioFileInfo.Name.Split('.')[1];
+            AudioContainer audioFound = audios.Find(x => x.nombre.Equals(filename));
+            if(audioFound != null){
+                int i = 1;
+                bool validNameFound = false;
+                DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
+                FileInfo[] audiosFileInfos = audiosDirectoryInfo.GetFiles();
+                while (!validNameFound) {
+                    string newAudioName = filename + i;
+                    // Busco AudioContainer.nombre repetido
+                    audioFound = audios.Find(x => x.nombre.Equals(newAudioName));
+                    // Busco nombre de archivo repetido (no tengo en cuenta la extension. Es intencional)
+                    FileInfo fileFound = Array.Find(
+                        audiosFileInfos,
+                        finfo => finfo.Name.Split('.')[0].Equals(newAudioName)
+                    );
+                    if (audioFound == null && fileFound == null) {
+                        string newFilePath = $"{audioFileInfo.DirectoryName}{Path.DirectorySeparatorChar}{newAudioName}.{fileExt}";
+                        audioFileInfo.MoveTo(newFilePath);
+                        validNameFound = true;
+                    } else {
+                        i++ ;
+                    }
+                }
+            }
+            Debug.Log($"Agrego el audio: {audioFileInfo.FullName}");
             GameObject auxGameObject =  new GameObject("audio "+filename);
             Transform audiosTransform = cManager.transform.GetChild(2);
             auxGameObject.transform.parent = audiosTransform;
             PathAudioContainer audioContainer = auxGameObject.AddComponent<PathAudioContainer>();
             audioContainer.nombre = filename;
-            audioContainer.audioPath = fileinfo.FullName;
+            audioContainer.audioPath = audioFileInfo.FullName;
             return audioContainer;
         }
 
-        public List<PathPhoto> LoadImages()
+
+        /// <summary>
+        /// Carga las imagenes ubicadas en el filesystem.
+        /// Recibe la lista de contenidos para poder saber si debe renombrar
+        /// alguno de los contenidos debido a ser un nombre repetido.
+        /// </summary>
+        /// <param name="contents"></param>
+        /// <returns></returns>
+        public List<PathPhoto> LoadImages(List<Content> contents)
         {
             List<PathPhoto> imageList = new List<PathPhoto>();
             if (Directory.Exists(Application.persistentDataPath))
             { 
-                string imagesDirectory = Application.persistentDataPath;
                 DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
-                foreach (var file in imagesDirectoryInfo.GetFiles())
+                foreach (FileInfo imageFileInfo in imagesDirectoryInfo.GetFiles())
                 {
-                    if(imageExtensionRegex.IsMatch(file.FullName))
+                    if(imageExtensionRegex.IsMatch(imageFileInfo.FullName))
                     {
-                        Debug.Log($"Agrego el contenido: {file.FullName}");
-                        PathPhoto photo = contentCreator.CreatePathPhoto(file);
+                        PathPhoto photo = LoadSingleImage(imageFileInfo, contents);
                         imageList.Add(photo);
                     }
                 }
             }
             else
             {
-                Directory.CreateDirectory(Application.persistentDataPath);
+                Directory.CreateDirectory(imagesDirectory);
             }
             return imageList;
         }
@@ -91,35 +148,37 @@ namespace Contents{
 		/// </summary>
 		/// <param name="fileinfo"></param>
 		/// <returns></returns>
-		public PathPhoto LoadSingleImage(FileInfo fileinfo){
-            if(imageExtensionRegex.IsMatch(fileinfo.FullName)){
-                Debug.Log($"Agrego el contenido: {fileinfo.FullName}");
-                PathPhoto photo = contentCreator.CreatePathPhoto(fileinfo);
-                return photo;
+		public PathPhoto LoadSingleImage(FileInfo imageFileInfo, List<Content> contents){
+            string filename = imageFileInfo.Name.Split('.')[0];
+            Content contentFound = contents.Find(x => x.nombre.Equals(filename));
+            if (contentFound != null) {
+                // Hay un content con este mismo nombre, asi que tengo que encontrar un nuevo nombre
+                // valido y renombrar este archivo antes de crear el nuevo Content.
+                findValidContentName(imageFileInfo, contents, imagesDirectory);
             }
-            return null;
-		}
+            Debug.Log($"Agrego el contenido: {imageFileInfo.FullName}");
+            PathPhoto photo = contentCreator.CreatePathPhoto(imageFileInfo);
+            return photo;
+        }
 
-        public List<PathVideo> LoadVideos()
+        public List<PathVideo> LoadVideos(List<Content> contents)
         {
             List<PathVideo> videoList = new List<PathVideo>();
             if (Directory.Exists(Application.persistentDataPath))
             { 
-                string imagesDirectory = Application.persistentDataPath;
-                DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
-                foreach (var file in imagesDirectoryInfo.GetFiles())
+                DirectoryInfo videosDirectoryInfo = new DirectoryInfo(videosDirectory);
+                foreach (var file in videosDirectoryInfo.GetFiles())
                 {
                     if(videoExtensionRegex.IsMatch(file.FullName))
                     {
-                        Debug.Log($"Agrego el contenido: {file.FullName}");
-                        PathVideo video = contentCreator.CreatePathVideo(file);
+                        PathVideo video = LoadSingleVideo(file, contents);
                         videoList.Add(video);
                     }
                 }
             }
             else
             {
-                Directory.CreateDirectory(Application.persistentDataPath);
+                Directory.CreateDirectory(videosDirectory);
             }
             return videoList;
         }
@@ -130,13 +189,17 @@ namespace Contents{
 		/// </summary>
 		/// <param name="fileinfo"></param>
 		/// <returns></returns>
-        public PathVideo LoadSingleVideo(FileInfo fileinfo){
-            if(videoExtensionRegex.IsMatch(fileinfo.FullName)){
-                Debug.Log($"Agrego el contenido: {fileinfo.FullName}");
-                PathVideo video = contentCreator.CreatePathVideo(fileinfo);
-                return video;
+        public PathVideo LoadSingleVideo(FileInfo videoFileInfo, List<Content> contents){
+            string filename = videoFileInfo.Name.Split('.')[0];
+            Content contentFound = contents.Find(x => x.nombre.Equals(filename));
+            if (contentFound != null) {
+                // Hay un content con este mismo nombre, asi que tengo que encontrar un nuevo nombre
+                // valido y renombrar este archivo antes de crear el nuevo Content.
+                findValidContentName(videoFileInfo, contents, videosDirectory);
             }
-            return null;
+            Debug.Log($"Agrego el contenido: {videoFileInfo.FullName}");
+            PathVideo video = contentCreator.CreatePathVideo(videoFileInfo);
+            return video;
 		}
 
         public List<ExternalApp> LoadExternalApps(){
@@ -165,16 +228,15 @@ namespace Contents{
         public List<Walk> LoadWalks()
         {
             List<Walk> imageList = new List<Walk>();
-            string path = Path.Combine(Application.persistentDataPath, "camino");
-            if (Directory.Exists(path))
+            if (Directory.Exists(walksDirectory))
             { 
-                string[] subDirectories = Directory.GetDirectories(path);
+                string[] subDirectories = Directory.GetDirectories(walksDirectory);
                 foreach (string subDirectory in subDirectories)
                 {
                     // Obtiene el nombre de la subcarpeta
                     string directoryName = Path.GetFileName(subDirectory);
                     Walk walk = contentCreator.CreateWalk(directoryName);
-                    string auxPath = Path.Combine(path, directoryName);
+                    string auxPath = Path.Combine(walksDirectory, directoryName);
                     DirectoryInfo directoryInfo = new DirectoryInfo(auxPath);
                     foreach (var file in directoryInfo.GetFiles())
                     {
@@ -200,7 +262,8 @@ namespace Contents{
             }
             else
             {
-            Debug.LogWarning("La carpeta 'camino' no existe en persistentDataPath.");
+                Debug.LogWarning("La carpeta 'camino' no existia en persistentDataPath.");
+                Directory.CreateDirectory(walksDirectory);
             }
         return imageList;
         }
