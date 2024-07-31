@@ -2,7 +2,7 @@
 
 Este repositorio aloja al componente de visualizacion de photos, videos y escenas 3D del sistema Tranquilidad 360. Muchas veces se hace referencia a este componente como "Servidor", ya que es quien va a recibir los mensajes por parte del cliente mobile.
 
-- Link al lado del cliente, escrito en Flutter: [Flutter](https://github.com/Simonlanzavecchia/TranquiFlut)
+- Link al lado del cliente, escrito en Flutter: [Flutter](https://github.com/InakiArzalluz/TranquiFlutter)
 - Link a repo usado para Service Discovery: [Fork jmdns](https://github.com/InakiArzalluz/jmdnsTranqui)
   - Los unicos cambios estan en "src/main/java/src/DnsSdJava/ServiceRegistration.java"
 
