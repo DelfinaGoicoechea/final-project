@@ -61,6 +61,11 @@ namespace Contents{
             }
         }
 
+        /// <summary>
+        /// Carga los audios que fueron enviados desde flutter antes de que se abriera Unity.
+        /// </summary>
+        /// <param name="audios"></param>
+        /// <returns></returns>
         public List<AudioContainer> LoadAudios(List<AudioContainer> audios)
         {
             List<AudioContainer> audioList = new List<AudioContainer>();
@@ -83,6 +88,14 @@ namespace Contents{
             return audioList;
         }
 
+        /// <summary>
+        /// Carga un unico audio ubicado en el path indicado en audioFileInfo.
+        /// <br/>Recibe la lista de audios para poder saber si debe renombrar
+        /// alguno de los audios debido a ser un nombre repetido.
+        /// </summary>
+        /// <param name="audioFileInfo"></param>
+        /// <param name="audios"></param>
+        /// <returns></returns>
         public AudioContainer LoadSingleAudio(FileInfo audioFileInfo, List<AudioContainer> audios){
             string filename = Path.GetFileNameWithoutExtension(audioFileInfo.FullName);
             string fileExt = audioFileInfo.Name.Split('.')[1];
@@ -125,7 +138,7 @@ namespace Contents{
 
         /// <summary>
         /// Carga las imagenes ubicadas en el filesystem.
-        /// Recibe la lista de contenidos para poder saber si debe renombrar
+        /// <br/>Recibe la lista de contenidos para poder saber si debe renombrar
         /// alguno de los contenidos debido a ser un nombre repetido.
         /// </summary>
         /// <param name="contents"></param>
@@ -155,6 +168,8 @@ namespace Contents{
         /// <summary>
 		/// Este metodo sirve para que la imagen que fue pasada usando adb, ahora
 		/// pueda ser cargada al ContentManager sin la necesidad de reiniciar la aplicacion.
+        /// <br/>Recibe la lista de contenidos para poder saber si debe renombrar
+        /// alguno de los contenidos debido a ser un nombre repetido.
 		/// </summary>
 		/// <param name="fileinfo"></param>
 		/// <returns></returns>
@@ -171,6 +186,14 @@ namespace Contents{
             return photo;
         }
 
+
+        /// <summary>
+        /// Carga los videos ubicados en el filesystem.
+        /// <br/>Recibe la lista de contenidos para poder saber si debe renombrar
+        /// alguno de los contenidos debido a ser un nombre repetido.
+        /// </summary>
+        /// <param name="contents"></param>
+        /// <returns></returns>
         public List<PathVideo> LoadVideos(List<Content> contents)
         {
             List<PathVideo> videoList = new List<PathVideo>();
@@ -212,6 +235,14 @@ namespace Contents{
             return video;
 		}
 
+
+        /// <summary>
+        /// Carga las externalApps indicadas en el archivo "externalApps.txt".
+        /// <br/>Se pasa la lista de contenidos para saber si se debe renombrar
+        /// alguna app en caso de ser un nombre repetido.
+        /// </summary>
+        /// <param name="contents"></param>
+        /// <returns></returns>
         public List<ExternalApp> LoadExternalApps(List<Content> contents){
             List<ExternalApp> appsList = new List<ExternalApp>();
             if (Directory.Exists(Application.persistentDataPath)){ 
@@ -237,6 +268,17 @@ namespace Contents{
             return appsList;
         }
 
+
+        /// <summary>
+        /// Carga una unica app. Es util para cargar nuevas apps sin la necesidad
+        /// de reiniciar Unity.
+        /// <br/>Se pasa el listado de contenidos para saber si de debe renombrar
+        /// alguna app por ser un nombre repetido.
+        /// </summary>
+        /// <param name="appName"></param>
+        /// <param name="packageName"></param>
+        /// <param name="contents"></param>
+        /// <returns></returns>
         public ExternalApp LoadSingleExternalApp(string appName,  string packageName, List<Content> contents){
             // La app ya fue agregada al listado de aplicaciones (externalApps,txt) desde
 			// Flutter, por lo que no es necesario agregarle nada al listado. PERO, puede
@@ -277,6 +319,13 @@ namespace Contents{
             return extApp;
         }
 
+
+        /// <summary>
+        /// Carga los walks de Street View que fueron almacenados en el sistema de archivos.
+        /// <br/><br/> Por ahora no se hace chequeo de nombre repetido.
+        /// <br/>(PENDIENTE EN CASO DE TERMINAR IMPLEMENTACION)
+        /// </summary>
+        /// <returns></returns>
         public List<Walk> LoadWalks()
         {
             List<Walk> imageList = new List<Walk>();
