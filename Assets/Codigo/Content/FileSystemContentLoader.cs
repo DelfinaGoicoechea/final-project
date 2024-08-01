@@ -26,7 +26,15 @@ namespace Contents{
         private string walksDirectory = Path.Combine(Application.persistentDataPath, "camino");
         private string audiosDirectory = Application.persistentDataPath;
 
-        private void findValidContentName(FileInfo contentFileInfo, List<Content> contents, string contentDirectory){
+
+        /// <summary>
+        /// Encuentra un nombre de contenido valido para Fotos o Videos, y renombra
+        /// al propio archivo que se intenta cargar desde el File System.
+        /// </summary>
+        /// <param name="contentFileInfo"></param>
+        /// <param name="contents"></param>
+        /// <param name="contentDirectory"></param>
+        private void findValidContentFileName(FileInfo contentFileInfo, List<Content> contents, string contentDirectory){
             int i = 1;
             bool validNameFound = false;
             string filename = contentFileInfo.Name.Split('.')[0];
@@ -35,7 +43,7 @@ namespace Contents{
             FileInfo[] contentsFileInfos = contentsDirectoryInfo.GetFiles();
             char separator = Path.DirectorySeparatorChar;
             while (!validNameFound) {
-                string newContentName = filename + i;
+                string newContentName = $"{filename} ({i})";
                 // Busco Content.nombre repetido
                 Content contentFound = contents.Find(x => x.nombre.Equals(newContentName));
                 // Busco nombre de archivo repetido
@@ -84,8 +92,9 @@ namespace Contents{
                 bool validNameFound = false;
                 DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
                 FileInfo[] audiosFileInfos = audiosDirectoryInfo.GetFiles();
+                string newAudioName = "";
                 while (!validNameFound) {
-                    string newAudioName = filename + i;
+                    newAudioName = $"{filename} ({i})";
                     // Busco AudioContainer.nombre repetido
                     audioFound = audios.Find(x => x.nombre.Equals(newAudioName));
                     // Busco nombre de archivo repetido (no tengo en cuenta la extension. Es intencional)
@@ -101,6 +110,7 @@ namespace Contents{
                         i++ ;
                     }
                 }
+                filename = newAudioName ;
             }
             Debug.Log($"Agrego el audio: {audioFileInfo.FullName}");
             GameObject auxGameObject =  new GameObject("audio "+filename);
@@ -154,7 +164,7 @@ namespace Contents{
             if (contentFound != null) {
                 // Hay un content con este mismo nombre, asi que tengo que encontrar un nuevo nombre
                 // valido y renombrar este archivo antes de crear el nuevo Content.
-                findValidContentName(imageFileInfo, contents, imagesDirectory);
+                findValidContentFileName(imageFileInfo, contents, imagesDirectory);
             }
             Debug.Log($"Agrego el contenido: {imageFileInfo.FullName}");
             PathPhoto photo = contentCreator.CreatePathPhoto(imageFileInfo);
@@ -195,14 +205,14 @@ namespace Contents{
             if (contentFound != null) {
                 // Hay un content con este mismo nombre, asi que tengo que encontrar un nuevo nombre
                 // valido y renombrar este archivo antes de crear el nuevo Content.
-                findValidContentName(videoFileInfo, contents, videosDirectory);
+                findValidContentFileName(videoFileInfo, contents, videosDirectory);
             }
             Debug.Log($"Agrego el contenido: {videoFileInfo.FullName}");
             PathVideo video = contentCreator.CreatePathVideo(videoFileInfo);
             return video;
 		}
 
-        public List<ExternalApp> LoadExternalApps(){
+        public List<ExternalApp> LoadExternalApps(List<Content> contents){
             List<ExternalApp> appsList = new List<ExternalApp>();
             if (Directory.Exists(Application.persistentDataPath)){ 
                 string externalAppsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}externalApps.txt";
@@ -213,7 +223,9 @@ namespace Contents{
                         ExternalAppInfo extAppInfo = ExternalAppInfo.CreateFromJSON(stringAppInfo);
                         string name = extAppInfo.visibleName;
                         string packg = extAppInfo.packageName;
-                        ExternalApp extApp = contentCreator.CreateExternalApp(name, packg);
+                        // Deberia chequear el name antes de crearla.
+                        // En caso de ser reperido deberia cambiar el nombre guardado
+                        ExternalApp extApp = LoadSingleExternalApp(name, packg, contents);
                         appsList.Add(extApp);
                     }
                 }
@@ -223,6 +235,46 @@ namespace Contents{
                 Directory.CreateDirectory(Application.persistentDataPath);
             }
             return appsList;
+        }
+
+        public ExternalApp LoadSingleExternalApp(string appName,  string packageName, List<Content> contents){
+            // La app ya fue agregada al listado de aplicaciones (externalApps,txt) desde
+			// Flutter, por lo que no es necesario agregarle nada al listado. PERO, puede
+            // que el nombre ya exista en el listado de contenidos, por lo que puedo
+            // llegar a necesitar modificar el nombre utilizado dentro del listado.
+            Content contentFound = contents.Find(x => x.nombre.Equals(appName));
+            if(contentFound != null){
+                // Encontre un contenido con el mismo nombre, toca renombrar
+                string extAppsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}externalApps.txt";
+                string[] stringAppInfos = File.ReadAllLines(extAppsFileLocation);
+                int i = 1;
+                string newAppName = "";
+                bool validNameFound = false;
+                while (!validNameFound) {
+                    newAppName = $"{appName} ({i})";
+                    // Busco Content.nombre repetido
+                    contentFound = contents.Find(x => x.nombre.Equals(newAppName));
+                    if (contentFound == null) {
+                        validNameFound = true;
+                    } else {
+                        i++ ;
+                    }
+                }
+                // Escribo los cambios (borro el archivo para rellenarlo con info actualizada)
+                StreamWriter streamWriter = File.CreateText(extAppsFileLocation);
+                foreach (string stringAppInfo in stringAppInfos){
+                    ExternalAppInfo extAppInfo = ExternalAppInfo.CreateFromJSON(stringAppInfo);
+                    if  (appName == extAppInfo.visibleName) {
+                        // escribo con nombre cambiado
+                        extAppInfo.visibleName = newAppName;
+                    }
+                    streamWriter.WriteLine(extAppInfo.CreateJSON());
+                }
+                streamWriter.Close();
+                appName = newAppName;
+            }
+            ExternalApp extApp = contentCreator.CreateExternalApp(appName, packageName);
+            return extApp;
         }
 
         public List<Walk> LoadWalks()

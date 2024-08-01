@@ -218,7 +218,7 @@ namespace Contents{
 			}
 
 			// Cargar ExternalApps cargadas con adb desde Flutter
-			List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps();
+			List<ExternalApp> appsToAdd = fsLoader.LoadExternalApps(contents);
 			foreach(ExternalApp app in appsToAdd){
 				contents.Add(app);
 			}
@@ -568,16 +568,13 @@ namespace Contents{
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public bool addExternalApp(string visibleName, string packageName){
-			Content content = contents.Find(x => x.nombre.Equals(visibleName));
-			if(content != null){
-				return false;
+			ExternalApp externalApp = fsLoader.LoadSingleExternalApp(visibleName, packageName, contents);
+			
+			if (externalApp != null){
+				contents.Add(externalApp);
+				return true;
 			}
-			ContentCreator contentCreator = new ContentCreator();
-			ExternalApp externalApp = contentCreator.CreateExternalApp(visibleName,packageName);
-			// el true previo hace que se cree una entrada para la app en un archivo con la lista
-			// de apps, así el listado persiste entre ejecuciones.
-			contents.Add(externalApp);
-			return true;
+			return false; // hubo problema en la creacion de la app 
 		}
 
 		/// <summary>
