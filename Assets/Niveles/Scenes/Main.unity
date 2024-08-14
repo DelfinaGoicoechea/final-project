@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25419354, g: 0.27291474, b: 0.27290523, a: 1}
+  m_IndirectSpecularColor: {r: 0.25400522, g: 0.2728911, b: 0.27359498, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -367,7 +367,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 961728569}
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -229}
+  m_LocalPosition: {x: 0, y: 0, z: -259}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -399,7 +399,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tranquilidad 360
+  m_text: Tranquiliza.360
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 91c4e06222709b14396ea031f00eb4bf, type: 2}
   m_sharedMaterial: {fileID: -7498209431081695434, guid: 91c4e06222709b14396ea031f00eb4bf, type: 2}
