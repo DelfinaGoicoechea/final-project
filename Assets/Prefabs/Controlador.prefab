@@ -2290,10 +2290,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8589162441111712441}
-  - component: {fileID: 8589162441111712440}
   - component: {fileID: 8589162441111712447}
   - component: {fileID: 8589162441111712446}
   - component: {fileID: 744010775593970388}
+  - component: {fileID: 6333582777249501389}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -2318,23 +2318,6 @@ Transform:
   m_Father: {fileID: 8589162441544098367}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8589162441111712440
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8589162441111712442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Camera: {fileID: 8589162442449043261}
-  m_OriginBaseGameObject: {fileID: 8589162441111712442}
-  m_CameraFloorOffsetObject: {fileID: 8589162442585694457}
-  m_RequestedTrackingOriginMode: 0
-  m_CameraYOffset: 0.8
 --- !u!114 &8589162441111712447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2395,6 +2378,23 @@ MonoBehaviour:
   m_MotionControllerModeEnded:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6333582777249501389
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8589162441111712442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0cb9aa70a22847b5925ee5f067c10a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Camera: {fileID: 8589162442449043261}
+  m_OriginBaseGameObject: {fileID: 8589162441111712442}
+  m_CameraFloorOffsetObject: {fileID: 8589162442585694457}
+  m_RequestedTrackingOriginMode: 1
+  m_CameraYOffset: 0.8
 --- !u!1 &8589162441544098360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2477,7 +2477,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Timeout: 10
-  m_XROrigin: {fileID: 8589162441111712440}
+  m_XROrigin: {fileID: 0}
 --- !u!114 &8589162441577423148
 MonoBehaviour:
   m_ObjectHideFlags: 0

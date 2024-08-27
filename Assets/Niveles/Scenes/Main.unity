@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25400522, g: 0.2728911, b: 0.27359498, a: 1}
+  m_IndirectSpecularColor: {r: 0.25440416, g: 0.27369034, b: 0.27419677, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -737,6 +737,26 @@ PrefabInstance:
       propertyPath: m_RayOriginTransform
       value: 
       objectReference: {fileID: 2014518034}
+    - target: {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_Camera
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_CameraYOffset
+      value: 1.1176
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_OriginBaseGameObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_CameraFloorOffsetObject
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_RequestedTrackingOriginMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8589162441111712442, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -813,7 +833,8 @@ PrefabInstance:
       propertyPath: m_RayInteractorChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 2014518035}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
 --- !u!1 &1715741733
 GameObject:
