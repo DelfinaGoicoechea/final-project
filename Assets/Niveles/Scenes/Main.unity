@@ -665,11 +665,6 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
---- !u!1 &1149797613 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4335162871363926806, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-  m_PrefabInstance: {fileID: 1687181872}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1687181872
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -709,18 +704,6 @@ PrefabInstance:
       propertyPath: m_AimTargetObject
       value: 
       objectReference: {fileID: 2023077651}
-    - target: {fileID: 1690662901295802689, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_LeftHandMesh
-      value: 
-      objectReference: {fileID: 1739711756}
-    - target: {fileID: 1690662901295802689, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_RightHandMesh
-      value: 
-      objectReference: {fileID: 1149797613}
-    - target: {fileID: 1690662901295802689, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_HandMeshMaterial
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_AttachTransform
       value: 
@@ -959,11 +942,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &1739711756 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1181595231691718868, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-  m_PrefabInstance: {fileID: 1687181872}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1833511617
 PrefabInstance:
   m_ObjectHideFlags: 0

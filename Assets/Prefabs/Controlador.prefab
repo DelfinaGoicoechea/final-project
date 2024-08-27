@@ -1896,8 +1896,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UseOptimizedControls: 0
-  m_LeftHandMesh: {fileID: 0}
-  m_RightHandMesh: {fileID: 0}
+  m_LeftHandMesh: {fileID: 1181595231691718868}
+  m_RightHandMesh: {fileID: 4335162871363926806}
   m_HandMeshMaterial: {fileID: 0}
   m_DrawMeshes: 1
   m_DebugDrawPrefab: {fileID: 6507399986997092475, guid: 254b742d65a15d14b9df756ae77de868, type: 3}
@@ -4327,8 +4327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d299502104b064388841ec2adf6def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Target: {fileID: 0}
-  m_AimTargetObject: {fileID: 0}
+  m_Target: {fileID: 5590519718582408322}
+  m_AimTargetObject: {fileID: 8298573517020880718}
   m_UseLocalSpace: 1
   m_AngleStabilization: 20
   m_PositionStabilization: 0.25
