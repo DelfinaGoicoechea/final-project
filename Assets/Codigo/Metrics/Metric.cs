@@ -12,7 +12,6 @@ public abstract class Metric : MonoBehaviour
 {
     public abstract string Nombre { get; }
     public string NombreContenido;
-    public string Mensaje;
     public delegate void MetricEventHandler(Metric metrica);
     public event MetricEventHandler CondicionMetricaCumplida;
     public bool metricaPublicada = false;
