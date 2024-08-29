@@ -29,7 +29,7 @@ public class MetricaIzquierdaDerecha : Metric
             // Mira hacia la derecha
             direcAnterior = "Derecha";
             string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
-            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la derecha ({y_angle}°)");
+            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la derecha (angulo:{y_angle})");
             return;
         }
 
@@ -37,7 +37,7 @@ public class MetricaIzquierdaDerecha : Metric
             // Mira hacia la izquierda
             direcAnterior = "Izquierda";
             string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
-            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la Izquierda ({y_angle}°)");
+            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la izquierda (angulo:{y_angle})");
             return;
         }
 
@@ -45,7 +45,7 @@ public class MetricaIzquierdaDerecha : Metric
             // Mira hacia el centro
             direcAnterior = "Centro";
             string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
-            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia el Centro ({y_angle}°)");
+            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia el centro (angulo:{y_angle})");
             return;
         }
     }
