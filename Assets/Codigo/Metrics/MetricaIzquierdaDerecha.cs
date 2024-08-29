@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
@@ -11,7 +10,7 @@ public class MetricaIzquierdaDerecha : Metric
     private float maxAngle;
     private List<string> mensajesDirecDetectadas = new List<string>();
     private Transform mainCamTransform;
-    private string direcAnterior = "Centro"; // Izquierda, Derecha, Centro
+    private string direcAnterior = "Discernible"; // Izquierda, Derecha, Centro
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +18,7 @@ public class MetricaIzquierdaDerecha : Metric
         // Agrego el MetricRayCaster a la camara principal
         maxAngle = 360.0f - minAngle;
         mainCamTransform = GameObject.FindWithTag("MainCamera").transform;
-        InvokeRepeating("checkAngle",0, 0.5f);
+        InvokeRepeating("checkAngle", 1.0f, 0.5f);
         PublicarMetrica();
     }
 
@@ -29,7 +28,7 @@ public class MetricaIzquierdaDerecha : Metric
             // Mira hacia la derecha
             direcAnterior = "Derecha";
             string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
-            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la derecha (angulo:{y_angle})");
+            mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la derecha (angulo:{(int)y_angle})");
             return;
         }
 
@@ -37,7 +36,7 @@ public class MetricaIzquierdaDerecha : Metric
             // Mira hacia la izquierda
             direcAnterior = "Izquierda";
             string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
-            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la izquierda (angulo:{y_angle})");
+            mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia la izquierda (angulo:{(int)y_angle})");
             return;
         }
 
@@ -45,7 +44,7 @@ public class MetricaIzquierdaDerecha : Metric
             // Mira hacia el centro
             direcAnterior = "Centro";
             string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
-            this.mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia el centro (angulo:{y_angle})");
+            mensajesDirecDetectadas.Add($"{currentTime}: Mira hacia el centro (angulo:{(int)y_angle})");
             return;
         }
     }
