@@ -651,10 +651,6 @@ namespace Contents{
 			return content.thumbnail;
 		}
 
-		public void addContent(Content content)
-		{
-
-		}
 
 		/// <summary>
 		/// Takes the name of a Content as an input, and starts playing it.

@@ -24,13 +24,11 @@ namespace Contents{
         public override void LoadPlayAudio(Action assignmentAuxFunc = null)
         {
             AudioClip clip = null;
-            // TODO: Probar cambiar a .mp3 y que funcione bien en Android
             string extension  = Path.GetExtension(audioPath);
             UnityWebRequest uwr = null;
             if (extension == ".mp3"){
                 uwr = UnityWebRequestMultimedia.GetAudioClip("file://"+audioPath, AudioType.MPEG);
-            }
-            else{
+            } else {
                 // Actualmente FileSystemContentLoader.cs solo escanea por .mp3 o .wav, 
                 // pero más vale chequear por si se agrega algun formato mas en el futuro.
                 if (extension == ".wav"){

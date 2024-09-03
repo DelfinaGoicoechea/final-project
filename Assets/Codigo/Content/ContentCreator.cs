@@ -13,20 +13,6 @@ namespace Contents{
     {
         private ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
 
-        private static Texture2D CreateThumbnail(ref Material material, Vector2Int resolution, string filename = "")
-        {
-            RenderTexture renderTexture = RenderTexture.GetTemporary(resolution.x, resolution.y);
-            Graphics.Blit(null, renderTexture, material);
-            Texture2D texture = new Texture2D(resolution.x, resolution.y, TextureFormat.RGB24, false);
-            texture.filterMode = FilterMode.Bilinear;
-            texture.wrapMode = TextureWrapMode.Clamp;
-            RenderTexture.active = renderTexture;
-            texture.ReadPixels(new Rect(Vector2.zero, resolution), 0, 0);
-            RenderTexture.active = null;
-            RenderTexture.ReleaseTemporary(renderTexture);
-            return texture;
-        }
-
         public static Texture2D GetThumbnail(string filename){
             
             string thumbFolder = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}thumbnails";

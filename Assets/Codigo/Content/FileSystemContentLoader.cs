@@ -255,7 +255,7 @@ namespace Contents{
                         string name = extAppInfo.visibleName;
                         string packg = extAppInfo.packageName;
                         // Deberia chequear el name antes de crearla.
-                        // En caso de ser reperido deberia cambiar el nombre guardado
+                        // En caso de ser repetido deberia cambiar el nombre guardado
                         ExternalApp extApp = LoadSingleExternalApp(name, packg, contents);
                         appsList.Add(extApp);
                     }
@@ -280,7 +280,7 @@ namespace Contents{
         /// <param name="contents"></param>
         /// <returns></returns>
         public ExternalApp LoadSingleExternalApp(string appName,  string packageName, List<Content> contents){
-            // La app ya fue agregada al listado de aplicaciones (externalApps,txt) desde
+            // La app ya fue agregada al listado de aplicaciones (externalApps.txt) desde
 			// Flutter, por lo que no es necesario agregarle nada al listado. PERO, puede
             // que el nombre ya exista en el listado de contenidos, por lo que puedo
             // llegar a necesitar modificar el nombre utilizado dentro del listado.
