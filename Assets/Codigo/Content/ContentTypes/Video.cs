@@ -99,6 +99,17 @@ namespace Contents{
             return config;
         }
 
+        public override string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange = true){
+            bool hasNewName = cambios.ContainsKey("newName");
+            bool hasNewAudio = cambios.ContainsKey("newAudio");
+            bool changedRepresentation = cambios.ContainsKey("isEquiangular");
+			if (changedRepresentation){
+				this.isEquiangularCubemap = (bool) cambios["isEquiangular"];
+			}
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio || changedRepresentation);
+            return base.customize(cambios, audios, saveChange);
+        }
+
         protected abstract IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource);
     }
 }

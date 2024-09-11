@@ -18,16 +18,6 @@ namespace SimpleHttpServer.Models
     }
 
     [System.Serializable]
-    public class DataSavedCustomizations{
-        public string contentType;
-        public string cambios;
-        public static DataSavedCustomizations CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<DataSavedCustomizations>(jsonString);
-        }
-    }
-
-    [System.Serializable]
     public class ExternalAppInfo{
         public string visibleName;
         public string packageName;
@@ -53,52 +43,6 @@ namespace SimpleHttpServer.Models
         public string CreateJSON()
         {
            return JsonUtility.ToJson(this);
-        }
-    }
-
-    [System.Serializable]
-    public class DataCustomizeApp{
-        public string oldName;
-        public string newName;
-        public string packageName;
-        public static DataCustomizeApp CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<DataCustomizeApp>(jsonString);
-        }
-    }
-
-    [System.Serializable]
-    public class DataCustomizePhoto{
-        public string oldName;
-        public string newName;
-        public string newAudio;
-        public static DataCustomizePhoto CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<DataCustomizePhoto>(jsonString);
-        }
-    }
-
-    [System.Serializable]
-    public class DataCustomizeEscena{
-        public string oldName;
-        public string newName;
-        public string newAudio;
-        public static DataCustomizeEscena CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<DataCustomizeEscena>(jsonString);
-        }
-    }
-
-    [System.Serializable]
-    public class DataCustomizeVideo{
-        public string oldName;
-        public string newName;
-        public string newAudio;
-        public bool isEquiangular;
-        public bool changedRepresentation;
-        public static DataCustomizeVideo CreateFromJSON(string jsonString)
-        {
-            return JsonUtility.FromJson<DataCustomizeVideo>(jsonString);
         }
     }
 

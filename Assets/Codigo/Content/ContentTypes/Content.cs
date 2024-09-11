@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Contents{
     
@@ -92,5 +94,61 @@ namespace Contents{
         }
 
         public abstract bool delete ();
+
+        protected void storeNewCustomization(string jsonCambios){
+            string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
+            if(!File.Exists(cambiosFileLocation)){
+                File.Create(cambiosFileLocation).Dispose();
+            } else {
+                // si el archivo existe pero no esta vacio, agrego un salto de linea al principio 
+                long fileLength = new FileInfo(cambiosFileLocation).Length;
+                if (fileLength > 0) {
+                    jsonCambios = '\n'+jsonCambios;
+                }
+            }
+            using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
+                streamWriter.Write(jsonCambios.ToString());
+            }
+        }
+
+        public virtual string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange){
+			// cambio el nombre
+            if (cambios.ContainsKey("newName")){
+				string newName = (string) cambios["newName"];
+				this.changeNombre(newName);
+			}
+
+            //cambio el audio
+			if (cambios.ContainsKey("newAudio")){
+				string newAudio = (string) cambios["newAudio"];
+				if(newAudio == ""){
+					this.soundContainer = null;
+				}else{
+					AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
+					if(audioContainer == null){
+						string warning = $"El audio solicitado \"{newAudio}\" no existe";
+						Debug.LogWarning(warning);
+						return warning;
+					}
+					this.soundContainer = audioContainer;
+				}
+			}
+
+            // Las clases que heredan deben decidir si se deben guardar o no los cambios,
+            // ya que cada una puede tener distintos criterios de decision.
+            //
+            // Ej: Todas las clases van a recibir un "saveChange" que viene desde 
+            //     ContentManager e indica si se debe guardar el cambio o no. Pero su vez:
+            //        1. Photo solo se guarda si tambien habia una entrada "newName" o "newAudio"
+            //        2. Video ademas de name y audio tiene en cuenta la presencia de "isEquiangular".
+            //
+            // Por lo que cada una debe analizar lo suyo, y decidir que valor
+            // asignar a "saveChange" antes de su llamado a base.customize(...)
+            if (saveChange) {
+                string jsonCambios = JsonConvert.SerializeObject(cambios);
+                storeNewCustomization(jsonCambios);
+            }
+            return "";
+        }
     }
 }

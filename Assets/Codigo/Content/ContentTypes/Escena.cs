@@ -99,5 +99,12 @@ namespace Contents{
                 }
             }
         }
+
+        public override string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange){
+            bool hasNewName = cambios.ContainsKey("newName");
+            bool hasNewAudio = cambios.ContainsKey("newAudio");
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio);
+            return base.customize(cambios, audios, shouldSave);    
+        }
     }
 }

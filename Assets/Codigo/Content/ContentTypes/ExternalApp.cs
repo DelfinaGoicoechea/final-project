@@ -112,7 +112,7 @@ namespace Contents{
             return true;
         }
 
-        public bool changePackageName(string newPackageName){
+        protected bool changePackageName(string newPackageName){
             // Util para meter los cambios en el propio listado de ExternalApps
             string extAppsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}externalApps.txt";
 			string[] stringAppInfos = File.ReadAllLines(extAppsFileLocation);
@@ -128,6 +128,29 @@ namespace Contents{
             streamWriter.Close();
             this.packageName = newPackageName;
             return true;
+        }
+
+        public override string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange = true){
+            bool hasNewName = cambios.ContainsKey("newName");
+			if (hasNewName){
+				string newName = (string) cambios["newName"];
+				this.changeNombre(newName);
+			}
+
+			bool hasPackageName = cambios.ContainsKey("packageName");
+			if (hasPackageName){
+				string packageName = (string) cambios["packageName"];
+				if(packageName == ""){
+					string warning = $"El packagenName de {this.nombre} no puede estar vacio";
+					Debug.LogWarning(warning);
+					return warning;
+				}else{
+					this.changePackageName(packageName);
+				}
+			}
+			
+			// Los cambios ya se guardan en changeNombre() y changePackageName()
+			return "";
         }
     }
 }

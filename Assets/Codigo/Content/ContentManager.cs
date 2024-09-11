@@ -8,6 +8,7 @@ using UnityEngine.Video;
 using System.Text;
 using System.IO;
 using SimpleHttpServer.Models;
+using Newtonsoft.Json;
 
 namespace Contents{
 
@@ -54,39 +55,10 @@ namespace Contents{
 				string[] cambios = File.ReadAllLines(cambiosFileLocation);
 				List<string> linesToRemove = new List<string>();
 				foreach (string cambio in cambios){
-					string result;
-					Debug.Log("cambio: " + cambio);
-					DataSavedCustomizations jsonCambios = DataSavedCustomizations.CreateFromJSON(cambio);
-					switch(jsonCambios.contentType)
-					{
-						case "escena":
-						    DataCustomizeEscena dce = DataCustomizeEscena.CreateFromJSON(jsonCambios.cambios);
-							result = customizeEscena(dce.oldName, dce.newName, dce.newAudio, false);
-							if (result == $"El contenido {dce.oldName} no existe"){
-								linesToRemove.Add(cambio);
-							}
-							break;
-						case "photo":
-						    DataCustomizePhoto dcph = DataCustomizePhoto.CreateFromJSON(jsonCambios.cambios);
-							result  = customizePhoto(dcph.oldName, dcph.newName, dcph.newAudio, false);
-							if (result == $"El contenido {dcph.oldName} no existe"){
-								linesToRemove.Add(cambio);
-							}
-							break;
-						case "video":
-							DataCustomizeVideo dcv = DataCustomizeVideo.CreateFromJSON(jsonCambios.cambios);
-							result = customizeVideo(dcv.oldName, dcv.isEquiangular, dcv.changedRepresentation, dcv.newName, dcv.newAudio, false);
-							if (result == $"El contenido {dcv.oldName} no existe"){
-								linesToRemove.Add(cambio);
-							}
-							break;
-						case "extApp":
-							DataCustomizeApp dca = DataCustomizeApp.CreateFromJSON(jsonCambios.cambios);
-							result = customizeExtApp(dca.oldName, dca.newName, dca.packageName, false);
-							if (result == $"El contenido {dca.oldName} no existe"){
-								linesToRemove.Add(cambio);
-							}
-							break;
+					Dictionary<string, object> customizations = JsonConvert.DeserializeObject<Dictionary<string, object>>(cambio);
+					string result = customizeContent(customizations, false);
+					if (result == $"El contenido {(string)customizations["oldName"]} no existe"){
+						linesToRemove.Add(cambio);
 					}
 				}
 
@@ -251,268 +223,30 @@ namespace Contents{
 			}
 		}
 
-		public string customizeEscena(string oldName, string newName = null, string newAudio = null, bool saveChange = true)
-		{
-			Content content = contents.Find(x => x.nombre.Equals(oldName));
-			if (content == null){
+		public string customizeContent(Dictionary<string, object> cambios, bool saveChange = true){
+			// Chequeo eue el contenido a personalizar exista
+			string oldName = (string)cambios["oldName"];
+			Content contentOldName = contents.Find(x => x.nombre.Equals(oldName));
+			if (contentOldName == null){
 				string warning = $"El contenido {oldName} no existe";
 				Debug.LogWarning(warning);
 				return warning;
 			}
-			else{
-				if(content.GetType() != typeof(Contents.Escena)){
-					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
-					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					string warning = $"El contenido {oldName} existe, pero el tipo no es Escena";
+
+			// Chequeo que el nuevo nombre todavia no exista
+			bool hasNewName = cambios.ContainsKey("newName");
+			if (hasNewName){
+				string newName = (string) cambios["newName"];
+				Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
+				if (contentNewName != null && contentOldName != contentNewName){
+					string warning = $"Ya existe un contenido llamado \"{newName}\"";
 					Debug.LogWarning(warning);
 					return warning;
 				}
-				Escena scene = (Escena) content;
-				if (newName != null){
-					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null && content != contentNewName){
-						string warning = $"Ya existe un contenido llamado \"{newName}\"";
-						Debug.LogWarning(warning);
-						return warning;
-					}
-					scene.changeNombre(newName);
-				}	
-				if (newAudio != null){
-					if(newAudio == ""){
-						scene.soundContainer = null;
-					}else{
-						AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
-						if(audioContainer == null){
-							string warning = $"El audio solicitado \"{newAudio}\" no existe";
-							Debug.LogWarning(warning);
-							return warning;
-						}
-						scene.soundContainer = audioContainer;
-					}
-				}
-			}
-			
-			// Si realmente hubo cambios, los guardo
-			if(saveChange && (newName != null || newAudio != null)){
-				StringBuilder cambios = new StringBuilder("\n{\"contentType\":\"escena\",");
-				cambios.Append($"\"cambios\":\"{{\\\"oldName\\\":\\\"{oldName}\\\",");
-				if(newName != null)
-					cambios.Append($"\\\"newName\\\":\\\"{newName}\\\",");
-				if(newAudio != null)
-					cambios.Append($"\\\"newAudio\\\":\\\"{newAudio}\\\",");
-				cambios = cambios.Remove(cambios.Length-1, 1);
-				cambios.Append("}\"}");
-				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
-				if(!File.Exists(cambiosFileLocation)){ 
-					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
-					File.Create(cambiosFileLocation).Dispose();
-				} else {
-					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
-					long fileLength = new FileInfo(cambiosFileLocation).Length;
-					if (fileLength == 0) {
-						cambios.Remove(0,1); 
-					}
-				}
-
-				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
-					streamWriter.Write(cambios.ToString());
-				}
-			}
-			return "";
-		}
-
-		public string customizePhoto(string oldName, string newName = null, string newAudio = null, bool saveChange = true)
-		{
-			Content content = contents.Find(x => x.nombre.Equals(oldName));
-			if (content == null){
-				string warning = $"El contenido {oldName} no existe";
-				Debug.LogWarning(warning);
-				return warning;
-			}
-			else{
-				Type tipoContent = content.GetType();
-				if(content.GetType() != typeof(Contents.Photo) && !tipoContent.IsSubclassOf(typeof(Contents.Photo))){
-					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
-					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					string warning = $"El contenido {oldName} existe, pero el tipo no es Photo";
-					Debug.LogWarning(warning);
-					return warning;
-				}
-				Photo photo = (Photo) content;
-				if (newName != null){
-					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null && content != contentNewName){
-						string warning = $"Ya existe un contenido llamado \"{newName}\"";
-						Debug.LogWarning($"Ya existe un contenido llamado \"{newName}\"");
-						return warning;
-					}
-					photo.changeNombre(newName); // Util porque renombra thumbnails
-				}	
-				if (newAudio != null){
-					if(newAudio == ""){
-						photo.soundContainer = null;
-					}else{
-						AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
-						if(audioContainer == null){
-							string warning = $"El audio solicitado \"{newAudio}\" no existe";
-							Debug.LogWarning(warning);
-							return warning;
-						}
-						photo.soundContainer = audioContainer;
-					}
-				}
 			}
 
-			// Si realmente hubo cambios, los guardo
-			if(saveChange && (newName != null || newAudio != null)){
-				StringBuilder cambios = new StringBuilder("\n{\"contentType\":\"photo\",");
-				cambios.Append($"\"cambios\":\"{{\\\"oldName\\\":\\\"{oldName}\\\",");
-				if(newName != null)
-					cambios.Append($"\\\"newName\\\":\\\"{newName}\\\",");
-				if(newAudio != null)
-					cambios.Append($"\\\"newAudio\\\":\\\"{newAudio}\\\",");
-				cambios = cambios.Remove(cambios.Length-1, 1);
-				cambios.Append("}\"}");
-				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
-				if(!File.Exists(cambiosFileLocation)){
-					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
-					File.Create(cambiosFileLocation).Dispose();
-				} else {
-					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
-					long fileLength = new FileInfo(cambiosFileLocation).Length;
-					if (fileLength == 0) {
-						cambios.Remove(0,1); 
-					}
-				}
-
-				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
-					streamWriter.Write(cambios.ToString());
-				}
-			}
-			return "";
-		}
-
-		public string customizeVideo(string oldName, bool isEquiangular, bool changedRepresentation, string newName = null, string newAudio = null, bool saveChange = true)
-		{
-			Content content = contents.Find(x => x.nombre.Equals(oldName));
-			if (content == null){
-				string warning = $"El contenido {oldName} no existe";
-				Debug.LogWarning(warning);
-				return warning;
-			}
-			else
-			{
-				Type tipoContent = content.GetType();
-				if(!tipoContent.IsSubclassOf(typeof(Contents.Video)))
-				{
-					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
-					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					string warning = $"El contenido {oldName} existe, pero el tipo no es Video";
-					Debug.LogWarning(warning);
-					return warning;
-				}
-				Video video = (Video) content;
-				if (changedRepresentation){
-					video.isEquiangularCubemap = isEquiangular;
-				}
-					
-				if (newName != null){
-					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null && content != contentNewName){
-						string warning = $"Ya existe un contenido llamado \"{newName}\"";
-						Debug.LogWarning(warning);
-						return warning;
-					}
-					video.changeNombre(newName);
-				}
-				if (newAudio != null){
-					if(newAudio == ""){
-						video.soundContainer = null;
-					}else{
-						AudioContainer audioContainer = audios.Find(x => x.nombre.Equals(newAudio));
-						if(audioContainer == null){
-							string warning = $"El audio solicitado \"{newAudio}\" no existe";
-							Debug.LogWarning(warning);
-							return warning;
-						}
-						video.soundContainer = audioContainer;
-					}
-				}
-			}
-
-			// Si realmente hubo cambios, los guardo
-			if(saveChange && (newName != null || newAudio != null || changedRepresentation)){
-				StringBuilder cambios = new StringBuilder("\n{\"contentType\":\"video\",");
-				cambios.Append($"\"cambios\":\"{{\\\"oldName\\\":\\\"{oldName}\\\",");
-				if(newName != null)
-					cambios.Append($"\\\"newName\\\":\\\"{newName}\\\",");
-				if(newAudio != null)
-					cambios.Append($"\\\"newAudio\\\":\\\"{newAudio}\\\",");
-				if(changedRepresentation){
-					string isEquiangular_lowercase = $"{isEquiangular}".ToLower();
-					cambios.Append($"\\\"isEquiangular\\\":{isEquiangular_lowercase},");
-					cambios.Append($"\\\"changedRepresentation\\\":true,");
-				}
-				cambios = cambios.Remove(cambios.Length-1, 1);
-				cambios.Append("}\"}");
-				string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
-				if(!File.Exists(cambiosFileLocation)){
-					cambios.Remove(0,1); // Quito el salto de linea inicial (si es el primer cambio de la lista)
-					File.Create(cambiosFileLocation).Dispose();
-				} else {
-					// si el archivo existe, pero esta vacio (por disables), tambien quito la linea inicial
-					long fileLength = new FileInfo(cambiosFileLocation).Length;
-					if (fileLength == 0) {
-						cambios.Remove(0,1); 
-					}
-				}
-
-				using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
-					streamWriter.Write(cambios.ToString());
-				}
-			}
-			return "";
-		}
-
-		public string customizeExtApp(string oldName, string newName = null, string packageName = null, bool saveChange = true)
-		{
-			Content content = contents.Find(x => x.nombre.Equals(oldName));
-			if (content == null){
-				string warning = $"El contenido {oldName} no existe";
-				Debug.LogWarning(warning);
-				return warning;
-			}
-			else{
-				if(content.GetType() != typeof(Contents.ExternalApp)){
-					// Este chequeo nunca deberia causar problemas porque desde flutter ya se
-					// sabe el tipo del contenido, pero mas vale prevenir que curar.
-					string warning = $"El contenido {oldName} existe, pero el tipo no es Aplicacion";
-					Debug.LogWarning(warning);
-					return warning;
-				}
-				ExternalApp extApp = (ExternalApp) content;
-				if (newName != null){
-					Content contentNewName = contents.Find(x => x.nombre.Equals(newName));
-					if (contentNewName != null && content != contentNewName){
-						string warning = $"Ya existe un contenido llamado \"{newName}\"";
-						Debug.LogWarning(warning);
-						return warning;
-					}
-					extApp.changeNombre(newName);
-				}	
-				if (packageName != null){
-					if(packageName == ""){
-						string warning = $"El packagenName de {extApp.nombre} no puede estar vacio";
-						Debug.LogWarning(warning);
-						return warning;
-					}else{
-						extApp.changePackageName(packageName);
-					}
-				}
-			}
-			
-			// Los cambios ya se guardan en changeNombre() y changePackageName()
-			return "";
+			// personalizo el contenido
+			return contentOldName.customize(cambios, audios, saveChange);
 		}
 
 		/// <summary>
