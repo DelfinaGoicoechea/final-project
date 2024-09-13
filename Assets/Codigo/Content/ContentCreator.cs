@@ -55,7 +55,7 @@ namespace Contents{
             // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 
             // porque esto no es un MonoBehavior, y si lo vuelvo un MonoBehavior, no lo 
             // puedo crear con new en FileSystemContentLoader. Unity es un dolor de cabeza.
-            Transform contentsTransform = cManager.transform.GetChild(1);
+            Transform contentsTransform = cManager.transform.GetChild(0);
             Transform photosTransform = contentsTransform.GetChild(0);
             auxGameObject.transform.parent = photosTransform;
             return photo;
@@ -66,7 +66,7 @@ namespace Contents{
             GameObject auxGameObject = new GameObject(name);
             Walk camino = auxGameObject.AddComponent<Walk>(); 
             camino.nombre = name;
-            Transform contentTransform = cManager.transform.GetChild(1);
+            Transform contentTransform = cManager.transform.GetChild(0);
             Transform walkTransform = contentTransform.GetChild(3);
             auxGameObject.transform.parent = walkTransform;
             return camino;
@@ -89,7 +89,7 @@ namespace Contents{
             photo.soundContainer = soundContainer;
             photo.nombre = filename;
             
-            Transform contentTransform = cManager.transform.GetChild(1);
+            Transform contentTransform = cManager.transform.GetChild(0);
             Transform walkTransform = contentTransform.GetChild(3);
             Transform photoTransform = walkTransform.GetChild(0);
             auxGameObject.transform.parent = photoTransform;
@@ -125,15 +125,9 @@ namespace Contents{
             bool isEAC = true;
             video.isEquiangularCubemap = isEAC;
             if (isEAC){
-                Shader shader = Shader.Find("Custom/EAC-sphere");
-                Material renderMaterial = new Material(shader);
-                renderMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
-                video.material = renderMaterial;
+                video.material = (Material)Resources.Load("360_EAC", typeof(Material));
             }else{
-                Shader shader = Shader.Find("Sprites/Default");
-                Material renderMaterial = new Material(shader);
-                renderMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
-                video.material = renderMaterial;
+                video.material = (Material)Resources.Load("360_Material", typeof(Material));
             }
             
 
@@ -141,7 +135,7 @@ namespace Contents{
             // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 
             // porque esto no es un MonoBehavior, y si lo vuelvo un MonoBehavior, no lo 
             // puedo crear con new en FileSystemContentLoader. Unity es un dolor de cabeza.
-            Transform contentsTransform = cManager.transform.GetChild(1);
+            Transform contentsTransform = cManager.transform.GetChild(0);
             Transform videosTransform = contentsTransform.GetChild(1);
             auxGameObject.transform.parent = videosTransform;
             return video;
@@ -171,7 +165,7 @@ namespace Contents{
             // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 
             // porque esto no es un MonoBehavior, y si lo vuelvo un MonoBehavior, no lo 
             // puedo crear con new en FileSystemContentLoader. Unity es un dolor de cabeza.
-            Transform contentsTransform = cManager.transform.GetChild(1);
+            Transform contentsTransform = cManager.transform.GetChild(0);
             Transform appsTransform = contentsTransform.GetChild(4);
             auxGameObject.transform.parent = appsTransform;
             

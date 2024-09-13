@@ -48,7 +48,7 @@ namespace Contents{
         public override void play()
         {
             // Pauso audio que se haya configurado al ver una imagen
-            AudioSource audioSource = ContentManager.Instance.audioSource;
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
             audioSource.Pause();
             // Siempre las imagenes y videos se reproducen en la escena de esferas
             if (SceneManager.GetActiveScene().name != "SphereScene")
@@ -104,12 +104,21 @@ namespace Contents{
             bool hasNewAudio = cambios.ContainsKey("newAudio");
             bool changedRepresentation = cambios.ContainsKey("isEquiangular");
 			if (changedRepresentation){
-				this.isEquiangularCubemap = (bool) cambios["isEquiangular"];
+                bool isEAC = (bool) cambios["isEquiangular"];
+				this.isEquiangularCubemap = isEAC;
+                if (isEAC){
+                    material = (Material)Resources.Load("360_EAC", typeof(Material));
+                }else{
+                    material = (Material)Resources.Load("360_Material", typeof(Material));
+                }
 			}
             bool shouldSave = saveChange && (hasNewName || hasNewAudio || changedRepresentation);
             return base.customize(cambios, audios, saveChange);
         }
 
+        protected void playAudioSource(){
+            base.play();
+        }
         protected abstract IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource);
     }
 }

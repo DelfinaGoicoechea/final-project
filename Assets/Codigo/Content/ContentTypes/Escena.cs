@@ -36,7 +36,7 @@ namespace Contents{
             } else {
                 SceneManager.LoadScene(sceneName);
             }
-            AudioSource audioSource = ContentManager.Instance.audioSource;
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
             audioSource.Pause();
             base.play();
         }

@@ -33,7 +33,7 @@ namespace Contents{
 
         public virtual void play(){
             // Paro la reproduccion del sonido de cualquier Content previo
-            AudioSource audioSource = ContentManager.Instance.audioSource;
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
             audioSource.Pause();
 
             if (this.soundContainer != null)
@@ -64,7 +64,7 @@ namespace Contents{
         {
             // TODO: audioSource se podria pausar desde pause() en contentManager,
             // estas lineas parecen ser innecesarias y sobrecomplicar el asunto.
-            AudioSource audioSource = ContentManager.Instance.audioSource;
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
             if (this.soundContainer != null){
                 audioSource.Pause();
             }
@@ -72,7 +72,7 @@ namespace Contents{
 
         public virtual void stop()
         {
-            AudioSource audioSource = ContentManager.Instance.audioSource;
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
             if (this.soundContainer != null){
                 audioSource.Stop();
                 soundContainer.UnloadAudio();

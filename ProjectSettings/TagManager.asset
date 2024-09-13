@@ -12,6 +12,7 @@ TagManager:
   - MetricsManager
   - NetworkManager
   - ThumbnailCamera
+  - ContentPlayer
   layers:
   - Default
   - TransparentFX

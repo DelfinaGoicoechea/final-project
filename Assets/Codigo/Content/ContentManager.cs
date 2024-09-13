@@ -18,14 +18,10 @@ namespace Contents{
 	/// </summary>
 	public class ContentManager : MonoBehaviour
 	{
-		public AudioSource audioSource;
 		public List<Content> contents;
 		private List<AudioContainer> audios = new List<AudioContainer>();
 		private GameObject sphere;
-		private Content currentlyPlaying;
-		private float configuredVolume = 1.0f;
 		private FileSystemContentLoader fsLoader;
-
 		public static ContentManager Instance { get; private set; }
 		private void Awake()
 		{
@@ -78,7 +74,7 @@ namespace Contents{
 
 		private void loadAudiosAndCustomizations()
 		{
-			Transform audiosTransform = transform.GetChild(2);
+			Transform audiosTransform = transform.GetChild(1);
 			// Cargar audios definidos en tiempo de compilacion
 			foreach (Transform audioTransform in audiosTransform){
 				AudioContainer audioContainer = audioTransform.gameObject.GetComponent<AudioContainer>();
@@ -118,7 +114,7 @@ namespace Contents{
 
 		private IEnumerator loadContents()
 		{
-			Transform contentsTransform = transform.GetChild(1);
+			Transform contentsTransform = transform.GetChild(0);
 			// Cargar Imagenes definidas en tiempo de compilacion
 			Transform photosTransform = contentsTransform.GetChild(0);
 			foreach (Transform photoTransform in photosTransform){
@@ -221,6 +217,10 @@ namespace Contents{
 				// Busco ProjectionSphere
 				sphere = GameObject.FindWithTag("ProjectionSphere");
 			}
+		}
+
+		public Content getContent(string contentName){
+			return contents.Find(x => x.nombre.Equals(contentName));
 		}
 
 		public string customizeContent(Dictionary<string, object> cambios, bool saveChange = true){
@@ -376,7 +376,6 @@ namespace Contents{
 		/// <param name="scene"></param>
 		/// <returns></returns>
 		public Texture2D getThumbnail(string scene){
-			Debug.Log("La escena que se carga es: " + scene);
 			Content content = contents.Find(x => x.nombre.Equals(scene));
 			if (content == null){
 				Debug.LogWarning("No se encontro el Contenido: " + scene);
@@ -385,40 +384,16 @@ namespace Contents{
 			return content.thumbnail;
 		}
 
-
-		/// <summary>
-		/// Takes the name of a Content as an input, and starts playing it.
-		/// </summary>
-		/// <param name="scene"></param>
-		/// <returns></returns>
-		public bool playContent(string scene)
-		{
-			Content content = contents.Find(x => x.nombre.Equals(scene));
-			if (content != null)
-			{
-				if(this.currentlyPlaying != null && this.currentlyPlaying != content){
-					// me aseguro de parar la reproduccion del anterior,
-					// antes de reproducir el nuevo contenido
-					currentlyPlaying.stop();
-				}
-				this.currentlyPlaying = content;
-                Time.timeScale = 1.0f;
-                content.play();
-				StartCoroutine(fadeIn(2.5f));
-				return true;
-			}
-			Debug.LogWarning("No se encontro el Contenido: " + scene);
-			return false;
-		}
-
 		public bool deleteContent(string scene, bool fromLoadContents = false){
 			Content content = contents.Find(x => x.nombre.Equals(scene));
 			if (content != null)
 			{
-				if(this.currentlyPlaying != null && this.currentlyPlaying == content) {
+				ContentPlayer cPlayer = ContentPlayer.Instance;
+				if(cPlayer.currentlyPlaying != null && cPlayer.currentlyPlaying == content) {
 					// Me aseguro de frenar la reproducción, porque lo voy a eliminar
-					currentlyPlaying.stop();
-					this.stop();
+					cPlayer.currentlyPlaying.stop();
+					Content mainScene = getContent("Main");
+					cPlayer.stop(mainScene); // TODO: Ver por que no se usa solo cPlayer.stop()
 				}
 
 				// si vengo de (LoadContents -> LoadDisables) => salteo el paso de agregar 
@@ -440,20 +415,6 @@ namespace Contents{
 			return false;
 		}
 
-		private IEnumerator fadeIn(float duration)
-		{
-			float currentTime = 0;
-			float start = 0.0f;
-			float end = configuredVolume;
-			while (currentTime < duration)
-			{
-				currentTime += Time.fixedDeltaTime;
-				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
-				yield return new WaitForFixedUpdate();
-			}
-			yield break;
-		}
-
 		/// <summary>
 		/// returns the sphere used to project a 360 image/video.
 		/// </summary>
@@ -461,89 +422,6 @@ namespace Contents{
 		public GameObject getSphere()
 		{
 			return sphere;
-		}
-
-		/// <summary>
-		/// Stops content reproduction and returns to the "Main" scene.
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerator stop()
-		{
-			float currentTime = 0.0f;
-			float start = configuredVolume;
-			float end = 0.0f;
-			float duration = 5f;
-			while (currentTime < duration)
-			{
-				currentTime += Time.fixedDeltaTime;
-				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
-				yield return new WaitForFixedUpdate();
-			}
-			// Solo voy a PlayContent si me tiran Stop y actualmente no estoy en la escena Main
-			bool alreadyInMain = this.currentlyPlaying == null || this.currentlyPlaying != null && this.currentlyPlaying.nombre == "Main";
-			if (!alreadyInMain)
-				this.playContent("Main");
-			yield return null;
-		}
-
-		/// <summary>
-		/// pauses any currently playing content.
-		/// Exactly what that means depends on the kind of
-		/// content currently playing (image/video/scene).
-		/// </summary>
-		/// <returns></returns>
-		public IEnumerator pause(){
-			float currentTime = 0.0f;
-			float start = configuredVolume;
-			float end = 0.0f;
-			float duration = 2.5f;
-            if (currentlyPlaying != null)
-            {
-                currentlyPlaying.pause();
-            }
-            while (currentTime < duration)
-			{
-				currentTime += Time.fixedDeltaTime;
-				audioSource.volume = Mathf.Lerp(start, end, currentTime / duration);
-				yield return new WaitForFixedUpdate();
-			}
-			yield return null;
-		}
-
-		public void setVolume(float vol){
-			if (vol > 100.0f){
-				vol = 100.0f;
-			}else if (vol < 0.0f){
-				vol = 0.0f;
-			}
-			vol = vol / 100.0f;
-
-			if (audioSource.clip != null){
-				audioSource.volume = vol;
-			}
-
-			configuredVolume = vol;
-
-			// El video solo esta presente en la escena de la esfera
-			if(SceneManager.GetActiveScene().name == "SphereScene"){
-				VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-				if (videoPlayer.clip != null)
-				{
-					if (videoPlayer.clip.audioTrackCount > 0)
-					{
-						videoPlayer.SetDirectAudioVolume(0, 0);
-					}
-				}
-			}
-		}
-
-		public string getPlayingName(){
-			if (currentlyPlaying != null){
-				return currentlyPlaying.nombre;
-			}
-			else{
-				return null;
-			}
 		}
 	}
 }

@@ -62,8 +62,8 @@ public abstract class Metric : MonoBehaviour
     /// <returns></returns>
     protected void ReiniciarNombreContent()
     {
-        ContentManager cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
-        NombreContenido = cManager.getPlayingName();
+        ContentPlayer cPlayer = GameObject.FindWithTag("ContentPlayer").GetComponent<ContentPlayer>();
+        NombreContenido = cPlayer.currentlyPlaying.nombre;
     }
 
     /// <summary>

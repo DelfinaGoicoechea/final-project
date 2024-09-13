@@ -73,7 +73,7 @@ namespace Contents{
             {
                 string audiosDirectory = Application.persistentDataPath;
                 DirectoryInfo audiosDirectoryInfo = new DirectoryInfo(audiosDirectory);
-                Transform audiosTransform = cManager.transform.GetChild(2);
+                Transform audiosTransform = cManager.transform.GetChild(1);
                 foreach (var audioFileInfo in audiosDirectoryInfo.GetFiles())
                 {
                     if(audioExtensionRegex.IsMatch(audioFileInfo.FullName))
@@ -127,7 +127,7 @@ namespace Contents{
             }
             Debug.Log($"Agrego el audio: {audioFileInfo.FullName}");
             GameObject auxGameObject =  new GameObject("audio "+filename);
-            Transform audiosTransform = cManager.transform.GetChild(2);
+            Transform audiosTransform = cManager.transform.GetChild(1);
             auxGameObject.transform.parent = audiosTransform;
             PathAudioContainer audioContainer = auxGameObject.AddComponent<PathAudioContainer>();
             audioContainer.nombre = filename;

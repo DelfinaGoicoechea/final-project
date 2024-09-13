@@ -14,7 +14,6 @@ namespace Contents{
     public class PathVideo : Video
     {
         public string videoFilePath;
-        protected bool hasThumbnail = false;
 
         protected override IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource)
         {
@@ -57,6 +56,7 @@ namespace Contents{
                     try
                     {
                         videoPlayer.SetDirectAudioVolume(0, 0);
+                        playAudioSource();
                     }
                     catch (Exception err)
                     {
@@ -82,7 +82,7 @@ namespace Contents{
                 meshR.materials = meshmaterials;
             }
             isPaused = false;
-            if(!hasThumbnail){
+            if(thumbnail == null || thumbnail == Texture2D.whiteTexture){
                 StartCoroutine(captureThumbnail(sceneName));
             }
         }
@@ -103,14 +103,10 @@ namespace Contents{
             if(SceneManager.GetActiveScene().name == sceneName){
                 Texture2D image = ThumbnailCreator.Capture(this.nombre);
                 this.thumbnail = image;
-                this.hasThumbnail = true;
             }
         }
 
         public override bool delete () {
-            if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
-                UnityEngine.Object.Destroy(thumbnail);
-            }
             // delete video
             try {
                 File.Delete(videoFilePath);
@@ -118,8 +114,9 @@ namespace Contents{
                 Debug.Log(e.StackTrace);
                 return false;
             }
-            // delete thumbnail}
-            if (hasThumbnail) {
+            // delete thumbnail
+            if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
+                UnityEngine.Object.Destroy(thumbnail);
                 char OsSep = Path.DirectorySeparatorChar;
                 string thumbLocation = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{nombre}.png";
                 try {
@@ -138,7 +135,7 @@ namespace Contents{
             string newThPath = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{newName}.png";
 
             // Cambio el nombre del archivo de thumbnail en caso de que exista
-            if (hasThumbnail) {
+            if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
                 if (File.Exists(oldThPath)) {
                     try {
                         File.Move(oldThPath, newThPath);
@@ -154,13 +151,11 @@ namespace Contents{
                 // nombre cambiado.
                 // Esto surge de "ContentManager -> LoadCustomization()"
                 if (File.Exists(newThPath)) {
-                    // borro de memoria la textura vieja (default) y cargo la  nueva.
-                    UnityEngine.Object.Destroy(thumbnail);
+                    // cargo la nueva textura.
                     byte[] bytes = File.ReadAllBytes(newThPath);
                     Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
                     ImageConversion.LoadImage(loadTexture, bytes);
                     this.thumbnail = loadTexture;
-                    hasThumbnail = true;
                 }
             }
             this.nombre = newName;

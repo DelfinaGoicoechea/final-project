@@ -63,16 +63,15 @@ namespace Contents{
                 videoPlayer.url = null;
                 videoPlayer.clip = video;
                 
-                if (this.soundContainer != null)
-                {
-                    if (video.audioTrackCount > 0)
-                    {
+                if (this.soundContainer != null) {
+                    if (video.audioTrackCount > 0) {
                         videoPlayer.SetDirectAudioVolume(0, 0);
                     }
-                }
-                else
-                {
-                    videoPlayer.SetDirectAudioVolume(0, 1);;
+                    playAudioSource();
+                } else {
+                    if (video.audioTrackCount > 0){
+                        videoPlayer.SetDirectAudioVolume(0, 1);
+                    }
                 }
                 // Creo un rendertexture a partir de la resolucion de video, y le doy play
                 videoPlayer.prepareCompleted += this.getVideoSizeAndPlay;

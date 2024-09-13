@@ -14,7 +14,6 @@ namespace Contents{
     public class PathPhoto : Photo
     {
         public string imagePath;
-        private bool hasThumbnail = false;
 
         // Start is called before the first frame update
         void Start()
@@ -27,7 +26,6 @@ namespace Contents{
                 Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
                 ImageConversion.LoadImage(loadTexture, bytes);
                 this.thumbnail = loadTexture;
-                hasThumbnail = true;
             }
         }
 
@@ -48,7 +46,7 @@ namespace Contents{
             imageMaterial.mainTexture = loadTexture;
             imageMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
             base.play();
-            if(!hasThumbnail){
+            if(thumbnail == null || thumbnail == Texture2D.whiteTexture){
                 StartCoroutine(captureThumbnail());
             }
         }
@@ -65,7 +63,6 @@ namespace Contents{
             }
             Texture2D image = ThumbnailCreator.Capture(this.nombre);
             this.thumbnail = image;
-            this.hasThumbnail = true;
         }
 
         public override bool delete () {
@@ -80,7 +77,7 @@ namespace Contents{
                 return false;
             }
             // delete thumbnail}
-            if (hasThumbnail) {
+            if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
                 char OsSep = Path.DirectorySeparatorChar;
                 string thumbLocation = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{nombre}.png";
                 try {
@@ -99,7 +96,7 @@ namespace Contents{
             string newThPath = $"{Application.persistentDataPath}{OsSep}thumbnails{OsSep}{newName}.png";
 
             // Cambio el nombre del archivo de thumbnail en caso de que exista
-            if (hasThumbnail) {
+            if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
                 if (File.Exists(oldThPath)) {
                     try {
                         File.Move(oldThPath, newThPath);
@@ -119,7 +116,6 @@ namespace Contents{
                     Texture2D loadTexture = new Texture2D(1, 1, TextureFormat.RGB24, false);
                     ImageConversion.LoadImage(loadTexture, bytes);
                     this.thumbnail = loadTexture;
-                    hasThumbnail = true;
                 }
             }
             this.nombre = newName;

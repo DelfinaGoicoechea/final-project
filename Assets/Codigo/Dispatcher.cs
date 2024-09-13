@@ -20,6 +20,8 @@ namespace DispatcherSpace
         private ContentManager cManager;
         private MetricsManager mManager;
 		private NetworkManager nManager;
+		private ContentPlayer cPlayer;
+		private Content escenaMain;
 
         private void Awake()
         {
@@ -41,16 +43,17 @@ namespace DispatcherSpace
             cManager = GameObject.FindWithTag("ContentManager").GetComponent<ContentManager>();
             mManager = GameObject.FindWithTag("MetricsManager").GetComponent<MetricsManager>();
 			nManager = GameObject.FindWithTag("NetworkManager").GetComponent<NetworkManager>();
+			cPlayer = GameObject.FindWithTag("ContentPlayer").GetComponent<ContentPlayer>();
         }
 
 		/// Funcion que realiza la accion de play y retorna la respuesta http acorde (codigo)
         public HttpResponse play(string scene, Func<bool, string, HttpResponse> callback)
         {	
-			string currentlyPlaying = cManager.getPlayingName();
+			Content currentlyPlaying = cPlayer.currentlyPlaying;
 			// chequeo si ya hay contenido en reproduccion, 
 			// y si es un cambio de contenido, o resumir una pausa
 			string metricasJson = "";
-			if(currentlyPlaying != null && !currentlyPlaying.Equals(scene)){
+			if (currentlyPlaying != null && !currentlyPlaying.nombre.Equals(scene)) {
 				// Levanta las metricas de la escena saliente (antes del cambio)
 				mManager.LevantarMetricasEscena();
 				// Obtengo las metricas a reportar de la escena saliente
@@ -58,8 +61,12 @@ namespace DispatcherSpace
 				DataMetricsList serializer = new DataMetricsList(metricas);
 				metricasJson = serializer.getAsJSON();
 			}
-            bool sceneFound = cManager.playContent(scene);
-            return callback(sceneFound, metricasJson);
+			Content contentFound = cManager.getContent(scene);
+			if (contentFound != null) {
+				cPlayer.play(contentFound);
+				return callback(true, metricasJson); 
+			}
+			return callback(false, metricasJson); 
         }
 
 		/// <summary>
@@ -84,7 +91,7 @@ namespace DispatcherSpace
 		/// <returns></returns>
         public HttpResponse pause(Func<HttpResponse> callback)
         {
-            StartCoroutine(cManager.pause());
+            StartCoroutine(cPlayer.pause());
             return callback();
         }
 
@@ -94,7 +101,7 @@ namespace DispatcherSpace
 		/// <returns></returns>
         public HttpResponse setVolume(float vol, Func<HttpResponse> callback)
         {
-            cManager.setVolume(vol);
+            cPlayer.setVolume(vol);
             return callback();
         }
 
@@ -109,7 +116,10 @@ namespace DispatcherSpace
             List<string> metricas = mManager.ReportarMetricas();
 			DataMetricsList serializer = new DataMetricsList(metricas);
 			string metricasJson = serializer.getAsJSON();
-			StartCoroutine(cManager.stop());
+			if (escenaMain == null) {
+				escenaMain = cManager.getContent("Main");
+			}
+			StartCoroutine(cPlayer.stop(escenaMain));
             return callback(metricasJson);
         }
         
@@ -244,9 +254,9 @@ namespace DispatcherSpace
 
 		public HttpResponse deleteContenido(string scene, Func<bool, HttpResponse> callback)
         {	
-			string currentlyPlaying = cManager.getPlayingName();
+			Content currentlyPlaying = cPlayer.currentlyPlaying;
 			// chequeo si el contenido esta en reproduccion
-			if(currentlyPlaying != null && !currentlyPlaying.Equals(scene)){
+			if (currentlyPlaying != null && !currentlyPlaying.nombre.Equals(scene)) {
 				// Levanta las metricas de la escena saliente (antes de la eliminacion)
 				mManager.LevantarMetricasEscena();
 			}

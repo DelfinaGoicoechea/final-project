@@ -36,7 +36,6 @@ public class MetricsManager : MonoBehaviour
     {
         List<string> listaRetorno = listaMetricasRegistradas;
         listaMetricasRegistradas = new List<string>();
-        Debug.Log(listaRetorno);
         return listaRetorno;
     }
 
