@@ -50,6 +50,7 @@ namespace Contents{
             photo.soundContainer = soundContainer;
             photo.nombre = filename;
             photo.imagePath = imageFileInfo.FullName;
+            photo.customizationsEntry = "Execution";
             
             // Tengo que agregar auxGameObject como hijo de ContentManager para que no se
             // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 
@@ -66,6 +67,7 @@ namespace Contents{
             GameObject auxGameObject = new GameObject(name);
             Walk camino = auxGameObject.AddComponent<Walk>(); 
             camino.nombre = name;
+            camino.customizationsEntry = "Execution";
             Transform contentTransform = cManager.transform.GetChild(0);
             Transform walkTransform = contentTransform.GetChild(3);
             auxGameObject.transform.parent = walkTransform;
@@ -88,6 +90,7 @@ namespace Contents{
             photo.thumbnail = thumbnail;
             photo.soundContainer = soundContainer;
             photo.nombre = filename;
+            photo.customizationsEntry = "Execution";
             
             Transform contentTransform = cManager.transform.GetChild(0);
             Transform walkTransform = contentTransform.GetChild(3);
@@ -120,6 +123,7 @@ namespace Contents{
             video.soundContainer = soundContainer;
             video.nombre = filename;
             video.videoFilePath = videoFileInfo.FullName;
+            video.customizationsEntry = "Execution";
 
             // TODO: Intentar averiguar la proyeccion analizando metadata
             bool isEAC = true;
@@ -160,6 +164,7 @@ namespace Contents{
             externalApp.soundContainer = null;
             externalApp.nombre = visibleName;
             externalApp.packageName = packageName;
+            externalApp.customizationsEntry = "Execution";
             
             // Tengo que agregar auxGameObject como hijo de ContentManager para que no se
             // elimine al cambiar de escena. Aparte acá no puedo usar DontDestroyOnLoad(), 

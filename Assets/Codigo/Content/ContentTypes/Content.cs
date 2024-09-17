@@ -19,6 +19,10 @@ namespace Contents{
         [Tooltip("Nombre a mostrar a los usuarios")]
         public string nombre;
 
+        [Tooltip(@"Define en que entrada de cambios.txt se va a guardar los cambios.
+         En el editor tipicamente seria Compile")]
+        public string customizationsEntry = "Compile";
+
         // Start is called before the first frame update
         void Start()
         {
@@ -95,20 +99,31 @@ namespace Contents{
 
         public abstract bool delete ();
 
-        protected void storeNewCustomization(string jsonCambios){
+        protected void storeNewCustomization(Dictionary<string, object> cambios) {
             string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
+            //el archivo guarada: 
+            //     Dict<str, List< Dict<str,obj> >>
+            // Ejemplo:
+            //     {"Compile" : [ {"oldName": "bosque", "newName":"Desierto"} ]}
+            Dictionary<string, List<Dictionary<string, object>>> fileContent;
             if(!File.Exists(cambiosFileLocation)){
                 File.Create(cambiosFileLocation).Dispose();
+                fileContent = new Dictionary<string, List<Dictionary<string, object>>>();
+                // Agrego la entry
+                fileContent[this.customizationsEntry]  = new List<Dictionary<string, object>> {cambios};
             } else {
-                // si el archivo existe pero no esta vacio, agrego un salto de linea al principio 
-                long fileLength = new FileInfo(cambiosFileLocation).Length;
-                if (fileLength > 0) {
-                    jsonCambios = '\n'+jsonCambios;
+                string cambiosFileContent = File.ReadAllLines(cambiosFileLocation)[0];
+                fileContent =  JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, object>>>>(cambiosFileContent);
+                // File existe, ¿pero existe o no la Entry?
+                if (!fileContent.ContainsKey(this.customizationsEntry)){
+                    fileContent[this.customizationsEntry]  = new List<Dictionary<string, object>> {cambios};
+                } else {
+                    List<Dictionary<string, object>> listCambios = fileContent[this.customizationsEntry];
+                    listCambios.Add(cambios);
                 }
             }
-            using (StreamWriter streamWriter = File.AppendText(cambiosFileLocation)){
-                streamWriter.Write(jsonCambios.ToString());
-            }
+            string strCustomizations = JsonConvert.SerializeObject(fileContent);
+			File.WriteAllText(cambiosFileLocation, strCustomizations);
         }
 
         public virtual string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange){
@@ -145,8 +160,7 @@ namespace Contents{
             // Por lo que cada una debe analizar lo suyo, y decidir que valor
             // asignar a "saveChange" antes de su llamado a base.customize(...)
             if (saveChange) {
-                string jsonCambios = JsonConvert.SerializeObject(cambios);
-                storeNewCustomization(jsonCambios);
+                storeNewCustomization(cambios);
             }
             return "";
         }

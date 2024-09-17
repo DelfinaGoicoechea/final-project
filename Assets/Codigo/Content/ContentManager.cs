@@ -45,34 +45,33 @@ namespace Contents{
 		}
 
 
-		private void loadCustomizations(){
+		private void loadCustomizations(string contentCreationTime) { // Compile/Execution
 			string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
 			if(File.Exists(cambiosFileLocation)){
-				string[] cambios = File.ReadAllLines(cambiosFileLocation);
-				List<string> linesToRemove = new List<string>();
-				foreach (string cambio in cambios){
-					Dictionary<string, object> customizations = JsonConvert.DeserializeObject<Dictionary<string, object>>(cambio);
-					string result = customizeContent(customizations, false);
-					if (result == $"El contenido {(string)customizations["oldName"]} no existe"){
-						linesToRemove.Add(cambio);
-					}
-				}
-
-				// Si se debe eliminar alguna linea, lo reflejo en el archivo almacenado
-				if(linesToRemove.Count > 0){
-					StreamWriter streamWriter = File.CreateText(cambiosFileLocation);
-					foreach (string cambio in cambios){
-						if (!linesToRemove.Contains(cambio)){
-							streamWriter.WriteLine(cambio);
+				string[] cambiosFileContent = File.ReadAllLines(cambiosFileLocation);
+				Dictionary<string, List<Dictionary<string, object>>> customizations = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, object>>>>(cambiosFileContent[0]);
+				if (customizations.ContainsKey(contentCreationTime)) { // Compile/Execution
+					List<Dictionary<string, object>> cambios = customizations[contentCreationTime];
+					List<Dictionary<string, object>> cambiosToRemove = new List<Dictionary<string, object>>();
+					foreach (Dictionary<string, object> cambio in cambios) {
+						string result = customizeContent(cambio, false);
+						if (result == $"El contenido {(string)cambio["oldName"]} no existe"){
+							cambiosToRemove.Add(cambio);
 						}
 					}
-					streamWriter.Close();
-				}
+
+					// Si se debe eliminar alguna linea, lo reflejo en el archivo almacenado
+					foreach (Dictionary<string, object> cambio2Remove in cambiosToRemove) {
+						cambios.Remove(cambio2Remove);
+						string strCustomizations = JsonConvert.SerializeObject(customizations);
+						File.WriteAllText(cambiosFileLocation, strCustomizations);
+					}
+				}				
 			}
 		}
 
 
-		private void loadAudiosAndCustomizations()
+		private void loadAudios()
 		{
 			Transform audiosTransform = transform.GetChild(1);
 			// Cargar audios definidos en tiempo de compilacion
@@ -93,9 +92,6 @@ namespace Contents{
 			foreach(AudioContainer audioContainer in audiosToAdd) {
 				audios.Add(audioContainer);
 			}
-
-			// Cargar personalizaciones a los contenidos existentes
-			loadCustomizations();
 			return;
 		}
 
@@ -162,6 +158,12 @@ namespace Contents{
 				}
 			}
 
+			// Cargo los audios, porque puede que formen parte de las personalizaciones
+			loadAudios();
+
+			// Cargar personalizaciones a los contenidos definidos en tiempo de compilacion
+			loadCustomizations("Compile");
+
 			// Desactivar contenidos ""eliminados"", porque no es posible eliminar
 			// aquellos que fueron definidos en tiempo de compilacion.
 			loadDisables();
@@ -191,10 +193,8 @@ namespace Contents{
 				contents.Add(app);
 			}
 
-			// Cargar Audios, y luego las personalizaciones a los contenidos existentes
-			loadAudiosAndCustomizations();
-			// TODO: chequear: ni loadAudios, ni loadCustomization son corutinas, asi que
-			// deberia poder ejecutarlos a ambos aca sin anidar un llamado dentro del otro 
+			// Cargo las personalizaciones a los contenidos definidos en tiempo de ejecucion.
+			loadCustomizations("Execution");
 			yield return null;
 		}
 
