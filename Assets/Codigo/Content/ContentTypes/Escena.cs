@@ -70,7 +70,7 @@ namespace Contents{
 
         public override bool delete() {
             if (thumbnail != null && thumbnail != Texture2D.whiteTexture) {
-                UnityEngine.Object.Destroy(thumbnail);
+                Resources.UnloadAsset(thumbnail);
             }
             string disablesFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}disables.txt";
             if (!File.Exists(disablesFileLocation)) {
