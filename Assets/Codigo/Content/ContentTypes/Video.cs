@@ -112,7 +112,9 @@ namespace Contents{
                     material = (Material)Resources.Load("360_Material", typeof(Material));
                 }
 			}
-            bool shouldSave = saveChange && (hasNewName || hasNewAudio || changedRepresentation);
+
+            bool hasTags = cambios.ContainsKey("tags");
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio || changedRepresentation || hasTags);
             return base.customize(cambios, audios, saveChange);
         }
 

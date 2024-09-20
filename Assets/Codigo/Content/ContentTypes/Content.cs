@@ -22,6 +22,7 @@ namespace Contents{
         [Tooltip(@"Define en que entrada de cambios.txt se va a guardar los cambios.
          En el editor tipicamente seria Compile")]
         public string customizationsEntry = "Compile";
+        public List<string> tags = new List<string>();
 
         // Start is called before the first frame update
         void Start()
@@ -97,11 +98,69 @@ namespace Contents{
             return true;
         }
 
-        public abstract bool delete ();
+        public virtual bool delete() {
+            string tagsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}tags.txt";
+            if (File.Exists(tagsFileLocation)) {
+                string tagsFileContent = File.ReadAllLines(tagsFileLocation)[0];
+                Dictionary<string, List<string>> tagsContent = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(tagsFileContent);
+                // Si hay tags para este Content, los elimino.
+                if(tagsContent.ContainsKey(this.nombre)){
+                    tagsContent.Remove(this.nombre);
+                    string strTags = JsonConvert.SerializeObject(tagsContent);
+			        File.WriteAllText(tagsFileLocation, strTags);
+                }
+            }
+            return true;
+        }
+
+        protected void storeTagsChanges (Dictionary<string, object> cambios, bool hasNewTags, bool hasNewName) {
+            string tagsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}tags.txt";
+            Dictionary<string, List<string>> tagsContent;
+            // ¿existe tags.txt?
+            if (!File.Exists(tagsFileLocation)) { // No existe, entonces lo creo
+                File.Create(tagsFileLocation).Dispose();
+                tagsContent = new Dictionary<string, List<string>>();
+            } else { // Existe, entonces lo cargo a tagsContent
+                string tagsFileContent = File.ReadAllLines(tagsFileLocation)[0];
+                tagsContent = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(tagsFileContent);
+            }
+            
+            bool hadTags = tagsContent.ContainsKey( (string)cambios["oldName"] );
+            if(hasNewTags){
+                if (hasNewName && hadTags) {
+                    tagsContent.Remove( (string)cambios["oldName"] );
+                }
+                tagsContent[this.nombre] = this.tags;
+                
+            } else {
+                // Si no hay nuevos tags, es porque se renombro el contenido. Entonces
+                // si el contenido tenia tags, tengo que modificar la key en tags.txt
+                if (hadTags) {
+                    tagsContent.Remove( (string)cambios["oldName"] );
+                    tagsContent[this.nombre] = this.tags;
+                }
+            }
+            string strTags = JsonConvert.SerializeObject(tagsContent);
+			File.WriteAllText(tagsFileLocation, strTags);
+            cambios.Remove("tags"); // elimino para que no se guarden tambien en cambios.txt
+        }
 
         protected void storeNewCustomization(Dictionary<string, object> cambios) {
             string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
-            //el archivo guarada: 
+            bool hasNewTags = cambios.ContainsKey("tags");
+            bool hasNewName = cambios.ContainsKey("newName");
+            // Guardo modificaciones relacionadas con los tags
+            if( hasNewTags || hasNewName ){
+                // 3 posibilidades:
+                //    1. se modificaron tags y hay que guardarlo en tags.txt
+                //    2. se cambio el nombre y puede que se deba cambiar una key en tags.txt
+                //    3. todas las anteriores
+                storeTagsChanges(cambios, hasNewTags, hasNewName);
+            }
+            
+            // Guardo las demas personalizaciones
+            
+            // el archivo guarada: 
             //     Dict<str, List< Dict<str,obj> >>
             // Ejemplo:
             //     {"Compile" : [ {"oldName": "bosque", "newName":"Desierto"} ]}
@@ -114,7 +173,7 @@ namespace Contents{
             } else {
                 string cambiosFileContent = File.ReadAllLines(cambiosFileLocation)[0];
                 fileContent =  JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, object>>>>(cambiosFileContent);
-                // File existe, ¿pero existe o no la Entry?
+                // File existe, ¿pero existe o no la Entry ("Compile"/"Execution")?
                 if (!fileContent.ContainsKey(this.customizationsEntry)){
                     fileContent[this.customizationsEntry]  = new List<Dictionary<string, object>> {cambios};
                 } else {
@@ -133,7 +192,7 @@ namespace Contents{
 				this.changeNombre(newName);
 			}
 
-            //cambio el audio
+            // cambio el audio
 			if (cambios.ContainsKey("newAudio")){
 				string newAudio = (string) cambios["newAudio"];
 				if(newAudio == ""){
@@ -148,6 +207,11 @@ namespace Contents{
 					this.soundContainer = audioContainer;
 				}
 			}
+
+            // cambio los tags
+            if (cambios.ContainsKey("tags")){
+                this.tags = (List<string>) cambios["tags"];
+            }
 
             // Las clases que heredan deben decidir si se deben guardar o no los cambios,
             // ya que cada una puede tener distintos criterios de decision.

@@ -49,7 +49,15 @@ namespace Contents{
 			string cambiosFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}cambios.txt";
 			if(File.Exists(cambiosFileLocation)){
 				string[] cambiosFileContent = File.ReadAllLines(cambiosFileLocation);
+				// Deserealizo en "customizations" el contenido de cambios.txt
 				Dictionary<string, List<Dictionary<string, object>>> customizations = JsonConvert.DeserializeObject<Dictionary<string, List<Dictionary<string, object>>>>(cambiosFileContent[0]);
+				//	cambios.txt tiene el formato:
+				//  {
+				//   	"Compile": [{"oldName":"bosque", "newName":"bosque2"}, ...],
+				//    	"Execution": [{"oldName":"IMG_24", "newName":"Foto cargada"}, ...]
+				// 	}
+				// 	Esto es para evitar algunos problemas que surgen al no poder eliminar o renombrar
+				//  de forma permanente a los contenidos  definidos en tiempo de compilación.
 				if (customizations.ContainsKey(contentCreationTime)) { // Compile/Execution
 					List<Dictionary<string, object>> cambios = customizations[contentCreationTime];
 					List<Dictionary<string, object>> cambiosToRemove = new List<Dictionary<string, object>>();
@@ -103,6 +111,21 @@ namespace Contents{
 				var disables = File.ReadLines(disablesFileLocation);
 				foreach (string contentToDisable in disables){
 					deleteContent(contentToDisable, true);
+				}
+			}
+		}
+
+		private void loadTags()
+		{
+			string tagsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}tags.txt";
+			if (File.Exists(tagsFileLocation)) {
+				string tagsFileContent = File.ReadAllLines(tagsFileLocation)[0];
+                Dictionary<string, List<string>> tagsContent = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(tagsFileContent);
+				foreach (KeyValuePair<string, List<string>> tags in tagsContent) {
+					Content content = contents.Find(x => x.nombre.Equals(tags.Key));
+					if (content != null){
+						content.tags = new List<string> (tags.Value);
+					}
 				}
 			}
 		}
@@ -195,6 +218,7 @@ namespace Contents{
 
 			// Cargo las personalizaciones a los contenidos definidos en tiempo de ejecucion.
 			loadCustomizations("Execution");
+			loadTags();
 			yield return null;
 		}
 

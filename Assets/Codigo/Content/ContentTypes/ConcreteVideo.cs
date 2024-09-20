@@ -94,7 +94,7 @@ namespace Contents{
                     using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
                         streamWriter.Write(this.nombre);
                     }
-                    return true;
+                    return base.delete();
                 } catch (Exception e) {
                     Debug.Log(e.StackTrace);
                     return false;
@@ -104,7 +104,7 @@ namespace Contents{
                     using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
 				        streamWriter.Write("\n"+this.nombre); 
 			        }
-                    return true;
+                    return base.delete();
                 } catch (Exception e) {
                     Debug.Log(e.StackTrace);
                     return false;

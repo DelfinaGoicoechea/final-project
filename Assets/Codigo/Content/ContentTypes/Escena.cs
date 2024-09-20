@@ -92,7 +92,7 @@ namespace Contents{
                     using (StreamWriter streamWriter = File.AppendText(disablesFileLocation)) {
                         streamWriter.Write(toWrite);
 			        }
-                    return true;
+                    return base.delete();
                 } catch (Exception e) {
                     Debug.Log(e.StackTrace);
                     return false;
@@ -103,7 +103,8 @@ namespace Contents{
         public override string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange){
             bool hasNewName = cambios.ContainsKey("newName");
             bool hasNewAudio = cambios.ContainsKey("newAudio");
-            bool shouldSave = saveChange && (hasNewName || hasNewAudio);
+            bool hasTags = cambios.ContainsKey("tags");
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio || hasTags);
             return base.customize(cambios, audios, shouldSave);    
         }
     }

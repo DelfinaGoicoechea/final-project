@@ -126,7 +126,7 @@ namespace Contents{
                     return false;
                 }
             }
-            return true;
+            return base.delete();
         }
 
         public override bool changeNombre(string newName){

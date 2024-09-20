@@ -79,7 +79,7 @@ namespace Contents{
                     }
                 }
                 streamWriter.Close();
-                return true;
+                return base.delete();
             }
             return false;
         }
@@ -132,10 +132,25 @@ namespace Contents{
 
         public override string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange = true){
             bool hasNewName = cambios.ContainsKey("newName");
-			if (hasNewName){
+            if (hasNewName){
 				string newName = (string) cambios["newName"];
-				this.changeNombre(newName);
+				this.changeNombre(newName); // cambia el nombre y almacena el cambio
 			}
+
+            // Guardo modificaciones relacionadas con los tags
+            bool hasNewTags = cambios.ContainsKey("tags");
+            if( hasNewTags || hasNewName ){
+                // 3 posibilidades:
+                //    1. se modificaron tags y hay que guardarlo en tags.txt
+                //    2. se cambio el nombre y puede que se deba cambiar una key en tags.txt
+                //    3. todas las anteriores
+                storeTagsChanges(cambios, hasNewTags, hasNewName);
+            }
+
+            if (hasNewName){
+                // Elimino del dict, xq el cambio ya se almacena
+                cambios.Remove("newName");
+            }
 
 			bool hasPackageName = cambios.ContainsKey("packageName");
 			if (hasPackageName){
@@ -146,11 +161,12 @@ namespace Contents{
 					return warning;
 				}else{
 					this.changePackageName(packageName);
+                    cambios.Remove("packageName"); // Elimino del dict, xq el cambio ya se almacena
 				}
 			}
 			
-			// Los cambios ya se guardan en changeNombre() y changePackageName()
-			return "";
+			// Los cambios ya se guardan en changeNombre(), changePackageName(), storeTagsChanges()
+            return ""; 
         }
     }
 }
