@@ -84,8 +84,8 @@ namespace Contents{
             return false;
         }
 
-        public override Dictionary<string,string> getCurrentConfig() {
-            Dictionary<string,string> config = base.getCurrentConfig();
+        public override Dictionary<string,object> getCurrentConfig() {
+            Dictionary<string,object> config = base.getCurrentConfig();
             config["packageName"] = this.packageName;
             return config;
         }

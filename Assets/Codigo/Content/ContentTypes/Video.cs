@@ -93,9 +93,9 @@ namespace Contents{
             material.mainTexture = null;
         }
 
-        public override Dictionary<string,string> getCurrentConfig(){
-            Dictionary<string,string> config = base.getCurrentConfig();
-            config["isEAC"] = $"{isEquiangularCubemap}".ToLower();
+        public override Dictionary<string,object> getCurrentConfig(){
+            Dictionary<string,object> config = base.getCurrentConfig();
+            config["isEAC"] = isEquiangularCubemap;
             return config;
         }
 

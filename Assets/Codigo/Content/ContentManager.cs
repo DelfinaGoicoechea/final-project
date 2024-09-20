@@ -297,10 +297,10 @@ namespace Contents{
 			}
 		}
 
-		public Dictionary<string,string> getContentConfig(string name){
+		public Dictionary<string,object> getContentConfig(string name){
 			Content content = contents.Find(x => x.nombre.Equals(name));
 			if (content != null){
-				Dictionary<string,string> config = content.getCurrentConfig();
+				Dictionary<string,object> config = content.getCurrentConfig();
 				return config;
 			}
 			return null;
@@ -379,13 +379,7 @@ namespace Contents{
 		public bool addPathAudio(string filepath){
 			FileInfo fileInfo = new FileInfo(filepath);
 			string filename = fileInfo.Name.Split('.')[0];
-			
-			AudioContainer audio = audios.Find(x => x.nombre.Equals(filename));
-			if(audio != null){
-				// TODO: Deberia renombrarlo y proseguir, porque al reiniciar la app
-				// va a intentar cargarlo y crearlo igualmente.
-				return false;
-			}
+			// LoadSingleAudio renombra en caso de que fuera necesario
 			AudioContainer audioContainer = fsLoader.LoadSingleAudio(fileInfo, audios);
 			if(audioContainer != null){
 				audios.Add(audioContainer);

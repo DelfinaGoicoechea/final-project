@@ -84,9 +84,10 @@ namespace Contents{
             }
         }
 
-        public virtual Dictionary<string,string> getCurrentConfig(){
-            Dictionary<string,string> config = new Dictionary<string,string>();
+        public virtual Dictionary<string,object> getCurrentConfig(){
+            Dictionary<string,object> config = new Dictionary<string,object>();
             config["name"] = this.nombre;
+            config["tags"] = this.tags;
             if (soundContainer != null){
                 config["sound"] = soundContainer.nombre;
             }
