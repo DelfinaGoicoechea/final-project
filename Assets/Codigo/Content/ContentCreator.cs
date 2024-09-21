@@ -125,7 +125,6 @@ namespace Contents{
             video.videoFilePath = videoFileInfo.FullName;
             video.customizationsEntry = "Execution";
 
-            // TODO: Intentar averiguar la proyeccion analizando metadata
             bool isEAC = true;
             video.isEquiangularCubemap = isEAC;
             if (isEAC){

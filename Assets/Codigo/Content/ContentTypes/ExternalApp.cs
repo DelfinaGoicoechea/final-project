@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 using System.IO;
 using System;
 using SimpleHttpServer.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Contents{
 
@@ -136,9 +138,14 @@ namespace Contents{
 				string newName = (string) cambios["newName"];
 				this.changeNombre(newName); // cambia el nombre y almacena el cambio
 			}
-
-            // Guardo modificaciones relacionadas con los tags
+            
+            // cambio los tags
             bool hasNewTags = cambios.ContainsKey("tags");
+            if (hasNewTags){
+                // en cambios["tags"] hay un JArray que debo convertir a lista
+                this.tags = ((JArray)cambios["tags"]).ToObject<List<string>>();
+            }
+            // Guardo modificaciones relacionadas con los tags
             if( hasNewTags || hasNewName ){
                 // 3 posibilidades:
                 //    1. se modificaron tags y hay que guardarlo en tags.txt

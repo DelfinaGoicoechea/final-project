@@ -282,7 +282,7 @@ namespace SimpleHttpServer
                     }
                 },
                 new Route {
-                    Name = "Customize Photo Handler",
+                    Name = "Customize Content Handler",
                     UrlRegex = @"^/CustomizeContent$",
                     Method = "POST",
                     Callable = (HttpRequest request) => {

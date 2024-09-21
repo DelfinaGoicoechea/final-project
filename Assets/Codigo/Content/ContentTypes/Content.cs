@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using System;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Contents{
     
@@ -210,8 +211,9 @@ namespace Contents{
 			}
 
             // cambio los tags
-            if (cambios.ContainsKey("tags")){
-                this.tags = (List<string>) cambios["tags"];
+            if (cambios.ContainsKey("tags")){               
+                // en cambios["tags"] hay un JArray que debo convertir a lista
+                this.tags = ((JArray)cambios["tags"]).ToObject<List<string>>();
             }
 
             // Las clases que heredan deben decidir si se deben guardar o no los cambios,
