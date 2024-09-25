@@ -27,8 +27,11 @@ namespace Contents{
                 if (sound.loadState == AudioDataLoadState.Unloaded)
                 {
                     sound.LoadAudioData();
-                    if(assignmentAuxFunc != null)
-                        assignmentAuxFunc();
+                }
+
+                if(assignmentAuxFunc != null)
+                {
+                    assignmentAuxFunc();
                 }
             }
         }

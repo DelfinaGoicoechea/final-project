@@ -24,6 +24,7 @@ namespace Contents{
          En el editor tipicamente seria Compile")]
         public string customizationsEntry = "Compile";
         public List<string> tags = new List<string>();
+        protected bool isPaused = false;
 
         // Start is called before the first frame update
         void Start()
@@ -41,6 +42,14 @@ namespace Contents{
             // Paro la reproduccion del sonido de cualquier Content previo
             AudioSource audioSource = ContentPlayer.Instance.audioSource;
             audioSource.Pause();
+            if (isPaused)
+            {
+                isPaused = false;
+                if (this.soundContainer != null){
+                    audioSource.Play();
+                }
+                return;
+            }
 
             if (this.soundContainer != null)
             {
@@ -74,10 +83,12 @@ namespace Contents{
             if (this.soundContainer != null){
                 audioSource.Pause();
             }
+            isPaused = true;
         }
 
         public virtual void stop()
         {
+            isPaused = false;
             AudioSource audioSource = ContentPlayer.Instance.audioSource;
             if (this.soundContainer != null){
                 audioSource.Stop();

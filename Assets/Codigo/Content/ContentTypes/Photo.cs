@@ -29,23 +29,33 @@ namespace Contents{
         }
         public override void play()
         {
-            base.play();
-            
+            // Pauso audio que se haya configurado al ver una imagen
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
+            audioSource.Pause();
             // Siempre las imagenes y videos se reproducen en la escena de esferas
             if (SceneManager.GetActiveScene().name != "SphereScene")
             {
                 SceneManager.LoadScene("SphereScene");
             }
             // Espero a que carge la escena, para no tener problemas al buscar la esfera
-            StartCoroutine(waitForSceneLoadThenPlay("SphereScene"));
+            StartCoroutine(waitForSceneLoadThenPlay("SphereScene", audioSource));
         }
 
-        private IEnumerator waitForSceneLoadThenPlay(string sceneName)
+        private IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource)
         {
             // Busy wait, pero el delay que debo esperar realmente es minimo
             while (SceneManager.GetActiveScene().name != sceneName)
             {
                 yield return null;
+            }
+
+            if (isPaused)
+            {
+                isPaused = false;
+                if (this.soundContainer != null){
+                    audioSource.Play();
+                }
+                yield break;
             }
 
             // Inserto el render definido a la esfera y transporto al player dentro
@@ -58,6 +68,7 @@ namespace Contents{
                 meshR.materials = meshmaterials;
                 sphere.transform.eulerAngles = Vector3.zero; // Acomodo la rotacion de la esfera, por si la cambio algun video
             }
+            base.play();
         }
 
         /// <summary>

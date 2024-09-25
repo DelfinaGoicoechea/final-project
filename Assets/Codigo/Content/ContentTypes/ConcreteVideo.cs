@@ -47,17 +47,6 @@ namespace Contents{
                 meshmaterials[0] = material;
 
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-
-                if (isPaused)
-                {
-                    videoPlayer.Play();
-                    isPaused = false;
-                    if (this.soundContainer != null){
-                        audioSource.Play();
-                    }
-                    yield break;
-                }
-                
                 // Asigno RenderTexture y video al VideoPlayer
                 videoPlayer.Stop();
                 videoPlayer.url = null;

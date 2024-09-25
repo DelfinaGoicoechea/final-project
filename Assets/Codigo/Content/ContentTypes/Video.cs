@@ -13,7 +13,6 @@ namespace Contents{
     {
         public Material material;
         public bool isEquiangularCubemap;
-        protected bool isPaused;
         protected static Vector3 noRotation = Vector3.zero;
         protected static Vector3 eacRotation = new Vector3(0.0f, 0.0f, 90.0f);
 
@@ -47,14 +46,21 @@ namespace Contents{
 
         public override void play()
         {
-            // Pauso audio que se haya configurado al ver una imagen
-            AudioSource audioSource = ContentPlayer.Instance.audioSource;
-            audioSource.Pause();
+            if (isPaused)
+            {
+                VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
+                base.play();
+                videoPlayer.Play();
+                isPaused = false;
+                return;
+            }
             // Siempre las imagenes y videos se reproducen en la escena de esferas
             if (SceneManager.GetActiveScene().name != "SphereScene")
             {
                 SceneManager.LoadScene("SphereScene");
             }
+
+            AudioSource audioSource = ContentPlayer.Instance.audioSource;
             // Espero a que carge la escena, para no tener problemas al buscar la esfera
             StartCoroutine(waitForSceneLoadThenPlay("SphereScene", audioSource));
         }
@@ -80,7 +86,6 @@ namespace Contents{
             base.pause();
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
             videoPlayer.Pause();
-            isPaused = true;
         }
 
         public override void stop()
@@ -88,7 +93,6 @@ namespace Contents{
             base.stop();
             VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
             videoPlayer.Stop();
-            isPaused = false;
             Object.Destroy(material.mainTexture);
             material.mainTexture = null;
         }

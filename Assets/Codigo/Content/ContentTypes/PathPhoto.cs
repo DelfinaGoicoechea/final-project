@@ -52,6 +52,7 @@ namespace Contents{
         }
 
         public override void stop(){
+            base.stop();
             UnityEngine.Object.Destroy(imageMaterial.mainTexture);
             imageMaterial.mainTexture = null;
         }

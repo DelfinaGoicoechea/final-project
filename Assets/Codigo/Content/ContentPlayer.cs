@@ -43,6 +43,10 @@ public class ContentPlayer : MonoBehaviour {
 	/// </summary>
 	/// <returns></returns>
     public IEnumerator stop(Content mainScene) {
+        bool alreadyInMain = this._currentlyPlaying == null || this._currentlyPlaying.nombre == "Main";
+        if (alreadyInMain){
+            yield break;
+        }
         // Deberia pasarme la escena Main
         float currentTime = 0.0f;
         float start = configuredVolume;
@@ -56,9 +60,8 @@ public class ContentPlayer : MonoBehaviour {
         }
         // Por que no hago currentlyPlaying.Stop?
         // Solo voy a Play si me tiran Stop y actualmente no estoy en la escena Main
-        bool alreadyInMain = this._currentlyPlaying == null || this._currentlyPlaying.nombre == "Main";
-        if (!alreadyInMain)
-            this.play(mainScene);
+        this._currentlyPlaying = null;
+        this.play(mainScene);
         yield return null;
     }
 

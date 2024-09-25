@@ -15,7 +15,6 @@ namespace Contents{
     {
        [Tooltip("Nombre de la escena a cargar (solo util y visible para Unity)")]
         public string sceneName;
-        private bool isPaused = false;
         // Start is called before the first frame update
         void Start()
         {
@@ -31,13 +30,9 @@ namespace Contents{
         public override void play()
         {
             Time.timeScale = 1.0f;
-            if (isPaused){
-                isPaused = false;
-            } else {
+            if (!isPaused){
                 SceneManager.LoadScene(sceneName);
             }
-            AudioSource audioSource = ContentPlayer.Instance.audioSource;
-            audioSource.Pause();
             base.play();
         }
 
@@ -51,7 +46,6 @@ namespace Contents{
         public override void stop()
         {
             base.stop();
-            isPaused = false;
             Time.timeScale = 1.0f;
         }
 
