@@ -196,6 +196,13 @@ namespace Contents{
             }
             string strCustomizations = JsonConvert.SerializeObject(fileContent);
 			File.WriteAllText(cambiosFileLocation, strCustomizations);
+            // Guardo la fecha del cambio
+            string dateFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}lastChangeDate.txt";
+            string dateToStore = DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+            if(!File.Exists(dateFileLocation)){
+                File.Create(dateFileLocation).Dispose();
+            }
+            File.WriteAllText(dateFileLocation, dateToStore);
         }
 
         public virtual string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange){

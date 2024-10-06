@@ -171,6 +171,16 @@ namespace Contents{
                     cambios.Remove("packageName"); // Elimino del dict, xq el cambio ya se almacena
 				}
 			}
+
+            if (hasNewName || hasPackageName || hasNewTags){
+                // Guardo la fecha del cambio
+                string dateFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}lastChangeDate.txt";
+                string dateToStore = DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+                if(!File.Exists(dateFileLocation)){
+                    File.Create(dateFileLocation).Dispose();
+                }
+                File.WriteAllText(dateFileLocation, dateToStore);
+            }
 			
 			// Los cambios ya se guardan en changeNombre(), changePackageName(), storeTagsChanges()
             return ""; 

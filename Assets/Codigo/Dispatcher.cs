@@ -294,6 +294,12 @@ namespace DispatcherSpace
 			return callback(JsonConvert.SerializeObject(config));
 		}
 
+		public HttpResponse getLastUpdateTime(Func<string, HttpResponse> callback){
+			DateTime dt = cManager.lastUpdateTime;
+			string lastUpdate = dt.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+			return callback(lastUpdate);
+		}
+
         // Update is called once per frame
 		public void Update() {
 			lock(_executionQueue) {

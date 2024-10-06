@@ -22,6 +22,7 @@ namespace Contents{
 		private List<AudioContainer> audios = new List<AudioContainer>();
 		private GameObject sphere;
 		private FileSystemContentLoader fsLoader;
+		public DateTime lastUpdateTime  { get; private set; } = DateTime.UtcNow;
 		public static ContentManager Instance { get; private set; }
 		private void Awake()
 		{
@@ -42,6 +43,11 @@ namespace Contents{
 		void Start()
 		{
 			StartCoroutine(loadContents());
+			string dateFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}lastChangeDate.txt";
+			if (File.Exists(dateFileLocation)) {
+				// No es necesario leer el contenido, ya que me alcanza con la ultima fecha de escritura
+				lastUpdateTime = File.GetLastWriteTimeUtc(dateFileLocation);
+			}
 		}
 
 
@@ -268,7 +274,7 @@ namespace Contents{
 					return warning;
 				}
 			}
-
+			lastUpdateTime = DateTime.UtcNow;
 			// personalizo el contenido
 			return contentOldName.customize(cambios, audios, saveChange);
 		}

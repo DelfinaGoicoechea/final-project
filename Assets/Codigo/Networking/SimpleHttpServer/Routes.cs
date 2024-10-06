@@ -632,6 +632,33 @@ namespace SimpleHttpServer
                         };
                     }
                 },
+                new Route {
+                    Name = "Get Last Update Time", 
+                    UrlRegex = @"^/GetLastUpdateTime$",
+                    Method = "GET",
+                    Callable = (HttpRequest request) => {
+                        Func<string, HttpResponse> callback = (string updateTime) =>
+                        {
+                            return new HttpResponse()
+                            {
+                                ContentAsUTF8 = updateTime,
+                                ReasonPhrase = "OK",
+                                StatusCode = "200"
+                            };
+                        };
+
+                        // Necesito usar un  task, porque getLastUpdateTime() se debe 
+                        // ejecutar SI O SI desde el thread principal.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () =>
+                            {
+                                return dispatcher.getLastUpdateTime(callback);
+                            }
+                        );
+                        task.Wait();
+                        return task.Result;
+                    }
+                },
             };
         }
 
