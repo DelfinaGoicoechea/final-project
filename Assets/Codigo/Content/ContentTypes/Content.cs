@@ -38,7 +38,7 @@ namespace Contents{
             
         }
 
-        public virtual void play(){
+        public virtual void play(Dictionary<string, object> config){
             // Paro la reproduccion del sonido de cualquier Content previo
             AudioSource audioSource = ContentPlayer.Instance.audioSource;
             audioSource.Pause();

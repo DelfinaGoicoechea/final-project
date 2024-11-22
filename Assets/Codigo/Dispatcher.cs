@@ -48,8 +48,8 @@ namespace DispatcherSpace
         }
 
 		/// Funcion que realiza la accion de play y retorna la respuesta http acorde (codigo)
-        public HttpResponse play(string scene, Func<bool, string, HttpResponse> callback)
-        {	
+        public HttpResponse play(string scene, Dictionary<string, object> config, Func<bool, string, HttpResponse> callback)
+        {
 			Content currentlyPlaying = cPlayer.currentlyPlaying;
 			// chequeo si ya hay contenido en reproduccion, 
 			// y si es un cambio de contenido, o resumir una pausa
@@ -64,7 +64,7 @@ namespace DispatcherSpace
 			}
 			Content contentFound = cManager.getContent(scene);
 			if (contentFound != null) {
-				cPlayer.play(contentFound);
+				cPlayer.play(contentFound, config);
 				return callback(true, metricasJson); 
 			}
 			return callback(false, metricasJson); 
@@ -285,8 +285,14 @@ namespace DispatcherSpace
 			return callback(resultado);
 		}
 
-		public HttpResponse getContentConfig(string name, Func<string, HttpResponse> callback){
-			Dictionary<string,object> config = cManager.getContentConfig(name);
+		/// <summary>
+		/// Retorna la configuracion actual del Contenido indicado, a partir de su nombre
+		/// </summary>
+		/// <param name="name"></param>
+		/// <param name="callback"></param>
+		/// <returns></returns>
+		public HttpResponse getCurrentContentConfig(string name, Func<string, HttpResponse> callback){
+			Dictionary<string,object> config = cManager.getCurrentContentConfig(name);
 			// Si el contenido no existe, se retorna null
 			if (config == null){
 				return callback(null);
@@ -390,6 +396,32 @@ namespace DispatcherSpace
 			Enqueue(ActionWrapper(WrappedAction));
 			return tcs.Task;
 		}
+
+		/// <summary>
+		/// Enqueue functions with a String argument, and a second Dictionary<string, object> argument
+		/// <param name="str"></param>
+		/// <param name="dict"></param>
+		/// <param name="action"></param>
+		/// <returns></returns>		
+        public Task<HttpResponse> EnqueueAsync(string str, Dictionary<string, object> dict, Func<string, Dictionary<string, object>, HttpResponse> action)
+		{
+			var tcs = new TaskCompletionSource<HttpResponse>();
+
+			void WrappedAction() {
+				try 
+				{
+					HttpResponse response = action(str, dict);
+					tcs.TrySetResult(response);
+				} catch (Exception ex) 
+				{
+					tcs.TrySetException(ex);
+				}
+			}
+
+			Enqueue(ActionWrapper(WrappedAction));
+			return tcs.Task;
+		}
+
 
         /// <summary>
 		/// Enqueue functions with a SINGLE float argument

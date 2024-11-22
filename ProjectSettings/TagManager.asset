@@ -13,6 +13,7 @@ TagManager:
   - NetworkManager
   - ThumbnailCamera
   - ContentPlayer
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

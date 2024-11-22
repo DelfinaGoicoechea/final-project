@@ -196,21 +196,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tomato_Interactable (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 2051830411307898810, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.6306057
+      value: -0.637
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.085365415
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.6774044
+      value: 0.677
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -373,21 +377,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pear_Interactable (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 3482485554154014942, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_RootOrder
       value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.3263014
+      value: -0.326
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.015214741
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.74609566
+      value: 0.746
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalRotation.w
@@ -497,7 +505,7 @@ GameObject:
   - component: {fileID: 290706110}
   m_Layer: 0
   m_Name: Interactables
-  m_TagString: Untagged
+  m_TagString: SpawnPoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -970,10 +978,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 665970422}
     m_Modifications:
-    - target: {fileID: 2290102815593137865, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
-      propertyPath: m_Convex
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8209775890507910426, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
       propertyPath: m_StaticShadowCaster
       value: 1
@@ -981,10 +985,6 @@ PrefabInstance:
     - target: {fileID: 8209775890509911002, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
       propertyPath: m_Name
       value: Mud_01
-      objectReference: {fileID: 0}
-    - target: {fileID: 8209775890509911002, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 8209775890510335994, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
       propertyPath: m_RootOrder
@@ -1044,6 +1044,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
+--- !u!1 &512647234 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8209775890509911002, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
+  m_PrefabInstance: {fileID: 512647233}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &525237398
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2376,21 +2381,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pear_Interactable (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 3482485554154014942, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_RootOrder
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.02843213
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.013865292
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.008213043
+      value: 0.008
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2438,6 +2447,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pear_Interactable (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 3482485554154014942, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -2448,11 +2461,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.026199996
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.17299986
+      value: 0.172
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2763,17 +2776,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Pear_Interactable (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 3482485554154014942, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_RootOrder
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.029563129
+      value: -0.029
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.013149321
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 4260289272847258212, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3001,17 +3018,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tomato_Interactable (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 2051830411307898810, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.38598967
+      value: -0.337
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.120441794
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3143,21 +3164,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tomato_Interactable (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 2051830411307898810, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.3555578
+      value: -0.345
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.10116851
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.050693035
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -3401,6 +3426,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8209775890510335994, guid: c4fa87cd4eff4ae4ba4c8d1ad48df5f7, type: 3}
   m_PrefabInstance: {fileID: 512647233}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &2140397822
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512647234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.9999998, y: 0.5, z: 0.1}
+  m_Center: {x: 0, y: 0, z: -2.1}
+--- !u!65 &2140397823
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 512647234}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4, y: 0.5, z: 0.1}
+  m_Center: {x: 0, y: 0, z: 2.1}
 --- !u!1001 &2051830410509602036
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3412,6 +3463,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Tomato_Interactable (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2051830411307898810, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -3422,7 +3477,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.099
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 2051830411307898811, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
       propertyPath: m_LocalPosition.z

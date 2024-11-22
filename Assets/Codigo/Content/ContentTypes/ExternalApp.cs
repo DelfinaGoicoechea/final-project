@@ -32,7 +32,7 @@ namespace Contents{
         {
         }
         
-        public override void play()
+        public override void play(Dictionary<string, object> config)
         {
         }
 

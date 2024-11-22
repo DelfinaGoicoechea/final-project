@@ -34,7 +34,7 @@ namespace Contents{
         {
 
         }
-        public override void play()
+        public override void play(Dictionary<string, object> config)
         {
             // --------------- Cargar Textura ---------------
             byte[] bytes = File.ReadAllBytes(imagePath);
@@ -45,7 +45,7 @@ namespace Contents{
             // --------------- Cargar Material ---------------
             imageMaterial.mainTexture = loadTexture;
             imageMaterial.renderQueue = 2450; // Hace que no se superpongan las imagenes de las esferas
-            base.play();
+            base.play(config);
             if(thumbnail == null || thumbnail == Texture2D.whiteTexture){
                 StartCoroutine(captureThumbnail());
             }

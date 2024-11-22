@@ -29,8 +29,8 @@ namespace Contents {
 
         }
 
-        public override void play() {
-            base.play();
+        public override void play(Dictionary<string, object> config) {
+            base.play(config);
 
             if (photos.Count > 0) {
                 // Reproduce la primera foto

@@ -1,6 +1,7 @@
 using Contents;
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
 
@@ -26,7 +27,7 @@ public class ContentPlayer : MonoBehaviour {
 	/// </summary>
 	/// <param name="scene"></param>
 	/// <returns></returns>
-    public void play(Content content) {
+    public void play(Content content, Dictionary<string, object> config) {
 		if(this._currentlyPlaying != null && this._currentlyPlaying != content){
 			// me aseguro de parar la reproduccion del anterior,
 			// antes de reproducir el nuevo contenido
@@ -34,7 +35,7 @@ public class ContentPlayer : MonoBehaviour {
 		}
 		this._currentlyPlaying = content;
         Time.timeScale = 1.0f;
-        content.play();
+        content.play(config);
 		StartCoroutine(fadeIn(2.5f));
 	}
 
@@ -61,7 +62,7 @@ public class ContentPlayer : MonoBehaviour {
         // Por que no hago currentlyPlaying.Stop?
         // Solo voy a Play si me tiran Stop y actualmente no estoy en la escena Main
         this._currentlyPlaying = null;
-        this.play(mainScene);
+        this.play(mainScene, null);
         yield return null;
     }
 

@@ -16,6 +16,7 @@ namespace Contents{
        [Tooltip("Nombre de la escena a cargar (solo util y visible para Unity)")]
         public string sceneName;
         // Start is called before the first frame update
+        public SceneConfig sceneConfig;
         void Start()
         {
             //or else
@@ -27,13 +28,19 @@ namespace Contents{
 
         }
         
-        public override void play()
+        private void OnLoadScene(AsyncOperation obj, Dictionary<string, object> currentConfig){
+            if (sceneConfig != null && currentConfig != null) {
+                sceneConfig.loadConfig(currentConfig);
+            }
+        }
+        public override void play(Dictionary<string, object> config)
         {
             Time.timeScale = 1.0f;
-            if (!isPaused){
-                SceneManager.LoadScene(sceneName);
+            if (!isPaused) {
+                AsyncOperation asyncOp = SceneManager.LoadSceneAsync(sceneName);
+                asyncOp.completed += (asyncOp) => OnLoadScene(asyncOp, config);
             }
-            base.play();
+            base.play(config);
         }
 
         public override void pause()

@@ -51,13 +51,21 @@ namespace SimpleHttpServer
                         DataScene jsonObject = DataScene.CreateFromJSON(request.Content);
                         string scene = jsonObject.scene;
 
+                        // Cargo posibles configuraciones de la escena
+                        Dictionary<string, object> config;
+                        if(!request.Headers.ContainsKey("config")){
+                            config = new Dictionary<string, object>();
+                        } else {
+                            config = JsonConvert.DeserializeObject<Dictionary<string, object>>(request.Headers["config"]);
+                        }
+
                         // Necesito usar un  task, porque play() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
-                            scene,
-                            (string scene) =>
+                            scene, config,
+                            (string scene, Dictionary<string, object> config) =>
                             {
-                                return dispatcher.play(scene, callback);
+                                return dispatcher.play(scene, config, callback);
                             }
                         );
                         task.Wait();
@@ -364,7 +372,7 @@ namespace SimpleHttpServer
                         // Necesito usar un  task, porque setVolumen() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
-                            () => { return dispatcher.getContentConfig(scene, callback); }
+                            () => { return dispatcher.getCurrentContentConfig(scene, callback); }
                         );
                         task.Wait();
                         return task.Result;
@@ -608,7 +616,7 @@ namespace SimpleHttpServer
                             };
                         };
 
-                        // Necesito usar un  task, porque play() se debe 
+                        // Necesito usar un  task, porque getTriggeredMetrics() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
                             () =>

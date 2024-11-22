@@ -44,12 +44,12 @@ namespace Contents{
 
         }
 
-        public override void play()
+        public override void play(Dictionary<string, object> config)
         {
             if (isPaused)
             {
                 VideoPlayer videoPlayer = GameObject.FindWithTag("VideoPlayer").GetComponent<VideoPlayer>();
-                base.play();
+                base.play(config);
                 videoPlayer.Play();
                 isPaused = false;
                 return;
@@ -123,7 +123,7 @@ namespace Contents{
         }
 
         protected void playAudioSource(){
-            base.play();
+            base.play(new Dictionary<string,object>());
         }
         protected abstract IEnumerator waitForSceneLoadThenPlay(string sceneName, AudioSource audioSource);
     }

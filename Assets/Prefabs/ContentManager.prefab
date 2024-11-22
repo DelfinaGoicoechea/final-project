@@ -47,7 +47,76 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 717550b2d81524540a715f23d769b06a, type: 3}
   soundContainer: {fileID: 8741705155626037305}
   nombre: Ciudad simple
+  customizationsEntry: Compile
+  tags: []
   sceneName: CityScene
+  sceneConfig: {fileID: 0}
+--- !u!1 &1117157025507119293
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3173214602402899192}
+  - component: {fileID: 6684878744891997201}
+  - component: {fileID: 801627269659885374}
+  m_Layer: 0
+  m_Name: FarmScene
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3173214602402899192
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117157025507119293}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8216540715953134333}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6684878744891997201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117157025507119293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c77a9aa4bfc8f244db01796a66174e89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thumbnail: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
+  soundContainer: {fileID: 1589300227078025040}
+  nombre: Frutas interactuables
+  customizationsEntry: Compile
+  tags: []
+  sceneName: InteractableFarm
+  sceneConfig: {fileID: 801627269659885374}
+--- !u!114 &801627269659885374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1117157025507119293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73e6b40cb9e3d3b4cbdc9f53fa6828d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tomatePrefab: {fileID: 2051830411307898810, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
+  peraPrefab: {fileID: 3482485554154014942, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
 --- !u!1 &1181926691968227035
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +399,10 @@ MonoBehaviour:
   thumbnail: {fileID: 0}
   soundContainer: {fileID: 1589300227078025040}
   nombre: Main
+  customizationsEntry: Compile
+  tags: []
   sceneName: Main
+  sceneConfig: {fileID: 0}
 --- !u!1 &7827076326634132436
 GameObject:
   m_ObjectHideFlags: 0
@@ -419,7 +491,10 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: abf81f966ceea744cabf9635c89f3228, type: 3}
   soundContainer: {fileID: 0}
   nombre: Ejemplo Metrica Objetos
+  customizationsEntry: Compile
+  tags: []
   sceneName: RaycastMetricExample
+  sceneConfig: {fileID: 0}
 --- !u!1 &8122455487270228303
 GameObject:
   m_ObjectHideFlags: 0
@@ -498,6 +573,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: c0c8ef42b34b71f4480ff9211d461ff5, type: 3}
   soundContainer: {fileID: 0}
   nombre: Tren noruego
+  customizationsEntry: Compile
+  tags: []
   material: {fileID: 2100000, guid: f5faec58b2fe1354aa0f72e31b5865f2, type: 2}
   isEquiangularCubemap: 0
   video: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
@@ -534,6 +611,7 @@ Transform:
   - {fileID: 8216540717909920686}
   - {fileID: 7718834895301982644}
   - {fileID: 8779673415653255064}
+  - {fileID: 3173214602402899192}
   m_Father: {fileID: 8216540716978143274}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -584,6 +662,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: dc6b5d6b10bb8c0489cd2e018afab84d, type: 3}
   soundContainer: {fileID: 7185524963068412162}
   nombre: Mar azul
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
 --- !u!1 &8216540716129985543
 GameObject:
@@ -632,6 +712,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: e903d7a3505b17445a17ab3e3dd95991, type: 3}
   soundContainer: {fileID: 3038270838357443450}
   nombre: Calle festiva
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
 --- !u!1 &8216540716262589908
 GameObject:
@@ -680,6 +762,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 9fa9b560382c82d45b775675607311f4, type: 3}
   soundContainer: {fileID: 1589300227078025040}
   nombre: Bosque de pinos
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
 --- !u!1 &8216540716366605905
 GameObject:
@@ -728,6 +812,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 7c2d9a4a7931dab47a85824cbb763244, type: 3}
   soundContainer: {fileID: 7185524963068412162}
   nombre: Mar colorido
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
 --- !u!1 &8216540716520445044
 GameObject:
@@ -776,6 +862,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 588facc2190d2d944aaeff8754be12e4, type: 3}
   soundContainer: {fileID: 8940307835444222314}
   nombre: Cielo nocturno
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
 --- !u!1 &8216540716786038010
 GameObject:
@@ -876,7 +964,10 @@ MonoBehaviour:
   thumbnail: {fileID: 0}
   soundContainer: {fileID: 0}
   nombre: SphereScene
+  customizationsEntry: Compile
+  tags: []
   sceneName: SphereScene
+  sceneConfig: {fileID: 0}
 --- !u!1 &8216540716978143269
 GameObject:
   m_ObjectHideFlags: 0
@@ -960,6 +1051,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: a2856ae240f4db04a9c637ca48056d1f, type: 3}
   soundContainer: {fileID: 1589300227078025040}
   nombre: Bosque Nevado
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
 --- !u!1 &8216540717177267771
 GameObject:
@@ -1008,6 +1101,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 4709c224b103f634799a8d23086082b0, type: 3}
   soundContainer: {fileID: 7185524963068412162}
   nombre: Muelle
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
 --- !u!1 &8216540717577473001
 GameObject:
@@ -1129,6 +1224,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: 9bb0d665dc6f2b342950c38fc0629bc1, type: 3}
   soundContainer: {fileID: 3038270838357443450}
   nombre: Iglesia
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
 --- !u!1 &8216540717909920681
 GameObject:
@@ -1177,7 +1274,10 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: ff6c315bc1d9b0141a5e50e90c8d1804, type: 3}
   soundContainer: {fileID: 1589300227078025040}
   nombre: Bosque lowpoly
+  customizationsEntry: Compile
+  tags: []
   sceneName: SimpleNaturePackScene
+  sceneConfig: {fileID: 0}
 --- !u!1 &8216540717980148934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1225,6 +1325,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
   soundContainer: {fileID: 8940307835444222314}
   nombre: Valle
+  customizationsEntry: Compile
+  tags: []
   imageMaterial: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
 --- !u!1 &8216540718048004332
 GameObject:
@@ -1273,6 +1375,8 @@ MonoBehaviour:
   thumbnail: {fileID: 2800000, guid: f226cfe95412a51439f6c21c4a13134e, type: 3}
   soundContainer: {fileID: 7185524963068412162}
   nombre: Playa
+  customizationsEntry: Compile
+  tags: []
   material: {fileID: 2100000, guid: b242c65006a121743b80e0f4050f7ebf, type: 2}
   isEquiangularCubemap: 1
   video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}

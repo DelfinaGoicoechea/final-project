@@ -303,7 +303,12 @@ namespace Contents{
 			}
 		}
 
-		public Dictionary<string,object> getContentConfig(string name){
+		/// <summary>
+		/// Retorna la configuracion actual de un contenido, a partir de su nombre.
+		/// </summary>
+		/// <param name="name"></param>
+		/// <returns></returns>
+		public Dictionary<string,object> getCurrentContentConfig(string name){
 			Content content = contents.Find(x => x.nombre.Equals(name));
 			if (content != null){
 				Dictionary<string,object> config = content.getCurrentConfig();
@@ -311,6 +316,8 @@ namespace Contents{
 			}
 			return null;
 		}
+
+		// TODO: VER CoMO OBTENER Y CAMBIAR LAS CONFIGURACIONES DE ESCENAS DESDE FLUTTER
 
 		/// <summary>
 		/// Returns a List with the names of the available Audios for scenes.
