@@ -633,11 +633,22 @@ namespace SimpleHttpServer
                     UrlRegex = @"^/CheckConnection$",
                     Method = "GET",
                     Callable = (HttpRequest request) => {
-                        return new HttpResponse() {
-                            ContentAsUTF8 = "",
-                            ReasonPhrase = "OK",
-                            StatusCode = "200"
+                        Func<bool, HttpResponse> callback = (bool isOk) =>
+                        {
+                            return new HttpResponse() {
+                                ContentAsUTF8 = "",
+                                ReasonPhrase = "OK",
+                                StatusCode = "200"
+                            };
                         };
+
+                        // Necesito usar un  task, porque si no le responde a Flutter aunque la pantalla
+                        // esté apagada,  mientras que todo aquello que use un task no le va a responder.
+                        Task<HttpResponse> task = dispatcher.EnqueueAsync(
+                            () => return callback(true);
+                        );
+                        task.Wait();
+                        return task.Result;
                     }
                 },
                 new Route {
