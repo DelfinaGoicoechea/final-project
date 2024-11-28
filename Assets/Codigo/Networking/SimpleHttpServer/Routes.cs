@@ -645,7 +645,7 @@ namespace SimpleHttpServer
                         // Necesito usar un  task, porque si no le responde a Flutter aunque la pantalla
                         // esté apagada,  mientras que todo aquello que use un task no le va a responder.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
-                            () => return callback(true);
+                            () => { return callback(true); }
                         );
                         task.Wait();
                         return task.Result;
