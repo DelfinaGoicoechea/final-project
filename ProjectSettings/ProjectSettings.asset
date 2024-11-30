@@ -140,6 +140,8 @@ PlayerSettings:
   preloadedAssets:
   - {fileID: 11400000, guid: ecffc28c0594c78409fad3844a178b6e, type: 2}
   - {fileID: 0}
+  - {fileID: 8137729250645939900, guid: 38bc54d2ddd999d40a5bb532bb0fe6cc, type: 2}
+  - {fileID: 2028797068273388420, guid: f3eba1b4755353e47b89cf3f2501650c, type: 2}
   metroInputSource: 0
   wsaTransparentSwapchain: 0
   m_HolographicPauseOnTrackingLoss: 1
@@ -522,7 +524,7 @@ PlayerSettings:
     m_GraphicsJobMode: 0
   m_BuildTargetGraphicsAPIs:
   - m_BuildTarget: AndroidPlayer
-    m_APIs: 15000000
+    m_APIs: 0b000000
     m_Automatic: 0
   - m_BuildTarget: iOSSupport
     m_APIs: 10000000
@@ -557,7 +559,9 @@ PlayerSettings:
     m_EncodingQuality: 1
   m_BuildTargetGroupLightmapSettings: []
   m_BuildTargetNormalMapEncoding: []
-  m_BuildTargetDefaultTextureCompressionFormat: []
+  m_BuildTargetDefaultTextureCompressionFormat:
+  - m_BuildTarget: Android
+    m_Format: 3
   playModeTestRunnerEnabled: 0
   runPlayModeTestAsEditModeTest: 0
   actionOnDotNetUnhandledException: 1
