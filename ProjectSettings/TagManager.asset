@@ -11,9 +11,9 @@ TagManager:
   - ContentManager
   - MetricsManager
   - NetworkManager
-  - ThumbnailCamera
   - ContentPlayer
   - SpawnPoint
+  - ThumbnailCamera
   layers:
   - Default
   - TransparentFX
