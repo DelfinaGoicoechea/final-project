@@ -7,10 +7,10 @@ public class FarmSceneConfig : SceneConfig {
     public GameObject tomatePrefab;
     public GameObject peraPrefab;
     private static Vector3[] lugaresSpawn = new Vector3[8] { 
-        new Vector3(-0.030f, 0.1f, 0.008f), new Vector3(-0.055f, 0.1f, 0.411f),
-        new Vector3(-0.029f, 0.1f, 0.758f), new Vector3(-0.345f, 0.1f, 0.050f),
-        new Vector3(-0.337f, 0.1f, 0.465f), new Vector3(-0.326f, 0.1f, 0.746f),
-        new Vector3(-0.647f, 0.1f, 0.172f), new Vector3(-0.637f, 0.1f, 0.677f)
+        new Vector3(-0.156f, 0.1f, -0.107f), new Vector3(0.162f, 0.1f, 0.005f),
+        new Vector3(0.165f, 0.1f, 0.106f), new Vector3(0.026f, 0.1f, -0.094f),
+        new Vector3(0.035f, 0.1f, 0.094f), new Vector3(-0.085f, 0.1f, -0.111f),
+        new Vector3(-0.121f, 0.1f, 0.006f), new Vector3(-0.110f, 0.1f, 0.101f)
     };
 
     public FarmSceneConfig(){
@@ -38,6 +38,7 @@ public class FarmSceneConfig : SceneConfig {
             for (int i = 0; i < nroTomates; i++) {
                 int spawnIndex = rand.Next(0, availableSpawns.Count);
                 GameObject apple = Instantiate(tomatePrefab, spawnPoint.transform);
+                apple.transform.localScale = new Vector3(0.7f, 0.7f, 0.7f);
                 apple.transform.localPosition = lugaresSpawn[availableSpawns[spawnIndex]];
                 availableSpawns.RemoveAt(spawnIndex);
             }
