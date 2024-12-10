@@ -9,7 +9,7 @@ public class SceneMetrics : MonoBehaviour
     // Mientras registra metricas, las conserva en una lista
     private List<Metric> listaMetricasRegistradas = new List<Metric>();
 
-    private void Start()
+    private void Awake()
     {
         // Scene Metrics debe tener a todas las metricas que quiera utiliar en la escena, como hijos
         // Entonces crea una lista de metricas a recolectar a partir de sus hijos
