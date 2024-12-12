@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.25410867, g: 0.27304277, b: 0.27376038, a: 1}
+  m_IndirectSpecularColor: {r: 0.254296, g: 0.2730462, b: 0.27302468, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -888,6 +888,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 801627269659885374, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: peraShadowPrefab
+      value: 
+      objectReference: {fileID: 3482485554154014942, guid: 245f7cfd7d4b9a24eaaf4961dce3f26b, type: 3}
+    - target: {fileID: 801627269659885374, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
+      propertyPath: tomateShadowPrefab
+      value: 
+      objectReference: {fileID: 5473569773201198281, guid: fd8e0760db14a534a89257f68a4f2a8c, type: 3}
     - target: {fileID: 5543280992658777646, guid: 179e159eb4b06044a8d655997760b3d6, type: 3}
       propertyPath: m_RootOrder
       value: 1
