@@ -96,7 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c77a9aa4bfc8f244db01796a66174e89, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  thumbnail: {fileID: 2800000, guid: cd607dc1ba891d7419216de1f14ed18e, type: 3}
+  thumbnail: {fileID: 2800000, guid: 82e9b157633367047b1823e74ab3daa2, type: 3}
   soundContainer: {fileID: 1589300227078025040}
   nombre: Frutas interactuables
   customizationsEntry: Compile
@@ -116,7 +116,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tomatePrefab: {fileID: 2051830411307898810, guid: f38639a158f93e44ea6a69637662f1d8, type: 3}
+  tomateShadowPrefab: {fileID: 0}
   peraPrefab: {fileID: 3482485554154014942, guid: af1ce4fbc26751a489d0b98b394a0914, type: 3}
+  peraShadowPrefab: {fileID: 0}
 --- !u!1 &1181926691968227035
 GameObject:
   m_ObjectHideFlags: 0
