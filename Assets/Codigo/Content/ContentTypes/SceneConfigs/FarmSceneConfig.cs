@@ -62,5 +62,21 @@ public class FarmSceneConfig : SceneConfig {
                 availableSpawns.RemoveAt(spawnIndex);
             }
         }
+
+        // Asigno atributos al grafo de dificultades, para que ahora maneje las cosas el.
+        GameObject grafoGameObject = GameObject.FindWithTag("GrafoDificultad");
+        if (grafoGameObject != null) {
+            DificultadesFarmScene grafoDific = grafoGameObject.GetComponent<DificultadesFarmScene>();
+            if (grafoDific != null) {
+                grafoDific.lugaresSpawn = lugaresSpawn;
+                grafoDific.nroTomates = nroTomates;
+                grafoDific.nroPeras = nroPeras;
+                grafoDific.tomatePrefab = tomatePrefab;
+                grafoDific.tomateShadowPrefab = tomateShadowPrefab;
+                grafoDific.peraPrefab = peraPrefab;
+                grafoDific.peraShadowPrefab = peraShadowPrefab;
+                grafoDific.usingShadows = useShadows;
+            }
+        }
     }
 }
