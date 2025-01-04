@@ -1,3 +1,4 @@
+#nullable enable
 //using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -24,7 +25,7 @@ public class GrafoDificultades {
 
     // procesar evento
     public bool procesarEvento(string evento) {
-        Arco arcoMatch = vertices[estadoActual].Find(arco => arco.evento == evento);
+        Arco? arcoMatch = vertices[estadoActual].Find(arco => arco.evento == evento);
         if (arcoMatch == null) return false; // No hay arco
         if (arcoMatch.proxEstado < 0 || arcoMatch.proxEstado >= size) return false; // proximo estado fuera de limites
         if(arcoMatch.acciones != null){

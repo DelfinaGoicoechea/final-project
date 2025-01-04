@@ -66,6 +66,7 @@ public class FarmSceneConfig : SceneConfig {
         // Asigno atributos al grafo de dificultades, para que ahora maneje las cosas el.
         GameObject grafoGameObject = GameObject.FindWithTag("GrafoDificultad");
         if (grafoGameObject != null) {
+            // Asigno atributos al grafo
             DificultadesFarmScene grafoDific = grafoGameObject.GetComponent<DificultadesFarmScene>();
             if (grafoDific != null) {
                 grafoDific.lugaresSpawn = lugaresSpawn;
@@ -76,6 +77,12 @@ public class FarmSceneConfig : SceneConfig {
                 grafoDific.peraPrefab = peraPrefab;
                 grafoDific.peraShadowPrefab = peraShadowPrefab;
                 grafoDific.usingShadows = useShadows;
+            }
+
+            // Asigno atributos a los emisores
+            EmisorCompletaFrutas emisorCompletaFrutas = grafoGameObject.GetComponent<EmisorCompletaFrutas>();
+            if (emisorCompletaFrutas != null) {
+                emisorCompletaFrutas.setFruitAmount(nroTomates + nroPeras);
             }
         }
     }

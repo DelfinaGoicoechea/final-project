@@ -4,9 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using UnityEngine.Video;
+using UnityEngine.Audio;
 
 public class ContentPlayer : MonoBehaviour {
     public AudioSource audioSource;
+    [SerializeField] private AudioMixer audioMixer;
     private GameObject sphere;
 	private Content _currentlyPlaying;
     public Content currentlyPlaying { get { return _currentlyPlaying; } set{ ; } } // sin setter
@@ -92,13 +94,14 @@ public class ContentPlayer : MonoBehaviour {
         if (vol > 100.0f) {
             vol = 100.0f;
         }
-        else if (vol < 0.0f) {
-            vol = 0.0f;
+        else if (vol <= 0.0f) {
+            vol = 0.0001f;
         }
         vol = vol / 100.0f;
 
         if (audioSource.clip != null) {
-            audioSource.volume = vol;
+            //audioSource.volume = vol; // Comentado, xq uso AudioMixer para controlar el volumen general
+            audioMixer.SetFloat("MasterVolume", Mathf.Log10(vol) * 20f); // Usa escala logaritmica
         }
         configuredVolume = vol;
 

@@ -17,6 +17,8 @@ TagManager:
   - CameraOffset
   - Fruta
   - GrafoDificultad
+  - CajaFrutas
+  - FXAudioSource
   layers:
   - Default
   - TransparentFX

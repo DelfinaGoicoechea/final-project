@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 2051830410706889857}
   - component: {fileID: 2051830410706889868}
   - component: {fileID: 2051830410706889859}
-  - component: {fileID: 2051830410706889858}
   m_Layer: 0
   m_Name: Tomato_03_LOD0
   m_TagString: Untagged
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2051830410706889858
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2051830410706889856}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.086434826
-  m_Center: {x: 0.0009502135, y: -0.0018981993, z: -0.00014098361}
 --- !u!1 &2051830411307898810
 GameObject:
   m_ObjectHideFlags: 0
@@ -109,8 +95,9 @@ GameObject:
   - component: {fileID: 2051830411307898790}
   - component: {fileID: 2051830411307898789}
   - component: {fileID: 2051830411307898788}
+  - component: {fileID: 2690447442162133276}
   m_Layer: 0
-  m_Name: Tomato_Interactable (1)
+  m_Name: Tomato_Interactable
   m_TagString: Fruta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -323,3 +310,16 @@ MonoBehaviour:
   m_MinimumScaleRatio: 0.25
   m_MaximumScaleRatio: 2
   m_ScaleMultiplier: 0.25
+--- !u!135 &2690447442162133276
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2051830411307898810}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.08643483
+  m_Center: {x: 0.0009502135, y: -0.001898199, z: -0.0001409836}

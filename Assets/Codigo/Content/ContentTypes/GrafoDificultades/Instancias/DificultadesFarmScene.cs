@@ -6,6 +6,9 @@ using System.Linq;
 public class DificultadesFarmScene : MonoBehaviour {
 
     private GrafoDificultades grafoDificultades;
+    [SerializeField] private AudioSource fxAudioSource;
+    [SerializeField] private AudioClip sonidoFinalizacion;
+    [SerializeField] private GameObject cartelFinalizacion;
     
     // Todos estos campos los asigna FarmSceneConfig al cargarse la escena
     public Vector3[] lugaresSpawn;
@@ -19,7 +22,6 @@ public class DificultadesFarmScene : MonoBehaviour {
 
     public bool procesarEvento(string evento) {
         bool result = grafoDificultades.procesarEvento(evento);
-        Debug.Log($"{evento}: {result}");
         return result;
     }
 
@@ -68,6 +70,7 @@ public class DificultadesFarmScene : MonoBehaviour {
             UnityEngine.Object.Destroy(fruta2Delete);
         }
 
+        // Spawn nuevas frutas
         GameObject spawnPoint = GameObject.FindWithTag("SpawnPoint");
         List<int> availableSpawns = new List<int>(Enumerable.Range(0, lugaresSpawn.Length));
         System.Random rand = new System.Random();
@@ -91,6 +94,13 @@ public class DificultadesFarmScene : MonoBehaviour {
                 availableSpawns.RemoveAt(spawnIndex);
             }
         }
+
+        // reinicio el EmisorCompletaFrutas (en el mismo GameObject que este script)
+        EmisorCompletaFrutas emisor = gameObject.GetComponent<EmisorCompletaFrutas>();
+        if (emisor != null) {
+            emisor.reiniciarContador();
+            emisor.setFruitAmount(nroTomates + nroPeras);
+        }
     }
 
     private void modificarNroFrutas(int nro) {
@@ -100,9 +110,25 @@ public class DificultadesFarmScene : MonoBehaviour {
         // (deberia asignar mas ubicaciones que anden bien)
     }
 
-    private void mostrarFelicitacion() {
-        return;
+    private void finalizacionExitosa() {
+        // Elimino todas las frutas que ya existen en la escena
+        GameObject[] frutas = GameObject.FindGameObjectsWithTag("Fruta");
+        foreach (GameObject fruta2Delete in frutas) {
+            UnityEngine.Object.Destroy(fruta2Delete);
+        }
+        // Reproduzco sonido y muestro cartel de finalización
+        StartCoroutine(sonidoTextoFinalizacion());
     }
+
+    IEnumerator sonidoTextoFinalizacion(){
+        if (fxAudioSource != null && fxAudioSource.isPlaying) {
+            yield return new WaitForSeconds(fxAudioSource.clip.length);
+        }
+        fxAudioSource.clip = sonidoFinalizacion;
+        fxAudioSource.Play();
+        cartelFinalizacion.SetActive(true);
+    }
+
 
     void Awake() {
         // crear grafo (vertices) y asignar arcos
@@ -123,12 +149,14 @@ public class DificultadesFarmScene : MonoBehaviour {
         };
         List<Arco> arcosEstadoCuatro = new List<Arco> {
             // Acá irían las felicitaciones
-            //new Arco("Completa", 2, new List<Arco.VoidMethodDelegate>()),
+            new Arco("Completa", 5, new List<Arco.VoidMethodDelegate>(){ finalizacionExitosa }),
         };
+        //
         grafoDificultades.asignarArcos(0, arcosEstadoCero);
         grafoDificultades.asignarArcos(1, arcosEstadoUno);
         grafoDificultades.asignarArcos(2, arcosEstadoDos);
         grafoDificultades.asignarArcos(3, arcosEstadoTres);
         grafoDificultades.asignarArcos(4, arcosEstadoCuatro);
+        grafoDificultades.asignarArcos(5, null);
     }
 }
