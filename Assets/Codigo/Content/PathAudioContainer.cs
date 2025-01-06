@@ -1,7 +1,6 @@
 using UnityEngine;
 using System.IO;
 using UnityEngine.Networking;
-using System.Threading.Tasks;
 using System;
 
 namespace Contents{

@@ -1,8 +1,5 @@
 #nullable enable
-//using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class GrafoDificultades {
     private int estadoActual = 0;

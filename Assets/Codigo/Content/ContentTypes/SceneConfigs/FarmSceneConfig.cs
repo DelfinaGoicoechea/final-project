@@ -1,7 +1,5 @@
 using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using System;
 
 public class FarmSceneConfig : SceneConfig {
     public GameObject tomatePrefab;
@@ -42,7 +40,7 @@ public class FarmSceneConfig : SceneConfig {
 
         List<int> availableSpawns = new List<int> {0, 1, 2, 3, 4, 5, 6, 7};
         System.Random rand = new System.Random();
-        GameObject tomate_a_instanciar = (useShadows) ? tomateShadowPrefab : tomatePrefab;
+        GameObject tomate_a_instanciar = useShadows ? tomateShadowPrefab : tomatePrefab;
         if (tomate_a_instanciar != null) {
             for (int i = 0; i < nroTomates; i++) {
                 int spawnIndex = rand.Next(0, availableSpawns.Count);
@@ -53,7 +51,7 @@ public class FarmSceneConfig : SceneConfig {
             }
         }
 
-        GameObject pera_a_instanciar = (useShadows) ? peraShadowPrefab : peraPrefab;
+        GameObject pera_a_instanciar = useShadows ? peraShadowPrefab : peraPrefab;
         if (pera_a_instanciar != null) {
             for (int i = 0; i < nroPeras; i++) {
                 int spawnIndex = rand.Next(0, availableSpawns.Count);

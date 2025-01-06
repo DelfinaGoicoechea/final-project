@@ -22,7 +22,6 @@
 #endregion
 
 using UnityEngine;
-using UnityEditor;
 using System;
 
 namespace TeamUtilityEditor

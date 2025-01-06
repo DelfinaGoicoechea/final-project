@@ -1,5 +1,4 @@
-using System.Collections;
-using System;
+#nullable enable
 using System.Collections.Generic;
 
 public class Arco {

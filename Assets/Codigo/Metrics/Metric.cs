@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using Contents;
 
 /// <summary>
 /// Clase abstracta de la que deben heredar todas las metricas. 

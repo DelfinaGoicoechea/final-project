@@ -2,12 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using UnityEngine.Video;
-using System.Text;
 using System.IO;
-using SimpleHttpServer.Models;
 using Newtonsoft.Json;
 
 namespace Contents{

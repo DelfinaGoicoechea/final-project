@@ -1,12 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.IO;
 using System;
 using SimpleHttpServer.Models;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Contents{
