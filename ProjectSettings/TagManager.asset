@@ -19,6 +19,7 @@ TagManager:
   - GrafoDificultad
   - CajaFrutas
   - FXAudioSource
+  - ControllerReferences
   layers:
   - Default
   - TransparentFX

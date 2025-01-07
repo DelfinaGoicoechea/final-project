@@ -667,14 +667,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 152651767795085381, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_Materials.Array.data[2]
-      value: 
-      objectReference: {fileID: 2100000, guid: 61d033f3a51f40647a5458ea14f3b4af, type: 2}
-    - target: {fileID: 152651767795085381, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_Materials.Array.data[3]
-      value: 
-      objectReference: {fileID: 2100000, guid: 61d033f3a51f40647a5458ea14f3b4af, type: 2}
     - target: {fileID: 8589162441111712440, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_Camera
       value: 
@@ -695,17 +687,9 @@ PrefabInstance:
       propertyPath: m_RequestedTrackingOriginMode
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8589162441111712442, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8589162441544098360, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_Name
       value: Controlador
-      objectReference: {fileID: 0}
-    - target: {fileID: 8589162441544098360, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8589162441544098367, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_RootOrder
@@ -749,10 +733,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8589162441544098367, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8589162441577423151, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:

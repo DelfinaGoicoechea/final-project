@@ -322,7 +322,8 @@ MonoBehaviour:
   fxAudioSource: {fileID: 444053889}
   sonidoBien: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   sonidoMal: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
-  emisor: {fileID: 1068545327}
+  emisorGrafoDific: {fileID: 1068545327}
+  metricaSoltarFrutas: {fileID: 1833941036}
 --- !u!1001 &82618611
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2238,6 +2239,50 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81dad7d5552c9a341b390c79338fe0a4, type: 3}
+--- !u!1 &990735860
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 990735861}
+  - component: {fileID: 990735862}
+  m_Layer: 0
+  m_Name: test
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &990735861
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990735860}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.33391273, y: -3.5010357, z: -20.376049}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &990735862
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990735860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f6e08f3afd10284886a409ce6a8cd29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1068545323
 GameObject:
   m_ObjectHideFlags: 0
@@ -3630,6 +3675,7 @@ Transform:
   m_Children:
   - {fileID: 1394671970}
   - {fileID: 927501438}
+  - {fileID: 1833941035}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4026,6 +4072,53 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3008297296413678391, guid: cb422acdc199d6e42910f589b81c283b, type: 3}
   m_PrefabInstance: {fileID: 1829549356}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1833941034
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1833941035}
+  - component: {fileID: 1833941036}
+  m_Layer: 0
+  m_Name: Metrica Soltar Fruta
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1833941035
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833941034}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1600872830}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1833941036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833941034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ad12df2e9577f45b826746bd1f6d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NombreContenido: 
+  metricaPublicada: 0
+  mensajesFrutas: []
 --- !u!1001 &1834268185
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4469,6 +4562,34 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 990735862}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: testSoltar
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmisorFallasAgarre, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7314574967168307339, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 7331975757378990622, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_Layer
       value: 2
@@ -4540,6 +4661,34 @@ PrefabInstance:
     - target: {fileID: 8287399544145805411, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_Layer
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 990735862}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: testSoltar
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: EmisorFallasAgarre, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8328032455204016052, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
+      propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8489545013799601374, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_Layer
@@ -5285,7 +5434,8 @@ MonoBehaviour:
   fxAudioSource: {fileID: 444053889}
   sonidoBien: {fileID: 8300000, guid: ffb159a21c8a04135a5616979c828fab, type: 3}
   sonidoMal: {fileID: 8300000, guid: 5fdb13d3756c84fecac96f5a2d124370, type: 3}
-  emisor: {fileID: 1068545327}
+  emisorGrafoDific: {fileID: 1068545327}
+  metricaSoltarFrutas: {fileID: 1833941036}
 --- !u!1001 &2029731939
 PrefabInstance:
   m_ObjectHideFlags: 0
