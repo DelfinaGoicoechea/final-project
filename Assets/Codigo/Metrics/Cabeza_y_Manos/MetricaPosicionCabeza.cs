@@ -13,7 +13,6 @@ public class MetricaPosicionCabeza : Metric
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("");
         mainCamTransform = GameObject.FindWithTag("MainCamera").transform;
         InvokeRepeating("check_Position_Angle", 1.0f, frecuenciaMuestreo);
         PublicarMetrica();
@@ -37,8 +36,7 @@ public class MetricaPosicionCabeza : Metric
     /// <returns>void</returns>
     protected override void PublicarMetrica()
     {
-        Debug.Log("Intento publicar la metrica");
-         // ver condicion (decidir si publicar siempre, o solo cuando se detecta un objeto)
+        // ver condicion (decidir si publicar siempre, o solo cuando se detecta un objeto)
         if (!metricaPublicada) 
         {
             InvokeCondicionMetricaCumplida();

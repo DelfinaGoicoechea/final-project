@@ -27,8 +27,6 @@ public class CapturadorPosicion : MonoBehaviour
     }
 
     public void check_Position_Angle() {
-
-        Debug.Log($"pooling {nombreObjeto}");
         string currentTime = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
         metricaPrincipal.addMessage($"{currentTime}: Posicion {nombreObjeto}: {gameObject.transform.position.ToString()}");
         metricaPrincipal.addMessage($"{currentTime}: Rotacion {nombreObjeto}: {gameObject.transform.eulerAngles.ToString()}");
