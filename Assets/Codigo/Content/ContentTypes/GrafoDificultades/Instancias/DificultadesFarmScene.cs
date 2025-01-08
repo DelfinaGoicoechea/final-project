@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Zeroconf.Providers.Bonjour;
 
 public class DificultadesFarmScene : MonoBehaviour {
 
@@ -10,15 +11,27 @@ public class DificultadesFarmScene : MonoBehaviour {
     [SerializeField] private AudioClip sonidoFinalizacion;
     [SerializeField] private GameObject cartelFinalizacion;
     
-    // Todos estos campos los asigna FarmSceneConfig al cargarse la escena
-    public Vector3[] lugaresSpawn;
-    public long nroTomates;
-    public long nroPeras;
-    public GameObject tomatePrefab;
-    public GameObject tomateShadowPrefab;
-    public GameObject peraPrefab;
-    public GameObject peraShadowPrefab;
-    public bool usingShadows;
+    // NOTA IMPORTANTE: 
+    //  Todos estos campos son private para que sea evidente en el Editor de Unity
+    //  cuales son los atributos que se deben asignar alli y cuales no, pero todos
+    //  estos campos (private) los asigna FarmSceneConfig al cargarse la escena.
+    private Vector3[] lugaresSpawn;
+    private long nroTomates;
+    private long nroPeras;
+    private GameObject tomatePrefab;
+    private GameObject tomateShadowPrefab;
+    private GameObject peraPrefab;
+    private GameObject peraShadowPrefab;
+    private bool usingShadows;
+    
+    public void setLugaresSpawn(Vector3[] lugares) => lugaresSpawn = lugares;
+    public void setNroTomates(long nro) => nroTomates = nro;
+    public void setNroPeras(long nro) => nroPeras = nro;
+    public void setTomatePrefab(GameObject prefab) => tomatePrefab = prefab;
+    public void setTomateShadowPrefab(GameObject prefab) => tomateShadowPrefab = prefab;
+    public void setPeraPrefab(GameObject prefab) => peraPrefab = prefab;
+    public void setPeraShadowPrefab(GameObject prefab) => peraShadowPrefab = prefab;
+    public void setUsingShadows(bool use) => usingShadows = use;
 
     public bool procesarEvento(string evento) {
         bool result = grafoDificultades.procesarEvento(evento);
@@ -42,21 +55,6 @@ public class DificultadesFarmScene : MonoBehaviour {
     
     private void quitarColores() {
         usingShadows = true;
-        // Iba a cambiar el color de las ya existentes, pero es mas facil definir
-        // usingShadows y usar respawn.
-        
-        /* GameObject spawnPoint = GameObject.FindWithTag("SpawnPoint");
-        GameObject[] frutas = GameObject.FindGameObjectsWithTag("Fruta");
-        foreach (GameObject fruta in frutas) {
-            Vector3 position;
-            Quaternion rotation;
-            Vector3 localScale;
-            fruta.transform.GetPositionAndRotation(position, rotation);
-            localScale = fruta.transform.localScale;
-            // GameObject frutaNew = Instantiate(tomate_a_instanciar, spawnPoint.transform);
-            // No se que  fruta Instanciar. Implementar cambiando el material.
-            // Puedo averiguar el prefab?
-        } */
     }
 
     private void devolverColores() {
@@ -96,7 +94,7 @@ public class DificultadesFarmScene : MonoBehaviour {
         }
 
         // reinicio el EmisorCompletaFrutas (en el mismo GameObject que este script)
-        EmisorCompletaFrutas emisor = gameObject.GetComponent<EmisorCompletaFrutas>();
+        EmisorEventosFrutas emisor = gameObject.GetComponent<EmisorEventosFrutas>();
         if (emisor != null) {
             emisor.reiniciarContador();
             emisor.setFruitAmount(nroTomates + nroPeras);
@@ -138,7 +136,7 @@ public class DificultadesFarmScene : MonoBehaviour {
         };
         List<Arco> arcosEstadoUno = new List<Arco> {
             new Arco("Completa", 2, new List<Arco.VoidMethodDelegate>{ quitarColores, respawnFrutas }),
-            new Arco("Falla", 0, new List<Arco.VoidMethodDelegate>{ agrandarFrutas }),
+            new Arco("Falla", 0, new List<Arco.VoidMethodDelegate>{ respawnFrutas }), // Tambien devuelve el tamaño original
         };
         List<Arco> arcosEstadoDos = new List<Arco> {
             new Arco("Completa", 4, new List<Arco.VoidMethodDelegate>{ respawnFrutas, achicarFrutas }),

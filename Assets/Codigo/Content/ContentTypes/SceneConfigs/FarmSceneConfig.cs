@@ -67,18 +67,18 @@ public class FarmSceneConfig : SceneConfig {
             // Asigno atributos al grafo
             DificultadesFarmScene grafoDific = grafoGameObject.GetComponent<DificultadesFarmScene>();
             if (grafoDific != null) {
-                grafoDific.lugaresSpawn = lugaresSpawn;
-                grafoDific.nroTomates = nroTomates;
-                grafoDific.nroPeras = nroPeras;
-                grafoDific.tomatePrefab = tomatePrefab;
-                grafoDific.tomateShadowPrefab = tomateShadowPrefab;
-                grafoDific.peraPrefab = peraPrefab;
-                grafoDific.peraShadowPrefab = peraShadowPrefab;
-                grafoDific.usingShadows = useShadows;
+                grafoDific.setLugaresSpawn(lugaresSpawn);
+                grafoDific.setNroTomates(nroTomates);
+                grafoDific.setNroPeras(nroPeras);
+                grafoDific.setTomatePrefab(tomatePrefab);
+                grafoDific.setTomateShadowPrefab(tomateShadowPrefab);
+                grafoDific.setPeraPrefab(peraPrefab);
+                grafoDific.setPeraShadowPrefab(peraShadowPrefab);
+                grafoDific.setUsingShadows(useShadows);
             }
 
             // Asigno atributos a los emisores
-            EmisorCompletaFrutas emisorCompletaFrutas = grafoGameObject.GetComponent<EmisorCompletaFrutas>();
+            EmisorEventosFrutas emisorCompletaFrutas = grafoGameObject.GetComponent<EmisorEventosFrutas>();
             if (emisorCompletaFrutas != null) {
                 emisorCompletaFrutas.setFruitAmount(nroTomates + nroPeras);
             }

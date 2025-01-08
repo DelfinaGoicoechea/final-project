@@ -7,7 +7,7 @@ public class TriggerFrutas : MonoBehaviour {
     public AudioSource fxAudioSource;
     public AudioClip sonidoBien;
     public AudioClip sonidoMal;
-    public EmisorCompletaFrutas emisorGrafoDific;
+    public EmisorEventosFrutas emisorGrafoDific;
     public MetricaSoltarFrutas metricaSoltarFrutas;
 
     private IEnumerator playSonido(AudioClip sonido){
@@ -31,6 +31,7 @@ public class TriggerFrutas : MonoBehaviour {
             } else {
                 // Emitir sonido mal
                 StartCoroutine(playSonido(sonidoMal));
+                emisorGrafoDific.agregarCajonErroneo();
             }
         }
     }
