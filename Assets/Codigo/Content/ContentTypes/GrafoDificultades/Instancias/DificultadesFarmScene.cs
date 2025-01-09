@@ -1,27 +1,28 @@
+#nullable enable
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Mono.Zeroconf.Providers.Bonjour;
 
 public class DificultadesFarmScene : MonoBehaviour {
 
-    private GrafoDificultades grafoDificultades;
-    [SerializeField] private AudioSource fxAudioSource;
-    [SerializeField] private AudioClip sonidoFinalizacion;
-    [SerializeField] private GameObject cartelFinalizacion;
+    private GrafoDificultades? grafoDificultades;
+    [SerializeField] private AudioSource? fxAudioSource;
+    [SerializeField] private AudioClip? sonidoFinalizacion;
+    [SerializeField] private GameObject? cartelFinalizacion;
+    [SerializeField] private MetricaSoltarFrutas? metricaSoltarFrutas;
     
     // NOTA IMPORTANTE: 
-    //  Todos estos campos son private para que sea evidente en el Editor de Unity
-    //  cuales son los atributos que se deben asignar alli y cuales no, pero todos
+    //  Todos los siguientes campos son private para que sea evidente en el Editor de 
+    //  Unity cuales son los atributos que se deben asignar alli y cuales no, pero todos
     //  estos campos (private) los asigna FarmSceneConfig al cargarse la escena.
-    private Vector3[] lugaresSpawn;
+    private Vector3[]? lugaresSpawn;
     private long nroTomates;
     private long nroPeras;
-    private GameObject tomatePrefab;
-    private GameObject tomateShadowPrefab;
-    private GameObject peraPrefab;
-    private GameObject peraShadowPrefab;
+    private GameObject? tomatePrefab;
+    private GameObject? tomateShadowPrefab;
+    private GameObject? peraPrefab;
+    private GameObject? peraShadowPrefab;
     private bool usingShadows;
     
     public void setLugaresSpawn(Vector3[] lugares) => lugaresSpawn = lugares;
@@ -33,9 +34,14 @@ public class DificultadesFarmScene : MonoBehaviour {
     public void setPeraShadowPrefab(GameObject prefab) => peraShadowPrefab = prefab;
     public void setUsingShadows(bool use) => usingShadows = use;
 
-    public bool procesarEvento(string evento) {
-        bool result = grafoDificultades.procesarEvento(evento);
-        return result;
+    public string? procesarEvento(string evento) {
+        string? nombreNuevoVertice = grafoDificultades?.procesarEvento(evento);
+        if(nombreNuevoVertice != null && metricaSoltarFrutas != null) {
+            metricaSoltarFrutas.cambiaDificultad(nombreNuevoVertice);
+            // Si se necesitara, se puede generalizar usando una lista de funciones a ejecutar,
+            // similar a lo que se hace en procesarEvento() de GrafoDificultades.
+        }
+        return nombreNuevoVertice;
     }
 
     // Definir las funciones que va a usar c/ arco
@@ -70,9 +76,9 @@ public class DificultadesFarmScene : MonoBehaviour {
 
         // Spawn nuevas frutas
         GameObject spawnPoint = GameObject.FindWithTag("SpawnPoint");
-        List<int> availableSpawns = new List<int>(Enumerable.Range(0, lugaresSpawn.Length));
-        System.Random rand = new System.Random();
-        GameObject tomate_a_instanciar = (usingShadows) ? tomateShadowPrefab : tomatePrefab;
+        List<int> availableSpawns = new(Enumerable.Range(0, lugaresSpawn!.Length));
+        System.Random rand = new();
+        GameObject? tomate_a_instanciar = (usingShadows) ? tomateShadowPrefab : tomatePrefab;
         if (tomate_a_instanciar != null) {
             for (int i = 0; i < nroTomates; i++) {
                 int spawnIndex = rand.Next(0, availableSpawns.Count);
@@ -83,7 +89,7 @@ public class DificultadesFarmScene : MonoBehaviour {
             }
         }
 
-        GameObject pera_a_instanciar = (usingShadows) ? peraShadowPrefab : peraPrefab;
+        GameObject? pera_a_instanciar = (usingShadows) ? peraShadowPrefab : peraPrefab;
         if (pera_a_instanciar != null) {
             for (int i = 0; i < nroPeras; i++) {
                 int spawnIndex = rand.Next(0, availableSpawns.Count);
@@ -122,9 +128,9 @@ public class DificultadesFarmScene : MonoBehaviour {
         if (fxAudioSource != null && fxAudioSource.isPlaying) {
             yield return new WaitForSeconds(fxAudioSource.clip.length);
         }
-        fxAudioSource.clip = sonidoFinalizacion;
+        fxAudioSource!.clip = sonidoFinalizacion;
         fxAudioSource.Play();
-        cartelFinalizacion.SetActive(true);
+        cartelFinalizacion?.SetActive(true);
     }
 
 
@@ -132,29 +138,43 @@ public class DificultadesFarmScene : MonoBehaviour {
         // crear grafo (vertices) y asignar arcos
         grafoDificultades = new GrafoDificultades(6); // 6 vertices
         List<Arco> arcosEstadoCero = new List<Arco> {
+            // Pasa a coloreadas pequeñas
             new Arco("Completa", 1, new List<Arco.VoidMethodDelegate>{ respawnFrutas, achicarFrutas })
         };
         List<Arco> arcosEstadoUno = new List<Arco> {
+            // pasa a sombras grandes
             new Arco("Completa", 2, new List<Arco.VoidMethodDelegate>{ quitarColores, respawnFrutas }),
+            // vuelve a coloreadas grandes
             new Arco("Falla", 0, new List<Arco.VoidMethodDelegate>{ respawnFrutas }), // Tambien devuelve el tamaño original
         };
         List<Arco> arcosEstadoDos = new List<Arco> {
+            // pasa a sombras pequeñas
             new Arco("Completa", 4, new List<Arco.VoidMethodDelegate>{ respawnFrutas, achicarFrutas }),
+            // devuelve el color a las frutas (grandes)
             new Arco("Falla", 3, new List<Arco.VoidMethodDelegate>{ devolverColores, respawnFrutas }),
         };
         List<Arco> arcosEstadoTres = new List<Arco> {
+            // vuelve a sombras grandes
             new Arco("Completa", 2, new List<Arco.VoidMethodDelegate>{ quitarColores, respawnFrutas }),
         };
         List<Arco> arcosEstadoCuatro = new List<Arco> {
-            // Acá irían las felicitaciones
+            // finaliza el ejercicio
             new Arco("Completa", 5, new List<Arco.VoidMethodDelegate>(){ finalizacionExitosa }),
         };
-        //
-        grafoDificultades.asignarArcos(0, arcosEstadoCero);
-        grafoDificultades.asignarArcos(1, arcosEstadoUno);
-        grafoDificultades.asignarArcos(2, arcosEstadoDos);
-        grafoDificultades.asignarArcos(3, arcosEstadoTres);
-        grafoDificultades.asignarArcos(4, arcosEstadoCuatro);
-        grafoDificultades.asignarArcos(5, null);
+
+        grafoDificultades.asignarVertice(0, new Vertice("Coloreados grandes", arcosEstadoCero));
+        grafoDificultades.asignarVertice(1, new Vertice("Coloreados chicos", arcosEstadoUno));
+        grafoDificultades.asignarVertice(2, new Vertice("Sombras grandes", arcosEstadoDos));
+        grafoDificultades.asignarVertice(3, new Vertice("Colores grandes revelados", arcosEstadoTres));
+        grafoDificultades.asignarVertice(4, new Vertice("Sombras chicas", arcosEstadoCuatro));
+        grafoDificultades.asignarVertice(5, new Vertice("Finalizado", null));
+        
+    }
+
+    void Start() {
+        // Informo el nombre del estado inicial
+        if (metricaSoltarFrutas != null) {
+            metricaSoltarFrutas.cambiaDificultad("Coloreados grandes");
+        }
     }
 }

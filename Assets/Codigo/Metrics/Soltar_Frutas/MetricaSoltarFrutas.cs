@@ -62,6 +62,11 @@ public class MetricaSoltarFrutas : Metric
         }
     }
 
+    public void cambiaDificultad(string nuevoNivel) {
+        string currTimeStr = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
+        Debug.Log($"{currTimeStr}: Se encuentra en el estado \"{nuevoNivel}\"");
+        mensajesFrutas.Add($"{currTimeStr}: Se encuentra en el estado \"{nuevoNivel}\"");
+    }
     public override string Nombre
     {
         get { return "Metrica soltar frutas"; }

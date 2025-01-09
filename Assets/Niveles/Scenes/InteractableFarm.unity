@@ -2287,6 +2287,7 @@ MonoBehaviour:
   fxAudioSource: {fileID: 444053889}
   sonidoFinalizacion: {fileID: 8300000, guid: a0ca8964c08d54c5dbebf245bdc474ca, type: 3}
   cartelFinalizacion: {fileID: 1322955309}
+  metricaSoltarFrutas: {fileID: 1833941036}
 --- !u!114 &1068545327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4031,7 +4032,7 @@ GameObject:
   - component: {fileID: 1833941035}
   - component: {fileID: 1833941036}
   m_Layer: 0
-  m_Name: Metrica Soltar Fruta
+  m_Name: Metrica Soltar Frutas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

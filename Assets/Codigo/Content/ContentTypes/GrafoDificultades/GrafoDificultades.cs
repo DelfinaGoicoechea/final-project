@@ -4,33 +4,37 @@ using System.Collections.Generic;
 public class GrafoDificultades {
     private int estadoActual = 0;
     private int size;
-    private List<Arco>[] vertices;
+    private Vertice[] vertices;
 
     // constructor
     public GrafoDificultades(int size) {
         this.size = size;
-        vertices = new List<Arco>[size];
+        vertices = new Vertice[size];
     }
 
-    public bool asignarArcos(int vertice, List<Arco> arcos) {
-        if (vertice < 0 || vertice >= size) {
+    public bool asignarVertice(int index, Vertice vertice) {
+        if (index < 0 || index >= size) {
             return false;
         }
-        vertices[vertice] = arcos;
+        vertices[index] = vertice;
         return true;
     }
 
-    // procesar evento
-    public bool procesarEvento(string evento) {
-        Arco? arcoMatch = vertices[estadoActual].Find(arco => arco.evento == evento);
-        if (arcoMatch == null) return false; // No hay arco
-        if (arcoMatch.proxEstado < 0 || arcoMatch.proxEstado >= size) return false; // proximo estado fuera de limites
+    /// <summary>
+    /// procesar evento
+    /// </summary>
+    /// <param name="evento"></param>
+    /// <returns> string (nombre) asociado al nuevo vertice (nivel)</returns>
+    public string? procesarEvento(string evento) {
+        Arco? arcoMatch = vertices[estadoActual].getAdyacente(evento);
+        if (arcoMatch == null) return null; // No hay arco
+        if (arcoMatch.proxEstado < 0 || arcoMatch.proxEstado >= size) return null; // proximo estado fuera de limites
         if(arcoMatch.acciones != null){
             foreach(Arco.VoidMethodDelegate accion in arcoMatch.acciones){
                 accion.Invoke();
             }
         }
         this.estadoActual = arcoMatch.proxEstado;
-        return true;
+        return vertices[estadoActual].getNombreVertice();
     }    
 }
