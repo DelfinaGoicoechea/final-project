@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 13050110539784973}
   - component: {fileID: 3375837413159086132}
   m_Layer: 0
-  m_Name: Tomato_Interactable_Shadow
+  m_Name: Tomate_Interactuable_Sombra
   m_TagString: Fruta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

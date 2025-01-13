@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2051830411307898788}
   - component: {fileID: 2690447442162133276}
   m_Layer: 0
-  m_Name: Tomato_Interactable
+  m_Name: Tomate_Interactuable
   m_TagString: Fruta
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
