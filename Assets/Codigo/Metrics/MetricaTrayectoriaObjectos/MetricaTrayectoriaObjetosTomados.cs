@@ -9,7 +9,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 public class MetricaTrayectoriaObjetosTomados : Metric
 {
     public float frecuenciaDeCaptura = 1.0f;
-    public List<string> mensajesTrayectorias = new();
+    private List<string> mensajesTrayectorias = new();
     private Coroutine coroutineLadoIzq;
     private Coroutine coroutineLadoDer;
     private StringBuilder capturaIzq = new();

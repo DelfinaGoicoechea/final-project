@@ -8,7 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MetricaSoltarFrutas : Metric
 {
-    public List<string> mensajesFrutas = new();
+    private List<string> mensajesFrutas = new();
     private Dictionary<string, bool> enCajas = new(); // key: transform de fruta, value: si esta en caja correcta
     private Dictionary<string, DateTime> soltados = new();
 

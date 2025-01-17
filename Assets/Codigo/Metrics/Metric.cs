@@ -7,10 +7,10 @@ using UnityEngine;
 public abstract class Metric : MonoBehaviour
 {
     public abstract string Nombre { get; }
-    public string NombreContenido;
+    protected string NombreContenido;
     public delegate void MetricEventHandler(Metric metrica);
     public event MetricEventHandler CondicionMetricaCumplida;
-    public bool metricaPublicada = false;
+    protected bool metricaPublicada = false;
 
     /// <summary>
     /// Funcion a sobrescribir por cada metrica, donde se llame a InvokeCondicionMetricaCumplida().

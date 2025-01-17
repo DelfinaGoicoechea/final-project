@@ -4,7 +4,7 @@ using System.Text;
 
 public class MetricaObservarObjetos : Metric
 {
-    public List<string> mensajesObjDetectados = new List<string>();
+    private List<string> mensajesObjDetectados = new List<string>();
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +18,7 @@ public class MetricaObservarObjetos : Metric
 
     public override string Nombre
     {
-        get { return "MetricaObservarObjetos"; }
+        get { return "Metrica Observar Objetos"; }
     }
 
     /// <summary>
