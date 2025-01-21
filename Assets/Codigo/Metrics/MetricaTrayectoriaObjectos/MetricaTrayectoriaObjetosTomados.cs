@@ -69,7 +69,7 @@ public class MetricaTrayectoriaObjetosTomados : Metric
         while (true) {
             string segundoSueltaStr = DateTime.Now.ToString("T", new CultureInfo("es-ES"));
             if (frutaTransform != null) {
-                captura.Append($"{segundoSueltaStr}hs: {frutaTransform.position.ToString()},  ");
+                captura.Append($"{segundoSueltaStr}hs: posicion:{frutaTransform.position.ToString()}, rotacion:{frutaTransform.rotation.eulerAngles.ToString()}\n");
             }
             yield return new WaitForSeconds(timeOut);
         }
@@ -80,14 +80,12 @@ public class MetricaTrayectoriaObjetosTomados : Metric
         if (isLeftSide) {
             StopCoroutine(coroutineLadoIzq);
             coroutineLadoIzq = null;
-            capturaIzq.Remove(capturaIzq.Length-3, 2); // quito la ultima coma y espacio
             mensajesTrayectorias.Add(capturaIzq.ToString());
             capturaIzq.Clear();
             
         } else {
             StopCoroutine(coroutineLadoDer);
             coroutineLadoDer = null;
-            capturaDer.Remove(capturaDer.Length-3, 2); // quito la ultima coma y espacio
             mensajesTrayectorias.Add(capturaDer.ToString());
             capturaDer.Clear();
         }
@@ -134,8 +132,8 @@ public class MetricaTrayectoriaObjetosTomados : Metric
             foreach (string detectionMsg in mensajesTrayectorias){
                 mensaje.Append($"{detectionMsg}\n");
             }
-            // quito el ultimo \n
-            mensaje = mensaje.Remove(mensaje.Length-1, 1);
+            // quito los 2 ultimos \n
+            mensaje = mensaje.Remove(mensaje.Length-2, 2);
         }
 
         var modeloMetrica = new Modelo
