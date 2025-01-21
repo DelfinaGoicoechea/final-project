@@ -18,22 +18,22 @@ public class MetricaPosicionManosJoystick : Metric
         GameObject rightHand = camOffsetTransform.Find("Right Hand").gameObject;
         // Joystick Izquierdo
         CapturadorPosicion capturador_JoyI = leftJoystick.AddComponent<CapturadorPosicion>();
-        capturador_JoyI.frecuenciaMuestreo = 10.0f;
+        capturador_JoyI.frecuenciaMuestreo = frecuenciaMuestreo;
         capturador_JoyI.nombreObjeto = "Joystick Izq";
         capturador_JoyI.metricaPrincipal = this;
         // Joystick Derecho
         CapturadorPosicion capturador_JoyD = rightJoystick.AddComponent<CapturadorPosicion>();
-        capturador_JoyD.frecuenciaMuestreo = 10.0f;
+        capturador_JoyD.frecuenciaMuestreo = frecuenciaMuestreo;
         capturador_JoyD.nombreObjeto = "Joystick Der";
         capturador_JoyD.metricaPrincipal = this;
         // Mano Izquierda
         CapturadorPosicion capturador_ManoI = leftHand.AddComponent<CapturadorPosicion>();
-        capturador_ManoI.frecuenciaMuestreo = 10.0f;
+        capturador_ManoI.frecuenciaMuestreo = frecuenciaMuestreo;
         capturador_ManoI.nombreObjeto = "Mano Izq";
         capturador_ManoI.metricaPrincipal = this;
         // Mano Derecha
         CapturadorPosicion capturador_ManoD = rightHand.AddComponent<CapturadorPosicion>();
-        capturador_ManoD.frecuenciaMuestreo = 10.0f;
+        capturador_ManoD.frecuenciaMuestreo = frecuenciaMuestreo;
         capturador_ManoD.nombreObjeto = "Mano Der";
         capturador_ManoD.metricaPrincipal = this;
         // Comenzar captura
