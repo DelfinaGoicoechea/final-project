@@ -28,12 +28,12 @@ public class MetricaTiempoEscenaActiva : Metric
         if (tiempoMaxTranscurrido >= 60)
         {
             int minutes = (int)Math.Round(tiempoMaxTranscurrido / 60);
-            m = $"La escena estuvo demasiado tiempo activa: {minutes} minutos";
+            m = $"La escena estuvo activa: {minutes} minutos";
             }
         else
         {
             int segundos = (int)Math.Round(tiempoMaxTranscurrido);
-            m = $"La escena estuvo demasiado tiempo activa: {segundos} segundos";
+            m = $"La escena estuvo activa: {segundos} segundos";
         };
 
         var modeloMetrica = new Modelo
