@@ -8,6 +8,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class MetricaSoltarFrutas : Metric
 {
+    public float tiempoEspera = 5.0f;
     private List<string> mensajesFrutas = new();
     private Dictionary<string, bool> enCajas = new(); // key: transform de fruta, value: si esta en caja correcta
     private Dictionary<string, DateTime> soltados = new();
@@ -48,7 +49,7 @@ public class MetricaSoltarFrutas : Metric
             mensajesFrutas.Add($"{currTimeStr}: Se solto fruta en cajon {isCajonCorrecto}");
         } else {
             soltados[frutaObjectName] = currentTime;
-            recheckConTimeout(frutaObjectName, currentTime,  5);
+            recheckConTimeout(frutaObjectName, currentTime,  tiempoEspera);
         }
         return;
     }
