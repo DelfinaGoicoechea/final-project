@@ -47,6 +47,9 @@ namespace SimpleHttpServer.Models
             set
             {
                 this.setContent(value, encoding: Encoding.UTF8);
+                if (!this.Headers.ContainsKey("Content-Type")) {
+                    this.Headers.Add("Content-Type","text/plain; charset=utf-8");
+                }
             }
         }
         public void setContent(string content, Encoding encoding = null)
@@ -54,6 +57,9 @@ namespace SimpleHttpServer.Models
             if (encoding == null)
             {
                 encoding = Encoding.UTF8;
+                if (!this.Headers.ContainsKey("Content-Type")) {
+                    this.Headers.Add("Content-Type","text/plain; charset=utf-8");
+                }
             }
             Content = encoding.GetBytes(content);
         }

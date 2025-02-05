@@ -215,8 +215,11 @@ namespace SimpleHttpServer
                             
                         }
 
-                        string scene = request.Headers["scene"];
-
+                        // La escena viene en Base64, porque Dart NO permite que los headers 
+                        // tengan caracteres que no son ASCI (tildes, eñes, etc).
+                        byte[] data = Convert.FromBase64String(request.Headers["scene"]);
+                        string scene = System.Text.Encoding.UTF8.GetString(data);
+                        
                         // Necesito usar un  task, porque setVolumen() se debe 
                         // ejecutar SI O SI desde el thread principal.
                         Task<HttpResponse> task = dispatcher.EnqueueAsync(
@@ -365,7 +368,10 @@ namespace SimpleHttpServer
                             
                         }
 
-                        string scene = request.Headers["scene"];
+                        // La escena viene en Base64, porque Dart NO permite que los headers 
+                        // tengan caracteres que no son ASCI (tildes, eñes, etc).
+                        byte[] data = Convert.FromBase64String(request.Headers["scene"]);
+                        string scene = System.Text.Encoding.UTF8.GetString(data);
 
                         // Necesito usar un  task, porque setVolumen() se debe 
                         // ejecutar SI O SI desde el thread principal.
