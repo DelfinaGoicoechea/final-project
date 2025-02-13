@@ -4,31 +4,48 @@ using TMPro;
 
 public class PedestrianTrafficLightController : MonoBehaviour
 {
-    public Light greenLight;  // Luz verde (persona caminando)
-    public Light redLight;    // Luz roja (persona detenida)
-    public TextMeshProUGUI contadorTexto;  // Texto en la UI para el contador
+    public Light greenLight;  
+    public Light redLight;    
+    public TextMeshProUGUI contadorTexto;  
 
-    public int greenDuration = 31;  // Tiempo en verde
-    public int redDuration = 31;    // Tiempo en rojo
+    public int greenDuration = 31;  
+    public int redDuration = 31;    
+
+    private bool semaforoActivo = false;  
 
     private void Start()
     {
-        StartCoroutine(TrafficLightCycle());
+        // Apagar las luces al inicio
+        greenLight.enabled = false;
+        redLight.enabled = false;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!semaforoActivo && other.CompareTag("Player"))  // Asegura que solo se active una vez y por el jugador
+        {
+            semaforoActivo = true;
+            redLight.enabled = true;
+            greenLight.enabled = false;
+            StartCoroutine(TrafficLightCycle());
+        }
     }
 
     IEnumerator TrafficLightCycle()
     {
         while (true)
         {
-            // Fase verde
+
+            yield return StartCoroutine(ActualizarContador(redDuration, Color.red));
+            greenLight.enabled = true;
+            redLight.enabled = false;
+
+
             yield return StartCoroutine(ActualizarContador(greenDuration, Color.green));
             greenLight.enabled = false;
             redLight.enabled = true;
 
-            // Fase roja
-            yield return StartCoroutine(ActualizarContador(redDuration, Color.red));
-            greenLight.enabled = true;
-            redLight.enabled = false;
+            
         }
     }
 
