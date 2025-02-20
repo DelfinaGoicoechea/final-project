@@ -117,21 +117,6 @@ namespace Contents{
 			}
 		}
 
-		private void loadTags()
-		{
-			string tagsFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}tags.txt";
-			if (File.Exists(tagsFileLocation)) {
-				string tagsFileContent = File.ReadAllLines(tagsFileLocation)[0];
-                Dictionary<string, List<string>> tagsContent = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(tagsFileContent);
-				foreach (KeyValuePair<string, List<string>> tags in tagsContent) {
-					Content content = contents.Find(x => x.nombre.Equals(tags.Key));
-					if (content != null){
-						content.tags = new List<string> (tags.Value);
-					}
-				}
-			}
-		}
-
 
 		private IEnumerator loadContents()
 		{
@@ -220,7 +205,6 @@ namespace Contents{
 
 			// Cargo las personalizaciones a los contenidos definidos en tiempo de ejecucion.
 			loadCustomizations("Execution");
-			loadTags();
 			yield return null;
 		}
 

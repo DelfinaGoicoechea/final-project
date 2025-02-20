@@ -134,21 +134,6 @@ namespace Contents{
 				string newName = (string) cambios["newName"];
 				this.changeNombre(newName); // cambia el nombre y almacena el cambio
 			}
-            
-            // cambio los tags
-            bool hasNewTags = cambios.ContainsKey("tags");
-            if (hasNewTags){
-                // en cambios["tags"] hay un JArray que debo convertir a lista
-                this.tags = ((JArray)cambios["tags"]).ToObject<List<string>>();
-            }
-            // Guardo modificaciones relacionadas con los tags
-            if( hasNewTags || hasNewName ){
-                // 3 posibilidades:
-                //    1. se modificaron tags y hay que guardarlo en tags.txt
-                //    2. se cambio el nombre y puede que se deba cambiar una key en tags.txt
-                //    3. todas las anteriores
-                storeTagsChanges(cambios, hasNewTags, hasNewName);
-            }
 
             if (hasNewName){
                 // Elimino del dict, xq el cambio ya se almacena
@@ -168,7 +153,7 @@ namespace Contents{
 				}
 			}
 
-            if (hasNewName || hasPackageName || hasNewTags){
+            if (hasNewName || hasPackageName){
                 // Guardo la fecha del cambio
                 string dateFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}lastChangeDate.txt";
                 string dateToStore = DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
@@ -178,7 +163,7 @@ namespace Contents{
                 File.WriteAllText(dateFileLocation, dateToStore);
             }
 			
-			// Los cambios ya se guardan en changeNombre(), changePackageName(), storeTagsChanges()
+			// Los cambios ya se guardan en changeNombre(), changePackageName()
             return ""; 
         }
     }

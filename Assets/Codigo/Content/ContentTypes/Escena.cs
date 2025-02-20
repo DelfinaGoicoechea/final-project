@@ -102,8 +102,7 @@ namespace Contents{
         public override string customize(Dictionary<string, object> cambios, List<AudioContainer> audios, bool saveChange){
             bool hasNewName = cambios.ContainsKey("newName");
             bool hasNewAudio = cambios.ContainsKey("newAudio");
-            bool hasTags = cambios.ContainsKey("tags");
-            bool shouldSave = saveChange && (hasNewName || hasNewAudio || hasTags);
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio);
             return base.customize(cambios, audios, shouldSave);    
         }
     }

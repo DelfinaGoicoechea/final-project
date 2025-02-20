@@ -142,8 +142,7 @@ namespace Contents {
             bool hasNewName = cambios.ContainsKey("newName");
             bool hasNewAudio = cambios.ContainsKey("newAudio");
             // TODO: Aca hace falta revisar las condiciones, y si se debe permitir personalizar algo mas
-            bool hasTags = cambios.ContainsKey("tags");
-            bool shouldSave = saveChange && (hasNewName || hasNewAudio || hasTags);
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio);
             return base.customize(cambios, audios, shouldSave);    
         }
     }
