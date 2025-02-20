@@ -10,6 +10,8 @@ public class PedestrianTrafficLightController : MonoBehaviour
     public AudioSource audioSource;  // Componente de sonido
     public AudioClip sonidoVerde;  // Sonido cuando el semáforo está en verde
 
+    public MetricaTiempoReaccion metricaTiempoReaccion;
+
     public int greenDuration = 31;  // Tiempo en verde
     public int redDuration = 31;    // Tiempo en rojo
 
@@ -49,7 +51,11 @@ public class PedestrianTrafficLightController : MonoBehaviour
             audioSource.PlayOneShot(sonidoVerde);
         }
 
+        metricaTiempoReaccion.tiempoVerde();
+
         yield return StartCoroutine(ActualizarContador(greenDuration, Color.green));
+
+        
 
         // 🔴 VOLVER A ROJO  
         StartCoroutine(TrafficLightCycle());
@@ -67,4 +73,6 @@ public class PedestrianTrafficLightController : MonoBehaviour
 
         contadorTexto.text = "";  // Ocultar el contador cuando termine
     }
+
+
 }
