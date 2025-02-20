@@ -69652,6 +69652,7 @@ MonoBehaviour:
   contadorTexto: {fileID: 122116428}
   audioSource: {fileID: 1809129687}
   sonidoVerde: {fileID: 8300000, guid: b9c92fd1c241e25469f792f3d10517c2, type: 3}
+  metricaTiempoReaccion: {fileID: 1445053270}
   greenDuration: 30
   redDuration: 30
 --- !u!65 &869871445
