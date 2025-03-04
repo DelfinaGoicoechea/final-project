@@ -67,6 +67,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Fruta
       objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: 275adcf798c421e49bf284f4405ce712, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 275adcf798c421e49bf284f4405ce712, type: 3}
 --- !u!1 &185865645826707467 stripped
