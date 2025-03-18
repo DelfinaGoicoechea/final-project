@@ -18,7 +18,7 @@ namespace Contents{
 		private List<AudioContainer> audios = new List<AudioContainer>();
 		private GameObject sphere;
 		private FileSystemContentLoader fsLoader;
-		public DateTime lastUpdateTime  { get; private set; } = DateTime.UtcNow;
+		public DateTime lastUpdateTime = DateTime.UtcNow;
 		public static ContentManager Instance { get; private set; }
 		private void Awake()
 		{

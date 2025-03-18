@@ -103,6 +103,16 @@ namespace Contents{
                 Texture2D image = ThumbnailCreator.Capture(this.nombre);
                 this.thumbnail = image;
             }
+            
+            // Guardo la fecha del cambio
+            ContentManager cm = ContentManager.Instance;
+            cm.lastUpdateTime = DateTime.UtcNow;
+            string dateFileLocation = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}lastChangeDate.txt";
+            string dateToStore = DateTime.UtcNow.ToString("s", System.Globalization.CultureInfo.InvariantCulture);
+            if(!File.Exists(dateFileLocation)){
+                File.Create(dateFileLocation).Dispose();
+            }
+            File.WriteAllText(dateFileLocation, dateToStore);
         }
 
         public override bool delete () {
