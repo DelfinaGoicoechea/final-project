@@ -117,8 +117,7 @@ namespace Contents{
                 }
 			}
 
-            bool hasTags = cambios.ContainsKey("tags");
-            bool shouldSave = saveChange && (hasNewName || hasNewAudio || changedRepresentation || hasTags);
+            bool shouldSave = saveChange && (hasNewName || hasNewAudio || changedRepresentation);
             return base.customize(cambios, audios, saveChange);
         }
 
