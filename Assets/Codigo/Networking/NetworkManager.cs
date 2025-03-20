@@ -88,7 +88,9 @@ namespace SimpleHttpServer
             string ip_str =  "" + ip;
             string port_str = "" + port;
             dns_sd = new DNS_SD(ip_str, port_str);
-            dns_sd.StartAdvertising();
+            string serviceName = dns_sd.StartAdvertising();
+            if (toPrint != null)
+                toPrint.text = serviceName;
         }
 
         public void stopAdvertisingService()

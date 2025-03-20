@@ -8,21 +8,33 @@ namespace DNSSpace
     /// </summary>
     public class DNS_SD
     {
-
         string IP;
         private string port;
         AndroidJavaClass jc = new AndroidJavaClass("src.DnsSdJava.ServiceRegistration");
 
-        public void StartAdvertising()
+        public string StartAdvertising()
         {
+            // Si estoy en Windows ya retorno, porque (por ahora) la publicacion del servicio
+            // solo funciona en Android
+            if (System.Environment.OSVersion.Platform ==  PlatformID.Win32NT) {
+                return "Tranquilidad 360";
+            }
+            
+            string[] args = new string[]{ IP, port};
+
+            // Hay 3 casos del metodo CallStatic (aunque la documentacion liste 2):
+            //    1. public void CallStatic(string methodName, params object[] args)
+            //    2. public ReturnType CallStatic(string methodName, params object[] args)
+            //    3. public ReturnType CallStatic(string methodName, params T[] args)
             try
             {
-                string[] args = new string[]{ IP, port};
-                jc.CallStatic("registerService", args);
+                // uso <string,string> para darle los tipos al caso "3."
+                string registeredName = jc.CallStatic<string,string>("registerService", args);
+                return registeredName;
             }
             catch (Exception ex)
             {
-                Debug.LogError("Error al iniciar el anuncio del servicio: " + ex.Message);
+                return ex.Message;
             }
         }
 
