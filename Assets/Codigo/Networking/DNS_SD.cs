@@ -17,7 +17,7 @@ namespace DNSSpace
             // Si estoy en Windows ya retorno, porque (por ahora) la publicacion del servicio
             // solo funciona en Android
             if (System.Environment.OSVersion.Platform ==  PlatformID.Win32NT) {
-                return "Tranquilidad 360";
+                return "Tranquiliza.360";
             }
             
             string[] args = new string[]{ IP, port};
@@ -30,6 +30,10 @@ namespace DNSSpace
             {
                 // uso <string,string> para darle los tipos al caso "3."
                 string registeredName = jc.CallStatic<string,string>("registerService", args);
+                if (registeredName.Contains("Tranquilidad 360"))
+                {
+                    registeredName = registeredName.Replace("Tranquilidad 360", "Tranquiliza.360");
+                }
                 return registeredName;
             }
             catch (Exception ex)
