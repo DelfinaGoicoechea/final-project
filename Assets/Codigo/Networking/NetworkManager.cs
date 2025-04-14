@@ -86,10 +86,10 @@ namespace SimpleHttpServer
             //Publico el dns_sd
             string ip_str =  "" + ip;
             string port_str = "" + port;
-            AndroidJNI.AttachCurrentThread(); // Necesario 
+            AndroidJNI.AttachCurrentThread(); // Necesario por estar en thread secundario
             dns_sd = new DNS_SD(ip_str, port_str);
             string serviceName = dns_sd.StartAdvertising();
-            AndroidJNI.DetachCurrentThread();
+            AndroidJNI.DetachCurrentThread(); // Necesario por estar en thread secundario
             if (toPrint != null) {
                 Task task = dispatcher.EnqueueAsync(
                     serviceName,
