@@ -306,6 +306,10 @@ namespace DispatcherSpace
 			return callback(lastUpdate);
 		}
 
+		public void updateServiceName(string serviceName){
+			nManager.updateServiceName(serviceName);
+		}
+
         // Update is called once per frame
 		public void Update() {
 			lock(_executionQueue) {
@@ -363,6 +367,24 @@ namespace DispatcherSpace
 				{
 					HttpResponse response = action(argument);
 					tcs.TrySetResult(response);
+				} catch (Exception ex) 
+				{
+					tcs.TrySetException(ex);
+				}
+			}
+
+			Enqueue(ActionWrapper(WrappedAction));
+			return tcs.Task;
+		}
+
+		public Task EnqueueAsync(string argument, Action<string> action)
+		{
+			var tcs = new TaskCompletionSource<HttpResponse>();
+
+			void WrappedAction() {
+				try 
+				{
+					action(argument);
 				} catch (Exception ex) 
 				{
 					tcs.TrySetException(ex);

@@ -1,5 +1,6 @@
 using System;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -51,8 +52,9 @@ namespace SimpleHttpServer
             //Levanto servidor http
             httpServer = new HttpServer(route_config);
             Thread thread = new Thread(new ThreadStart(httpServer.Listen));
+            Thread threadPublisher = new Thread(new ThreadStart(publishService));
             thread.Start();
-            StartCoroutine(publishService());
+            threadPublisher.Start();
         }
 
         // Update is called once per frame
@@ -75,22 +77,38 @@ namespace SimpleHttpServer
             return null;
         }
 
-        private IEnumerator publishService()
+        private void publishService()
         {
-            yield return new WaitForSeconds(2);
+            Thread.Sleep(2000);
             IPAddress ip = getIP();
             Int32 port = httpServer.getPort();
-            Debug.Log("Listening in ip: " + ip + "  port: " + port);
-            if (toPrint != null)
-                toPrint.text = "ip:" + ip + " port:" + port; // TODO: Eventually delete "toPrint", and this line too
-            
+
             //Publico el dns_sd
             string ip_str =  "" + ip;
             string port_str = "" + port;
+            AndroidJNI.AttachCurrentThread(); // Necesario 
             dns_sd = new DNS_SD(ip_str, port_str);
             string serviceName = dns_sd.StartAdvertising();
+            AndroidJNI.DetachCurrentThread();
+            if (toPrint != null) {
+                Task task = dispatcher.EnqueueAsync(
+                    serviceName,
+                    (string serviceName) => dispatcher.updateServiceName(serviceName)
+                );
+                task.Wait();
+            }
+        }
+
+        public void updateServiceName(string serviceName)
+        {
             if (toPrint != null)
                 toPrint.text = serviceName;
+            
+            if (Application.platform != RuntimePlatform.Android) {
+                IPAddress ip = getIP();
+                Int32 port = httpServer.getPort();
+                Debug.Log("Listening in ip: " + ip + "  port: " + port);
+            }
         }
 
         public void stopAdvertisingService()
