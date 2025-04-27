@@ -23,10 +23,9 @@ namespace SimpleHttpServer
         public static NetworkManager Instance { get; private set; }
         public TMP_Text toPrint;
         private HttpServer httpServer;
-
         private DNS_SD dns_sd;
-
         public Dispatcher dispatcher;
+        public string serviceName;
 
         private void Awake()
         {
@@ -106,6 +105,7 @@ namespace SimpleHttpServer
 
         public void updateServiceName(string serviceName)
         {
+            this.serviceName = serviceName;
             if (toPrint != null)
                 toPrint.text = serviceName;
             
