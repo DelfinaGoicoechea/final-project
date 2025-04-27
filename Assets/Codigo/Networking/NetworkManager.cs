@@ -9,6 +9,7 @@ using UnityEngine;
 using TMPro;
 using DispatcherSpace;
 using DNSSpace;
+using System.IO;
 
 namespace SimpleHttpServer
 {
@@ -44,6 +45,9 @@ namespace SimpleHttpServer
         // Start is called before the first frame update
         void Start()
         {
+            // Guardo el ip y el puerto en archivo, como mitigacion a problemas de DNS-SD en Windows
+            string ipPortPath = $"{Application.persistentDataPath}{Path.DirectorySeparatorChar}ip_port.txt";
+
             //Inicializo rutas
             Routes routes = new Routes();
             routes.setDispatcher(this.dispatcher);
@@ -52,7 +56,7 @@ namespace SimpleHttpServer
             //Levanto servidor http
             httpServer = new HttpServer(route_config);
             Thread thread = new Thread(new ThreadStart(httpServer.Listen));
-            Thread threadPublisher = new Thread(new ThreadStart(publishService));
+            Thread threadPublisher = new Thread(()=>publishService(ipPortPath));
             thread.Start();
             threadPublisher.Start();
         }
@@ -77,15 +81,16 @@ namespace SimpleHttpServer
             return null;
         }
 
-        private void publishService()
+        private void publishService(string ipPortPath)
         {
             Thread.Sleep(2000);
-            IPAddress ip = getIP();
-            Int32 port = httpServer.getPort();
+            string ip_str = "" + getIP();
+            string port_str = "" + httpServer.getPort();
+            
+            // Guardo el ip y el puerto en archivo, como mitigacion a problemas de DNS-SD en Windows
+            File.WriteAllText(ipPortPath, ip_str + ":" + port_str);
 
             //Publico el dns_sd
-            string ip_str =  "" + ip;
-            string port_str = "" + port;
             AndroidJNI.AttachCurrentThread(); // Necesario por estar en thread secundario
             dns_sd = new DNS_SD(ip_str, port_str);
             string serviceName = dns_sd.StartAdvertising();
