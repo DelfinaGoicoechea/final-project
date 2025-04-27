@@ -10,7 +10,7 @@ public class getServiceName : MonoBehaviour
     void Start()
     {
         NetworkManager nm = GameObject.Find("NetworkManager").GetComponent<NetworkManager>();
-        if (nm.serviceName != null) {
+        if (nm.serviceName != null && nm.serviceName != "") {
             this.gameObject.GetComponent<TMP_Text>().text = nm.serviceName;
         }
     }
