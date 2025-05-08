@@ -72,7 +72,7 @@ namespace Contents{
                 Transform audiosTransform = cManager.transform.GetChild(1);
                 foreach (var audioFileInfo in audiosDirectoryInfo.GetFiles())
                 {
-                    if(audioExtensionRegex.IsMatch(audioFileInfo.FullName))
+                    if(audioExtensionRegex.IsMatch(audioFileInfo.FullName.ToLower()))
                     {
                         AudioContainer audioContainer = LoadSingleAudio(audioFileInfo, audios);
                         audioList.Add(audioContainer);
@@ -147,7 +147,7 @@ namespace Contents{
                 DirectoryInfo imagesDirectoryInfo = new DirectoryInfo(imagesDirectory);
                 foreach (FileInfo imageFileInfo in imagesDirectoryInfo.GetFiles())
                 {
-                    if(imageExtensionRegex.IsMatch(imageFileInfo.FullName))
+                    if(imageExtensionRegex.IsMatch(imageFileInfo.FullName.ToLower()))
                     {
                         PathPhoto photo = LoadSingleImage(imageFileInfo, contents);
                         imageList.Add(photo);
@@ -198,7 +198,7 @@ namespace Contents{
                 DirectoryInfo videosDirectoryInfo = new DirectoryInfo(videosDirectory);
                 foreach (var file in videosDirectoryInfo.GetFiles())
                 {
-                    if(videoExtensionRegex.IsMatch(file.FullName))
+                    if(videoExtensionRegex.IsMatch(file.FullName.ToLower()))
                     {
                         PathVideo video = LoadSingleVideo(file, contents);
                         videoList.Add(video);
@@ -337,7 +337,7 @@ namespace Contents{
                     DirectoryInfo directoryInfo = new DirectoryInfo(auxPath);
                     foreach (var file in directoryInfo.GetFiles())
                     {
-                        if (imageExtensionRegex.IsMatch(file.FullName))
+                        if (imageExtensionRegex.IsMatch(file.FullName.ToLower()))
                         {
                             Debug.Log($"Agrego la imagen de camino: {file.FullName}");
                             Photo photo = contentCreator.CreatePhotoForWalk(file);
