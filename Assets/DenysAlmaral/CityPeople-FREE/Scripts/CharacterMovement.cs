@@ -4,38 +4,47 @@ public class CharacterMovement : MonoBehaviour
 {
     private Animator animator;
     private bool isWalking = false;
-    public float speed = 2f;
-    private float idleTime = 0f;
     private bool hasWaved = false;
+
+    public float speed = 2f;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        // El personaje arranca quieto en Idle, sin necesidad de activar nada aún
+
+        // Inicialmente el personaje está parado
+        animator.SetBool("isWalking", false);
     }
 
     void Update()
     {
-        // Acumulamos el tiempo desde el arranque
-        idleTime += Time.deltaTime;
-
-        // A los 5 segundos, saluda (una sola vez)
-        if (!hasWaved && idleTime >= 5f)
-        {
-            animator.SetTrigger("wave");
-            hasWaved = true;
-        }
-
-        // Si está caminando, lo movemos hacia adelante
         if (isWalking)
         {
+            // Mover hacia adelante mientras camina
             transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
     }
 
-    // Este método debe ser llamado al final de la animación de saludo (via Animation Event)
+    public void StartWalking()
+    {
+        isWalking = true;
+        animator.SetBool("isWalking", true);
+    }
+
+    public void Wave()
+    {
+        if (!hasWaved)
+        {
+            animator.SetTrigger("wave");
+            isWalking = false;
+            hasWaved = true;
+        }
+    }
+
+    // Este método se llama al final de la animación "Waving"
     public void ResumeWalking()
     {
         isWalking = true;
+        animator.SetBool("isWalking", true);
     }
 }
