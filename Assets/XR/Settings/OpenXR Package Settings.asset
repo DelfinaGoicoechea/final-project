@@ -75,9 +75,7 @@ MonoBehaviour:
     enabled: 1
   forceRemoveInternetPermission: 0
   symmetricProjection: 0
-  foveatedRenderingApi: 0
   systemSplashScreen: {fileID: 0}
-  optimizeBufferDiscards: 1
   lateLatchingMode: 0
   lateLatchingDebug: 0
 --- !u!114 &-8800033426494311790
@@ -158,11 +156,11 @@ MonoBehaviour:
   - {fileID: 4484306946429800912}
   - {fileID: -8581267575656307138}
   - {fileID: 3643632998712110093}
+  - {fileID: 675909816117623124}
   - {fileID: -3498027004086829874}
   - {fileID: 9004326511408078314}
   - {fileID: 1814701731787411000}
   - {fileID: 1578018256519527485}
-  - {fileID: -3631928179910246785}
   - {fileID: 4953574148528527338}
   - {fileID: 7868821438550915699}
   - {fileID: 4733206372604147149}
@@ -175,14 +173,8 @@ MonoBehaviour:
   - {fileID: 4372910495386016723}
   - {fileID: -2187283030807048666}
   - {fileID: 8859757254084177683}
-  - {fileID: 977845914936308146}
-  - {fileID: 675909816117623124}
   m_renderMode: 1
-  m_autoColorSubmissionMode: 1
-  m_colorSubmissionModes:
-    m_List: 00000000
   m_depthSubmissionMode: 0
-  m_optimizeBufferDiscards: 0
   m_symmetricProjection: 0
 --- !u!114 &-7623335121768237618
 MonoBehaviour:
@@ -874,10 +866,10 @@ MonoBehaviour:
   - {fileID: -8976367443444996865}
   - {fileID: -4775118287591380211}
   - {fileID: 7839185761889522898}
+  - {fileID: -8601405073567290304}
   - {fileID: -4452616723399183569}
   - {fileID: -7554801288290972147}
   - {fileID: -8973132407887758675}
-  - {fileID: -5789783543233418364}
   - {fileID: 5525303498216127277}
   - {fileID: -7132896989278482274}
   - {fileID: -6982155827584738503}
@@ -890,14 +882,8 @@ MonoBehaviour:
   - {fileID: -7623335121768237618}
   - {fileID: 895042609796071549}
   - {fileID: -6246712898848680762}
-  - {fileID: -1560532805549261505}
-  - {fileID: -8601405073567290304}
   m_renderMode: 1
-  m_autoColorSubmissionMode: 1
-  m_colorSubmissionModes:
-    m_List: 00000000
   m_depthSubmissionMode: 0
-  m_optimizeBufferDiscards: 0
   m_symmetricProjection: 0
 --- !u!114 &2308079416548033898
 MonoBehaviour:
