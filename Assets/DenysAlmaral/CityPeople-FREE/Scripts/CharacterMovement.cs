@@ -38,6 +38,7 @@ public class CharacterMovement : MonoBehaviour
             animator.SetTrigger("wave");
             isWalking = false;
             hasWaved = true;
+            Debug.Log("Se empezo a saludar");
         }
     }
 
@@ -46,5 +47,6 @@ public class CharacterMovement : MonoBehaviour
     {
         isWalking = true;
         animator.SetBool("isWalking", true);
+        Debug.Log("Se empezo a caminar");
     }
 }

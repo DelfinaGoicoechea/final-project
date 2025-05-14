@@ -14,6 +14,7 @@ public class WaveZoneTrigger : MonoBehaviour
             {
                 // Llama al método de saludo del personaje
                 characterMovement.Wave();
+                Debug.Log("Se entro en la zona");
             }
             else
             {
