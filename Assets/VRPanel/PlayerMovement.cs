@@ -3,8 +3,9 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 2.0f;
-    
-    // Variables para controlar el estado de movimiento
+    public Transform headset; // Arrastra la cámara VR o la cabeza aquí
+
+    // Variables de control
     private bool isMovingForward = false;
     private bool isMovingBackward = false;
     private bool isMovingLeft = false;
@@ -12,63 +13,37 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Movimiento continuo en Update
+        Vector3 moveDirection = Vector3.zero;
+
+        // Calcula la dirección relativa a la cabeza
         if (isMovingForward)
-        {
-            transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
-        }
+            moveDirection += headset.forward;
         if (isMovingBackward)
-        {
-            transform.Translate(-Vector3.forward * moveSpeed * Time.deltaTime);
-        }
+            moveDirection -= headset.forward;
         if (isMovingLeft)
-        {
-            transform.Translate(-Vector3.right * moveSpeed * Time.deltaTime);
-        }
+            moveDirection -= headset.right;
         if (isMovingRight)
+            moveDirection += headset.right;
+
+        // Elimina el componente vertical (opcional) y normaliza
+        moveDirection.y = 0;
+        if (moveDirection.magnitude > 0)
         {
-            transform.Translate(Vector3.right * moveSpeed * Time.deltaTime);
+            moveDirection.Normalize();
+            transform.Translate(moveDirection * moveSpeed * Time.deltaTime, Space.World);
         }
     }
 
-    // Métodos públicos para activar/desactivar el movimiento
-    public void StartMovingForward()
-    {
-        isMovingForward = true;
-    }
+    // Funciones públicas para los botones (¡asegúrate de que sean PUBLIC!)
+    public void StartMovingForward() => isMovingForward = true;
+    public void StopMovingForward() => isMovingForward = false;
 
-    public void StopMovingForward()
-    {
-        isMovingForward = false;
-    }
+    public void StartMovingBackward() => isMovingBackward = true;
+    public void StopMovingBackward() => isMovingBackward = false;
 
-    public void StartMovingBackward()
-    {
-        isMovingBackward = true;
-    }
+    public void StartMovingLeft() => isMovingLeft = true;
+    public void StopMovingLeft() => isMovingLeft = false;
 
-    public void StopMovingBackward()
-    {
-        isMovingBackward = false;
-    }
-
-    public void StartMovingLeft()
-    {
-        isMovingLeft = true;
-    }
-
-    public void StopMovingLeft()
-    {
-        isMovingLeft = false;
-    }
-
-    public void StartMovingRight()
-    {
-        isMovingRight = true;
-    }
-
-    public void StopMovingRight()
-    {
-        isMovingRight = false;
-    }
+    public void StartMovingRight() => isMovingRight = true;
+    public void StopMovingRight() => isMovingRight = false;
 }
