@@ -12904,7 +12904,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 1171815480}
   followDistance: 0.75
-  heightOffset: 0.35
+  heightOffset: 0.4
+  rotationSmoothness: 5
 --- !u!114 &170781995
 MonoBehaviour:
   m_ObjectHideFlags: 0
