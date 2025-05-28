@@ -107,7 +107,7 @@ public class SparrowIdleController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(!other.CompareTag("Player"))
+        if(!other.CompareTag("MainCamera"))
             return;
 
         userInZone = true;
@@ -120,7 +120,7 @@ public class SparrowIdleController : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if(!other.CompareTag("Player"))
+        if(!other.CompareTag("MainCamera"))
             return;
 
         userInZone = false;

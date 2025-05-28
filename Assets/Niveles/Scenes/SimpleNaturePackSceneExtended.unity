@@ -17888,7 +17888,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8589162442449043258, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: MainCamera
       objectReference: {fileID: 0}
     - target: {fileID: 8589162442585694456, guid: d8a531f4c95861d49b7d7a33e412c3d3, type: 3}
       propertyPath: m_LocalPosition.y
