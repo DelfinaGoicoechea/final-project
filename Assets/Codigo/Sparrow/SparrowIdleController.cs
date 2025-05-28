@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class SparrowIdleController : MonoBehaviour
 {
-    public Animator animator;
+    private Animator animator;
     public Transform user; //reference to the camera transform
     public float rotationSpeed = 2f;
+
+    private AudioSource audioSource;
 
     public float singRepeatInterval = 10f;
 
@@ -27,6 +29,15 @@ public class SparrowIdleController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
+
+        if (animator == null)
+            Debug.LogWarning("Animator component not found on " + gameObject.name);
+
+        if (audioSource == null)
+            Debug.LogWarning("AudioSource component not found on " + gameObject.name);
+
         SetNextHeadMoveTime();
         SetNextFlapTime();
     }
@@ -129,5 +140,13 @@ public class SparrowIdleController : MonoBehaviour
         //Calculate rotation to look at user
         Quaternion targetRotation = Quaternion.LookRotation(direction);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-    }   
+    }  
+
+    public void PlaySingSound()
+    {
+        if (audioSource != null && !audioSource.isPlaying)
+        {
+            audioSource.Play();
+        }
+    }
 }
