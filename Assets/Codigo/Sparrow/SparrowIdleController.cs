@@ -24,9 +24,10 @@ public class SparrowIdleController : MonoBehaviour
     private float nextFlapTime;
 
     private bool userInZone = false;
+    private bool isSinging = false;
     
 
-    // Start is called before the first frame update
+    //Start is called before the first frame update
     void Start()
     {
         animator = GetComponent<Animator>();
@@ -43,27 +44,27 @@ public class SparrowIdleController : MonoBehaviour
     }
 
 
-    // Update is called once per frame
+    //Update is called once per frame
     void Update()
     {
-        // idle while user not in zone
+        //idle while user not in zone
         if (!userInZone)
         {
             headMoveTimer += Time.deltaTime;
 
             if (headMoveTimer >= nextHeadMoveTime)
             {
-                // int Range, [minInclusive..maxExclusive)
+                //int Range, [minInclusive..maxExclusive)
                 int choice = Random.Range(0, 2); // 0: left, 1: right
 
-                // if choice is 0, set the trigger to the left, else set the trigger to the right
+                //if choice is 0, set the trigger to the left, else set the trigger to the right
                 animator.SetTrigger(choice == 0 ? "Trigger_LookLeft" : "Trigger_LookRight");
 
                 headMoveTimer = 0f;
                 SetNextHeadMoveTime();
             }
         }
-        else // user in zone
+        else //user in zone
         {
             //follows user position
             RotateTowardsUser();
@@ -85,11 +86,18 @@ public class SparrowIdleController : MonoBehaviour
                 animator.SetTrigger("Trigger_Sing");
                 singTimer = 0f;
             }
+
+            //check if singing finished
+            if(isSinging && !audioSource.isPlaying)
+            {
+                animator.SetTrigger("Trigger_SingFinished");
+                isSinging = false;
+            }
         }
     }
 
 
-    // time until the sparrow moves its head again
+    //time until the sparrow moves its head again
     void SetNextHeadMoveTime()
     {
         // float Range, [minInclusive..maxInclusive] (range is inclusive)
@@ -97,10 +105,10 @@ public class SparrowIdleController : MonoBehaviour
     }
 
 
-    // time until the sparrow flaps again
+    //time until the sparrow flaps again
     void SetNextFlapTime()
     {
-        // float Range, [minInclusive..maxInclusive] (range is inclusive)
+        //float Range, [minInclusive..maxInclusive] (range is inclusive)
         nextFlapTime = Random.Range(minFlapInterval, maxFlapInterval);
     }
 
@@ -123,6 +131,7 @@ public class SparrowIdleController : MonoBehaviour
         if(!other.CompareTag("MainCamera"))
             return;
 
+        //isSinging = false;
         userInZone = false;
         animator.SetTrigger("Trigger_Reset");
     }
@@ -147,6 +156,7 @@ public class SparrowIdleController : MonoBehaviour
         if (audioSource != null && !audioSource.isPlaying)
         {
             audioSource.Play();
+            isSinging = true;
         }
     }
 }
