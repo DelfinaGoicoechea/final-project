@@ -34,10 +34,14 @@ public class SparrowIdleController : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
 
         if (animator == null)
-            Debug.LogWarning("Animator component not found on " + gameObject.name);
+        {
+            Debug.LogError("Animator not assigned in Inspector on " + gameObject.name);
+        }
 
         if (audioSource == null)
-            Debug.LogWarning("AudioSource component not found on " + gameObject.name);
+        {
+            Debug.LogError("AudioSource not assigned in Inspector on " + gameObject.name);
+        }
 
         SetNextHeadMoveTime();
         SetNextFlapTime();
@@ -131,7 +135,7 @@ public class SparrowIdleController : MonoBehaviour
         if(!other.CompareTag("MainCamera"))
             return;
 
-        //isSinging = false;
+        isSinging = false;
         userInZone = false;
         animator.SetTrigger("Trigger_Reset");
     }
