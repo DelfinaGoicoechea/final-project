@@ -117,24 +117,18 @@ public class SparrowIdleController : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
+    public void OnUserEnterZone()
     {
-        if(!other.CompareTag("MainCamera"))
-            return;
-
         userInZone = true;
-        animator.SetTrigger("Trigger_Bounce");
+        animator.SetTrigger("Trigger_Sing");
         flapTimer = 0f;
         singTimer = 0f;
         SetNextFlapTime();
     }
 
 
-    private void OnTriggerExit(Collider other)
+    public void OnUserExitZone()
     {
-        if(!other.CompareTag("MainCamera"))
-            return;
-
         isSinging = false;
         userInZone = false;
         animator.SetTrigger("Trigger_Reset");

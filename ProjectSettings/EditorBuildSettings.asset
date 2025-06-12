@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Niveles/Scenes/SimpleNaturePackSceneExtended.unity
+    guid: f7034ac3aafc42e41acbb34effb8fece
+  - enabled: 1
     path: Assets/Niveles/Scenes/Main.unity
     guid: f6637c9455f3f784b93b71a02211c7ae
   - enabled: 1
