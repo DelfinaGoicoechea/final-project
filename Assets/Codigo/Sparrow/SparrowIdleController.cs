@@ -157,4 +157,9 @@ public class SparrowIdleController : MonoBehaviour
             isSinging = true;
         }
     }
+
+    public bool IsSinging()
+    {
+        return isSinging;
+    }
 }

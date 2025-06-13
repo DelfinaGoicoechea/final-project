@@ -17827,11 +17827,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 428f4dbfd2cf47c46a9004fc236b5d05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sparrowController: {fileID: 1342063617}
   user: {fileID: 574517950}
-  minVolume: 0.2
+  minVolume: 0.1
   maxVolume: 1
   stillnessThreshold: 0.01
   volumeChangeSpeed: 1
+  sparrowSingVolume: 0.05
 --- !u!1001 &568106601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36266,6 +36268,7 @@ GameObject:
   - component: {fileID: 1052668862}
   - component: {fileID: 1052668863}
   - component: {fileID: 1052668864}
+  - component: {fileID: 1052668865}
   m_Layer: 0
   m_Name: InteractiveFlower
   m_TagString: Untagged
@@ -36336,7 +36339,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1052668862}
-  maxGazeDistance: 5
+  maxGazeDistance: 6
+--- !u!65 &1052668865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052668860}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.22, y: 0.5, z: 0.22}
+  m_Center: {x: -1.415, y: 0.2, z: 0.47}
 --- !u!1001 &1057399226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45263,7 +45279,7 @@ AudioSource:
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 0
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -45355,11 +45371,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   user: {fileID: 574517950}
   rotationSpeed: 2
-  singRepeatInterval: 10
+  singRepeatInterval: 15
   minHeadInterval: 4
   maxHeadInterval: 8
   minFlapInterval: 3
   maxFlapInterval: 6
+--- !u!136 &1342063619
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1342063614}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 1.4
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1343791391
 PrefabInstance:
   m_ObjectHideFlags: 0
