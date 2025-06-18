@@ -48,7 +48,6 @@ MonoBehaviour:
   soundContainer: {fileID: 8741705155626037305}
   nombre: Ciudad simple
   customizationsEntry: Compile
-  tags: []
   sceneName: CityScene
   sceneConfig: {fileID: 0}
 --- !u!1 &1117157025507119293
@@ -100,7 +99,6 @@ MonoBehaviour:
   soundContainer: {fileID: 1589300227078025040}
   nombre: Frutas interactuables
   customizationsEntry: Compile
-  tags: []
   sceneName: InteractableFarm
   sceneConfig: {fileID: 801627269659885374}
 --- !u!114 &801627269659885374
@@ -402,7 +400,6 @@ MonoBehaviour:
   soundContainer: {fileID: 1589300227078025040}
   nombre: Main
   customizationsEntry: Compile
-  tags: []
   sceneName: Main
   sceneConfig: {fileID: 0}
 --- !u!1 &7827076326634132436
@@ -494,7 +491,6 @@ MonoBehaviour:
   soundContainer: {fileID: 0}
   nombre: Ejemplo Metrica Objetos
   customizationsEntry: Compile
-  tags: []
   sceneName: RaycastMetricExample
   sceneConfig: {fileID: 0}
 --- !u!1 &8122455487270228303
@@ -576,7 +572,6 @@ MonoBehaviour:
   soundContainer: {fileID: 0}
   nombre: Tren noruego
   customizationsEntry: Compile
-  tags: []
   material: {fileID: 2100000, guid: f5faec58b2fe1354aa0f72e31b5865f2, type: 2}
   isEquiangularCubemap: 0
   video: {fileID: 32900000, guid: 70f37e9c2dd8afe45abe126db6551d52, type: 3}
@@ -665,7 +660,6 @@ MonoBehaviour:
   soundContainer: {fileID: 7185524963068412162}
   nombre: Mar azul
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: b0e5dc165892a724dab30a2445487b64, type: 2}
 --- !u!1 &8216540716129985543
 GameObject:
@@ -715,7 +709,6 @@ MonoBehaviour:
   soundContainer: {fileID: 3038270838357443450}
   nombre: Calle festiva
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 335a46cb570dd314bade6a2fcc213d9d, type: 2}
 --- !u!1 &8216540716262589908
 GameObject:
@@ -765,7 +758,6 @@ MonoBehaviour:
   soundContainer: {fileID: 1589300227078025040}
   nombre: Bosque de pinos
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: d83a4784b00216e4a8376555d4f1b0da, type: 2}
 --- !u!1 &8216540716366605905
 GameObject:
@@ -815,7 +807,6 @@ MonoBehaviour:
   soundContainer: {fileID: 7185524963068412162}
   nombre: Mar colorido
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 7e0de44042bb72f47881278adfdc5d58, type: 2}
 --- !u!1 &8216540716520445044
 GameObject:
@@ -865,7 +856,6 @@ MonoBehaviour:
   soundContainer: {fileID: 8940307835444222314}
   nombre: Cielo nocturno
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 65dccc47c6cfb0b44a6db24a778d4704, type: 2}
 --- !u!1 &8216540716786038010
 GameObject:
@@ -967,7 +957,6 @@ MonoBehaviour:
   soundContainer: {fileID: 0}
   nombre: SphereScene
   customizationsEntry: Compile
-  tags: []
   sceneName: SphereScene
   sceneConfig: {fileID: 0}
 --- !u!1 &8216540716978143269
@@ -1054,7 +1043,6 @@ MonoBehaviour:
   soundContainer: {fileID: 1589300227078025040}
   nombre: Bosque Nevado
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 6aee1c7f9f80a2f4bb1a9ed038ffb8d7, type: 2}
 --- !u!1 &8216540717177267771
 GameObject:
@@ -1104,7 +1092,6 @@ MonoBehaviour:
   soundContainer: {fileID: 7185524963068412162}
   nombre: Muelle
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 0cbc7c0e6dc68304db0590b3314fddfc, type: 2}
 --- !u!1 &8216540717577473001
 GameObject:
@@ -1227,7 +1214,6 @@ MonoBehaviour:
   soundContainer: {fileID: 3038270838357443450}
   nombre: Iglesia
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 55dc52b486de310459324168c3f7c73f, type: 2}
 --- !u!1 &8216540717909920681
 GameObject:
@@ -1275,10 +1261,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thumbnail: {fileID: 2800000, guid: ff6c315bc1d9b0141a5e50e90c8d1804, type: 3}
   soundContainer: {fileID: 1589300227078025040}
-  nombre: Bosque lowpoly
+  nombre: Bosque interactivo
   customizationsEntry: Compile
-  tags: []
-  sceneName: SimpleNaturePackScene
+  sceneName: SimpleNaturePackSceneExtended
   sceneConfig: {fileID: 0}
 --- !u!1 &8216540717980148934
 GameObject:
@@ -1328,7 +1313,6 @@ MonoBehaviour:
   soundContainer: {fileID: 8940307835444222314}
   nombre: Valle
   customizationsEntry: Compile
-  tags: []
   imageMaterial: {fileID: 2100000, guid: 1b677b8eccf618d4aaa719ba7ed6ebe5, type: 2}
 --- !u!1 &8216540718048004332
 GameObject:
@@ -1378,7 +1362,6 @@ MonoBehaviour:
   soundContainer: {fileID: 7185524963068412162}
   nombre: Playa
   customizationsEntry: Compile
-  tags: []
   material: {fileID: 2100000, guid: b242c65006a121743b80e0f4050f7ebf, type: 2}
   isEquiangularCubemap: 1
   video: {fileID: 32900000, guid: 7bdb84e5456ef8647be2dc18dbad1052, type: 3}
