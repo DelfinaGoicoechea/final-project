@@ -5,12 +5,14 @@ using UnityEngine;
 public class GazeFlowerOpener : MonoBehaviour
 {
     public Animator animator;
+    public MetricaAperturaFlor metricaAperturaFlor;
+    public MetricaDuracionFlorAbierta metricaDuracionFlorAbierta;
 
     // The flower will close if the user is not looking at it
     private bool isLooking = false;
     
-    // Distancia máxima a la que el jugador puede mirar la flor para abrirla. 1 metro es la distancia predeterminada
-    public float maxGazeDistance = 1.0f;
+    // Distancia máxima a la que el jugador puede mirar la flor para abrirla
+    public float maxGazeDistance = 6.0f;
     
     void Start()
     {
@@ -18,6 +20,14 @@ public class GazeFlowerOpener : MonoBehaviour
         if (animator == null)
         {
             Debug.LogError("Animator not assigned in Inspector on " + gameObject.name);
+        }
+        if (metricaAperturaFlor == null)
+        {
+            Debug.LogError("MetricaAperturaFlor not assigned in Inspector on " + gameObject.name);
+        }
+        if (metricaDuracionFlorAbierta == null)
+        {
+            Debug.LogError("MetricaDuracionFlorAbierta not assigned in Inspector on " + gameObject.name);
         }
     }
 
@@ -38,6 +48,15 @@ public class GazeFlowerOpener : MonoBehaviour
         {
             isLooking = currentlyLooking;
             animator.SetBool("IsLooking", isLooking);
+            metricaAperturaFlor.RegisterFlowerEvent(isLooking);
+            if (isLooking)
+            {
+                metricaDuracionFlorAbierta.OnFlowerOpened();
+            }
+            else
+            {
+                metricaDuracionFlorAbierta.OnFlowerClosed();
+            }
         }
     }
 }
