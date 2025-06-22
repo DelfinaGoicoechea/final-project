@@ -50,7 +50,7 @@ public class MetricaAperturaFlor : Metric
             {
                 mensaje.Append($"{evt}\n");
             }
-            // Quita el último salto de línea
+            // Quita el ultimo salto de linea
             mensaje = mensaje.Remove(mensaje.Length - 1, 1);
         }
         var modeloMetrica = new Modelo

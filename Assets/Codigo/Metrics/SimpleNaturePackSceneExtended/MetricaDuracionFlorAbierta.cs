@@ -32,7 +32,7 @@ public class MetricaDuracionFlorAbierta : Metric
             TimeSpan duration = closeTimestamp - openTimestamp.Value;
             string openStr = openTimestamp.Value.ToString("T", new CultureInfo("es-ES"));
             string closeStr = closeTimestamp.ToString("T", new CultureInfo("es-ES"));
-            string msg = $"Abierta: {openStr} | Cerrada: {closeStr} | Duración: {duration.TotalSeconds:F1} segundos";
+            string msg = $"Abierta: {openStr} | Cerrada: {closeStr} | Duracion: {duration.TotalSeconds:F1} segundos";
             duraciones.Add(msg);
             openTimestamp = null;
         }
@@ -40,7 +40,7 @@ public class MetricaDuracionFlorAbierta : Metric
 
     public override string Nombre
     {
-        get { return "Metrica Duración Flor Abierta"; }
+        get { return "Metrica Duracion Flor Abierta"; }
     }
 
     protected override void PublicarMetrica()
@@ -68,7 +68,7 @@ public class MetricaDuracionFlorAbierta : Metric
             {
                 mensaje.Append($"{evt}\n");
             }
-            // Quita el último salto de línea
+            // Quita el ultimo salto de linea
             mensaje = mensaje.Remove(mensaje.Length - 1, 1);
         }
         var modeloMetrica = new Modelo
