@@ -48,14 +48,14 @@ public class GazeFlowerOpener : MonoBehaviour
         {
             isLooking = currentlyLooking;
             animator.SetBool("IsLooking", isLooking);
-            metricaAperturaFlor.RegisterFlowerEvent(isLooking);
+            metricaAperturaFlor?.RegisterFlowerEvent(isLooking);
             if (isLooking)
             {
-                metricaDuracionFlorAbierta.OnFlowerOpened();
+                metricaDuracionFlorAbierta?.OnFlowerOpened();
             }
             else
             {
-                metricaDuracionFlorAbierta.OnFlowerClosed();
+                metricaDuracionFlorAbierta?.OnFlowerClosed();
             }
         }
     }

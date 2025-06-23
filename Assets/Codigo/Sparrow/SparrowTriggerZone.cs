@@ -6,6 +6,7 @@ public class SparrowTriggerZone : MonoBehaviour
 {
     public SparrowIdleController sparrowController;
     public MetricaTiempoEnColliderGorrion metricaTiempo;
+    public MetricaEntradasCollider metricaEntradasCollider;
 
     void Start()
     {
@@ -15,7 +16,11 @@ public class SparrowTriggerZone : MonoBehaviour
         }
         if (metricaTiempo == null)
         {
-            Debug.LogError("MetricaTiempoEnColliderGorrion not assigned in Inspector on " + gameObject.name);
+            Debug.LogError("MetricaTiempo not assigned in Inspector on " + gameObject.name);
+        }
+        if (metricaEntradasCollider == null)
+        {
+            Debug.LogError("MetricaEntradasCollider not assigned in Inspector on " + gameObject.name);
         }
     }
 
@@ -26,6 +31,7 @@ public class SparrowTriggerZone : MonoBehaviour
         
         sparrowController.OnUserEnterZone();
         metricaTiempo?.OnEnterCollider();
+        metricaEntradasCollider?.OnEnterCollider();
     }
 
     private void OnTriggerExit(Collider other)
