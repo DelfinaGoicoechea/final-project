@@ -6,8 +6,8 @@ public class GazeFlowerOpener : MonoBehaviour
 {
     public Animator animator;
 
-    // La flor solo se abrirá una vez
-    private bool hasOpened = false;
+    // The flower will close if the user is not looking at it
+    private bool isLooking = false;
     
     // Distancia máxima a la que el jugador puede mirar la flor para abrirla. 1 metro es la distancia predeterminada
     public float maxGazeDistance = 1.0f;
@@ -24,19 +24,20 @@ public class GazeFlowerOpener : MonoBehaviour
     
     void Update()
     {
-        if (hasOpened) return;
-
         // Guarda información sobre el objeto que el rayo golpea
         RaycastHit hit;
 
         // Crea un rayo desde la posición de la cámara y en la dirección hacia donde está mirando
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
-        // Si el rayo golpea un objeto y es la flor, la abre
-        if (Physics.Raycast(ray, out hit, maxGazeDistance) && hit.collider.gameObject == gameObject)
+        // Check if the raycast hits the flower
+        bool currentlyLooking = Physics.Raycast(ray, out hit, maxGazeDistance) && hit.collider.gameObject == gameObject;
+
+        // If the raycast hits the flower, open it
+        if (currentlyLooking != isLooking)
         {
-            animator.SetTrigger("LookAtTrigger");
-            hasOpened = true;
+            isLooking = currentlyLooking;
+            animator.SetBool("IsLooking", isLooking);
         }
     }
 }
