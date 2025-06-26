@@ -5,7 +5,7 @@ using UnityEngine;
 public class SparrowTriggerZone : MonoBehaviour
 {
     public SparrowIdleController sparrowController;
-    public MetricaTiempoEnColliderGorrion metricaTiempo;
+    public MetricaTiempoEnCollider metricaTiempo;
     public MetricaEntradasCollider metricaEntradasCollider;
 
     void Start()

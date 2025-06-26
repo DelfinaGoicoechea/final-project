@@ -4,7 +4,7 @@ using System.Text;
 using UnityEngine;
 using System.Globalization;
 
-public class MetricaTiempoEnColliderGorrion : Metric
+public class MetricaTiempoEnCollider : Metric
 {
     private List<string> duraciones = new List<string>();
     private DateTime? enterTimestamp = null;
@@ -40,7 +40,7 @@ public class MetricaTiempoEnColliderGorrion : Metric
 
     public override string Nombre
     {
-        get { return "Metrica Tiempo en Collider del Gorrion"; }
+        get { return "Metrica Tiempo en Collider Gorrion"; }
     }
 
     protected override void PublicarMetrica()

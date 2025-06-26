@@ -37,7 +37,6 @@ public class SparrowIdleController : MonoBehaviour
         {
             Debug.LogError("Animator not assigned in Inspector on " + gameObject.name);
         }
-
         if (audioSource == null)
         {
             Debug.LogError("AudioSource not assigned in Inspector on " + gameObject.name);
