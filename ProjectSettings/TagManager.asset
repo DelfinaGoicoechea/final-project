@@ -20,6 +20,8 @@ TagManager:
   - CajaFrutas
   - FXAudioSource
   - ControllerReferences
+  - WaveZone
+  - Character
   layers:
   - Default
   - TransparentFX
