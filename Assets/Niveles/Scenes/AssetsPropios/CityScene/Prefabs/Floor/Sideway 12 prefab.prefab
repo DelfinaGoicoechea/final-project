@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4321232574278396}
   - component: {fileID: 33779225633172334}
   - component: {fileID: 23598444642365436}
-  - component: {fileID: 64029755271704616}
+  - component: {fileID: 999621667202842090}
   m_Layer: 0
   m_Name: Sidewalk_12
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64029755271704616
-MeshCollider:
+--- !u!65 &999621667202842090
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -95,10 +95,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: a095af871810f0142adbb604b61b452b, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.02, y: 0.020000005, z: 0.0010000002}
+  m_Center: {x: -0.0000000121071935, y: -0.00000024354085, z: 0.0004999405}
 --- !u!1 &1893114798651238
 GameObject:
   m_ObjectHideFlags: 0

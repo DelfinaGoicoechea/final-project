@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4123418281425828}
   - component: {fileID: 33853668951170078}
   - component: {fileID: 23033937103755954}
-  - component: {fileID: 64444443302316780}
+  - component: {fileID: 5981939433547501653}
   m_Layer: 0
   m_Name: stone pot
   m_TagString: Untagged
@@ -85,8 +85,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!64 &64444443302316780
-MeshCollider:
+--- !u!65 &5981939433547501653
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -95,10 +95,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 4300000, guid: 361f18f311d2a624295d402952b751b4, type: 3}
+  serializedVersion: 2
+  m_Size: {x: 0.0053905905, y: 0.010522407, z: 0.003536543}
+  m_Center: {x: 0, y: 5.0257307e-17, z: 0.001768212}
 --- !u!1 &1833885393432152
 GameObject:
   m_ObjectHideFlags: 0

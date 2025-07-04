@@ -49,4 +49,14 @@ public class CharacterMovement : MonoBehaviour
         animator.SetBool("isWalking", true);
         Debug.Log("Se empezo a caminar");
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision.gameObject.tag);
+        if(collision.gameObject.tag == "hedge")
+        {
+            isWalking = false;
+            animator.SetBool("isWalking", false);
+        }
+    }
 }
