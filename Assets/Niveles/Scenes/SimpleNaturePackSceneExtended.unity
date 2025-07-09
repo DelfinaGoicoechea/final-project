@@ -17838,6 +17838,7 @@ MonoBehaviour:
   stillnessThreshold: 0.01
   volumeChangeSpeed: 1
   sparrowSingVolume: 0.05
+  minStillnesDuration: 2
 --- !u!1001 &568106601
 PrefabInstance:
   m_ObjectHideFlags: 0

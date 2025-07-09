@@ -75,6 +75,13 @@ public class SparrowIdleController : MonoBehaviour
             flapTimer += Time.deltaTime;
             singTimer += Time.deltaTime;
 
+            //check if singing finished
+            if(isSinging && !audioSource.isPlaying)
+            {
+                animator.SetTrigger("Trigger_SingFinished");
+                isSinging = false;
+            }
+
             //flap randomly
             if(flapTimer >= nextFlapTime)
             {
@@ -88,13 +95,6 @@ public class SparrowIdleController : MonoBehaviour
             {
                 animator.SetTrigger("Trigger_Sing");
                 singTimer = 0f;
-            }
-
-            //check if singing finished
-            if(isSinging && !audioSource.isPlaying)
-            {
-                animator.SetTrigger("Trigger_SingFinished");
-                isSinging = false;
             }
         }
     }

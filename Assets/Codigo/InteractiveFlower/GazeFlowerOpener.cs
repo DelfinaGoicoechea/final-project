@@ -16,7 +16,6 @@ public class GazeFlowerOpener : MonoBehaviour
     
     void Start()
     {
-
         if (animator == null)
         {
             Debug.LogError("Animator not assigned in Inspector on " + gameObject.name);
@@ -58,5 +57,5 @@ public class GazeFlowerOpener : MonoBehaviour
                 metricaDuracionFlorAbierta?.OnFlowerClosed();
             }
         }
-    }
+    } 
 }

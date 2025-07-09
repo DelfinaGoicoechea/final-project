@@ -19,6 +19,8 @@ public class MusicVolumeController : MonoBehaviour
     private Vector3 lastPosition;
     private float currentVolume;
     private bool wasMoving = true;
+    private float stillnessTimer = 0f; // Timer to track how long the user has been still
+    public float stillnessDurationThreshold = 3f; // Duration (in seconds) the user must be still before metrics are called
     
     // Start is called before the first frame update
     void Start()
@@ -46,32 +48,42 @@ public class MusicVolumeController : MonoBehaviour
     {
         float targetVolume;
 
+        // Always track movement and stillness
+        float distanceMoved = Vector3.Distance(user.position, lastPosition);
+        bool isUserMoving = distanceMoved > stillnessThreshold;
+
+        if (isUserMoving)
+        {
+            stillnessTimer = 0f;
+            if (!wasMoving)
+            {
+                metricaDuracionInmovilidad?.OnStillnessEnd();
+                wasMoving = true;
+            }
+        }
+        else
+        {
+            stillnessTimer += Time.deltaTime;
+            if (wasMoving && stillnessTimer >= stillnessDurationThreshold)
+            {
+                metricaDecrementoSonido?.OnVolumeDecrease();
+                metricaDuracionInmovilidad?.OnStillnessStart();
+                wasMoving = false;
+            }
+        }
+
+        // Only the volume logic depends on sparrow singing
         if (sparrowController.IsSinging())
         {
             targetVolume = sparrowSingVolume;
-        } else {
-            //public static float Distance(Vector3 a, Vector3 b); - Returns the distance between a and b.
-            float distanceMoved = Vector3.Distance(user.position, lastPosition);
-            bool isUserMoving = distanceMoved > stillnessThreshold;
-            if (isUserMoving)
-            {
-                targetVolume = maxVolume;
-                if (!wasMoving)
-                {
-                    metricaDuracionInmovilidad?.OnStillnessEnd();
-                    wasMoving = true;
-                }
-            }
-            else
-            {
-                targetVolume = minVolume;
-                if (wasMoving)
-                {
-                    metricaDecrementoSonido?.OnVolumeDecrease();
-                    metricaDuracionInmovilidad?.OnStillnessStart();
-                    wasMoving = false;
-                }
-            }
+        }
+        else if (isUserMoving)
+        {
+            targetVolume = maxVolume;
+        }
+        else
+        {
+            targetVolume = minVolume;
         }
 
         currentVolume = Mathf.Lerp(currentVolume, targetVolume, volumeChangeSpeed * Time.deltaTime);
