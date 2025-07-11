@@ -17716,7 +17716,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: af8ffe15a56a66245a824ba96aac0d33, type: 3}
+  m_audioClip: {fileID: 8300000, guid: ea452d85cd8e6134595eab1e6e5d5791, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
@@ -17833,12 +17833,12 @@ MonoBehaviour:
   user: {fileID: 574517950}
   metricaDecrementoSonido: {fileID: 2075342575}
   metricaDuracionInmovilidad: {fileID: 719689952}
-  minVolume: 0.1
+  minVolume: 0.8
   maxVolume: 1
   stillnessThreshold: 0.01
   volumeChangeSpeed: 1
-  sparrowSingVolume: 0.05
-  minStillnesDuration: 2
+  sparrowSingVolume: 0.9
+  stillnessDurationThreshold: 3
 --- !u!1001 &568106601
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -36362,6 +36362,7 @@ GameObject:
   - component: {fileID: 1052668863}
   - component: {fileID: 1052668864}
   - component: {fileID: 1052668865}
+  - component: {fileID: 1052668866}
   m_Layer: 0
   m_Name: InteractiveFlower
   m_TagString: Untagged
@@ -36415,7 +36416,7 @@ SphereCollider:
   m_GameObject: {fileID: 1052668860}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.3
   m_Center: {x: -1.4, y: 0.2, z: 0.45}
@@ -36448,6 +36449,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.22, y: 0.5, z: 0.22}
   m_Center: {x: -1.415, y: 0.2, z: 0.47}
+--- !u!136 &1052668866
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1052668860}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.3
+  m_Height: 0.8
+  m_Direction: 1
+  m_Center: {x: -1.415, y: 0.2, z: 0.45}
 --- !u!1001 &1057399226
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -45410,7 +45425,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: ba9e76e40d5f827458e3d17460e6232c, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8ae6ab5349a69be4ebf15e2c9f29883b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1

@@ -8,12 +8,12 @@ public class MusicVolumeController : MonoBehaviour
     public Transform user;
     public MetricaDecrementoSonido metricaDecrementoSonido;
     public MetricaDuracionInmovilidad metricaDuracionInmovilidad;
-    public float minVolume = 0.2f;
+    public float minVolume = 0.8f;
     public float maxVolume = 1f;
     //Threshold to determine if the user is moving or not
     public float stillnessThreshold = 0.01f;
     public float volumeChangeSpeed = 1f;
-    public float sparrowSingVolume = 0.05f;
+    public float sparrowSingVolume = 0.9f;
 
     private AudioSource audioSource;
     private Vector3 lastPosition;
