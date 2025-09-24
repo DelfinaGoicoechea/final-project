@@ -91,9 +91,10 @@ public class SparrowIdleController : MonoBehaviour
             }
 
             //repeat singing after 'singRepeatInterval' time
-            if(singTimer >= singRepeatInterval)
+            if(singTimer >= singRepeatInterval && !isSinging)
             {
                 animator.SetTrigger("Trigger_Sing");
+                isSinging = true;
                 singTimer = 0f;
             }
         }
@@ -119,7 +120,14 @@ public class SparrowIdleController : MonoBehaviour
     public void OnUserEnterZone()
     {
         userInZone = true;
-        animator.SetTrigger("Trigger_Sing");
+        
+        // Only trigger sing if not already singing to prevent conflicts
+        if (!isSinging)
+        {
+            animator.SetTrigger("Trigger_Sing");
+            isSinging = true;
+        }
+        
         flapTimer = 0f;
         singTimer = 0f;
         SetNextFlapTime();
@@ -130,6 +138,13 @@ public class SparrowIdleController : MonoBehaviour
     {
         isSinging = false;
         userInZone = false;
+        
+        // Stop any playing audio to prevent audio from continuing after exit
+        if (audioSource != null && audioSource.isPlaying)
+        {
+            audioSource.Stop();
+        }
+        
         animator.SetTrigger("Trigger_Reset");
     }
 
@@ -150,7 +165,7 @@ public class SparrowIdleController : MonoBehaviour
 
     public void PlaySingSound()
     {
-        if (audioSource != null && !audioSource.isPlaying)
+        if (audioSource != null && !audioSource.isPlaying && userInZone)
         {
             audioSource.Play();
             isSinging = true;
